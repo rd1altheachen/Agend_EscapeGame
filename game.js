@@ -290,7 +290,7 @@ function puzzle1_4() {
 }
 function checkConstellation() {
   if (document.getElementById('c1').value==='leo' && document.getElementById('c2').value==='aqua' && document.getElementById('c3').value==='libra') {
-    solvePuzzle('1-4'); addItem('magicWeight'); closeModal(); renderRoom1();
+    markSolved('1-4'); addItem('magicWeight'); closeModal(); renderRoom1();
   } else { showMessage('不對...'); }
 }
 
@@ -302,15 +302,15 @@ function puzzle1_5() {
 }
 function checkFireplace() {
   const code = ['fp1','fp2','fp3','fp4'].map(id=>document.getElementById(id).value).join('');
-  if (code==='2417') { solvePuzzle('1-5'); addItem('moonPowder'); closeModal(); renderRoom1(); }
+  if (code==='2417') { markSolved('1-5'); addItem('moonPowder'); closeModal(); renderRoom1(); }
   else { showMessage('不對...'); }
 }
 
 function puzzle1_6() {
   if (isSolved('1-6')) return;
   if (state.selectedItem==='sunPotion') {
-    solvePuzzle('1-6'); removeItem('sunPotion'); closeModal();
-    showModal('<h3>花朵綻放了！</h3><p>花心裡藏著最後一顆魔法星星！</p>');
+    markSolved('1-6'); removeItem('sunPotion'); closeModal();
+    showModal('<h3>花朵綻放了！</h3><p>所有謎題都解開了！</p>');
     renderRoom1(); setTimeout(()=>checkEndGame(),1500);
   } else { showModal('<h3>小花盆</h3><p>窗台上的小花緊閉著花瓣。</p>'); }
 }
@@ -373,6 +373,7 @@ function checkRhythm(){
 
 function puzzle2_2() {
   if (isSolved('2-2')) return;
+  owlLeft = 0; owlRight = 0;
   showModal(`<h3>貓頭鷹掛畫</h3><p>貓頭鷹的兩隻眼睛可以旋轉。旁邊牆上貼著一張小紙條。</p>
     <p style="color:#aaa;font-size:12px;font-style:italic;">紙條：「左眼月亮，右眼星星」</p>
     <div style="display:flex;gap:20px;justify-content:center;margin:15px 0;">
@@ -426,7 +427,7 @@ function puzzle2_5() {
   else if(allIn){html+=`<p>已攪拌：${pb.stirCount}/3</p>`;if(state.selectedItem==='stirrer')html+=`<button onclick="stirCauldron()">攪拌</button>`;else html+=`<p style="color:#888;font-size:13px;">需要用什麼來攪拌...</p>`;}
   showModal(html);
 }
-function addToCauldron(key,itemId){state.potionBrewing[key]=true;removeItem(itemId);closeModal();puzzle2_5();}
+function addToCauldron(key,itemId){state.potionBrewing[key]=true;removeItem(itemId);closeModal();saveGame();puzzle2_5();}
 function stirCauldron(){state.potionBrewing.stirCount++;if(state.potionBrewing.stirCount>=3){markSolved('2-5');addItem('sunPotion');removeItem('stirrer');closeModal();showModal('<h3>藥水完成！</h3><p>大鍋中冒出金色光芒...</p>');renderRoom2();}else{closeModal();showMessage(`攪拌 ${state.potionBrewing.stirCount}/3`);puzzle2_5();}}
 
 function puzzle2_6() {
