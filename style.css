@@ -1,16 +1,12 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Segoe UI', sans-serif; background: #1a1a2e; overflow: hidden; height: 100vh; width: 100vw; }
-#game-container { display: flex; flex-direction: column; height: 100vh; width: 100vw; }
+body { font-family: 'Segoe UI', sans-serif; background: #1a1a2e; overflow: hidden; height: 100vh; height: 100dvh; width: 100vw; }
+#game-container { display: flex; flex-direction: column; height: 100vh; height: 100dvh; width: 100vw; }
 #scene-area { flex: 1; position: relative; overflow: hidden; }
 .room { width: 100%; height: 100%; position: absolute; top: 0; left: 0; }
 .hidden { display: none !important; }
 
-/* Hotspots - invisible by default */
-.hotspot { position: absolute; cursor: pointer; z-index: 10; border-radius: 5px; transition: box-shadow 0.3s; }
-.hotspot:hover { box-shadow: 0 0 15px 5px rgba(255,215,0,0.3); }
-@media (hover: none) { .hotspot { animation: mobileHint 4s ease-in-out infinite; }
-  @keyframes mobileHint { 0%,90%,100% { box-shadow: none; } 95% { box-shadow: 0 0 10px 3px rgba(255,215,0,0.15); } }
-}
+/* Hotspots - invisible, no visual hints */
+.hotspot { position: absolute; cursor: pointer; z-index: 10; border-radius: 5px; }
 
 /* Animations */
 @keyframes glow { 0%,100% { box-shadow: 0 0 5px gold; } 50% { box-shadow: 0 0 18px gold; } }
@@ -21,7 +17,7 @@ body { font-family: 'Segoe UI', sans-serif; background: #1a1a2e; overflow: hidde
 .item-fly-in { animation: itemFlyIn 0.5s ease-out; }
 
 /* Inventory - always visible */
-#inventory-bar { height: 72px; background: rgba(15,15,35,0.97); border-top: 2px solid #ffd700; display: flex; align-items: center; padding: 5px 10px; overflow-x: auto; -webkit-overflow-scrolling: touch; min-height: 72px; }
+#inventory-bar { height: 72px; background: rgba(15,15,35,0.97); border-top: 2px solid #ffd700; display: flex; align-items: center; padding: 5px 10px; overflow-x: auto; -webkit-overflow-scrolling: touch; min-height: 72px; flex-shrink: 0; }
 #inventory-slots { display: flex; gap: 8px; min-width: min-content; align-items: center; height: 100%; }
 .inv-empty { color: rgba(255,215,0,0.3); font-size: 13px; padding: 0 15px; white-space: nowrap; }
 .inv-placeholder { width: 52px; height: 52px; border: 2px dashed rgba(255,215,0,0.2); border-radius: 10px; flex-shrink: 0; }
@@ -30,7 +26,7 @@ body { font-family: 'Segoe UI', sans-serif; background: #1a1a2e; overflow: hidde
 .inv-item.selected { border-color: #ffd700; background: rgba(255,215,0,0.25); box-shadow: 0 0 12px rgba(255,215,0,0.5); }
 
 /* Navigation */
-#nav-bar { height: 48px; background: rgba(10,10,30,0.97); display: flex; align-items: center; justify-content: center; gap: 8px; padding: 5px; border-top: 1px solid #333; }
+#nav-bar { height: 48px; background: rgba(10,10,30,0.97); display: flex; align-items: center; justify-content: center; gap: 8px; padding: 5px; border-top: 1px solid #333; flex-shrink: 0; }
 .nav-btn { padding: 8px 14px; border: none; border-radius: 20px; background: rgba(255,255,255,0.1); color: #fff; font-size: 14px; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
 .nav-btn:hover:not(:disabled) { background: rgba(255,255,255,0.2); }
 .nav-btn.active { background: rgba(255,215,0,0.3); border: 1px solid #ffd700; }
@@ -51,6 +47,15 @@ body { font-family: 'Segoe UI', sans-serif; background: #1a1a2e; overflow: hidde
 #modal-content .symbol-btn { width: 50px; height: 50px; font-size: 24px; margin: 5px; border-radius: 50%; }
 #modal-content .symbol-btn.active { background: #ffd700; }
 #modal-content .diary-page { background: rgba(255,248,220,0.1); padding: 15px; border-radius: 8px; margin: 10px 0; border-left: 3px solid #ffd700; }
+
+/* Diary visual */
+.diary-visual { display:flex; justify-content:center; }
+.diary-spread { display:flex; width:100%; max-width:320px; height:160px; border-radius:4px; overflow:hidden; box-shadow: 0 3px 10px rgba(0,0,0,0.3); }
+.diary-left, .diary-right { width:50%; background:#f5e6c8; position:relative; cursor:pointer; transition:background 0.2s; }
+.diary-left { border-right:1px solid #d4c4a0; }
+.diary-left:hover, .diary-right:hover { background:#efe0b8; }
+.diary-left::after { content:'◀'; position:absolute; bottom:5px; left:8px; color:rgba(0,0,0,0.2); font-size:10px; }
+.diary-right::after { content:'▶'; position:absolute; bottom:5px; right:8px; color:rgba(0,0,0,0.2); font-size:10px; }
 
 /* Message box */
 #message-box { position: absolute; bottom: 80px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.85); color: #ffd700; padding: 12px 24px; border-radius: 25px; font-size: 15px; z-index: 80; animation: fadeInUp 0.3s ease; white-space: nowrap; }

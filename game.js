@@ -215,9 +215,36 @@ function puzzle1_1() {
   if (isSolved('1-1')) return;
   if (!state.mirrorUsed) {
     state.mirrorUsed = true;
-    showModal(`<h3>魔法鏡</h3><p>你凝視魔法鏡...鏡中映出書房的景象。</p><p>但鏡中的書架似乎和現實有些不同。有什麼東西在鏡中微微發光...</p>`);
+    showModal(`<div style="text-align:center;">
+      <div style="width:120px;height:160px;margin:10px auto;border-radius:50%;border:4px solid #b8860b;background:radial-gradient(ellipse,#1a1a4a,#2a2a6a);display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(100,100,200,0.3);">
+        <div style="font-size:11px;color:rgba(200,200,255,0.7);text-align:center;padding:10px;">
+          <div style="display:flex;gap:2px;justify-content:center;flex-wrap:wrap;">
+            <span style="display:inline-block;width:8px;height:20px;background:#8b4513;border-radius:1px;"></span>
+            <span style="display:inline-block;width:8px;height:18px;background:#2e8b57;border-radius:1px;"></span>
+            <span style="display:inline-block;width:8px;height:22px;background:#4169e1;border-radius:1px;"></span>
+            <span style="display:inline-block;width:8px;height:19px;background:#ffd700;border-radius:1px;box-shadow:0 0 8px #ffd700;"></span>
+            <span style="display:inline-block;width:8px;height:21px;background:#8b0000;border-radius:1px;"></span>
+            <span style="display:inline-block;width:8px;height:17px;background:#4b0082;border-radius:1px;"></span>
+          </div>
+        </div>
+      </div>
+      <p style="color:#aaa;font-size:12px;margin-top:8px;">鏡中映出書架的倒影...</p>
+    </div>`);
   } else {
-    showModal(`<h3>魔法鏡</h3><p>鏡中的書架和現實的書架...仔細看，有個地方不一樣。</p>`);
+    showModal(`<div style="text-align:center;">
+      <div style="width:120px;height:160px;margin:10px auto;border-radius:50%;border:4px solid #b8860b;background:radial-gradient(ellipse,#1a1a4a,#2a2a6a);display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(100,100,200,0.3);">
+        <div style="font-size:11px;color:rgba(200,200,255,0.7);text-align:center;padding:10px;">
+          <div style="display:flex;gap:2px;justify-content:center;flex-wrap:wrap;">
+            <span style="display:inline-block;width:8px;height:20px;background:#8b4513;border-radius:1px;"></span>
+            <span style="display:inline-block;width:8px;height:18px;background:#2e8b57;border-radius:1px;"></span>
+            <span style="display:inline-block;width:8px;height:22px;background:#4169e1;border-radius:1px;"></span>
+            <span style="display:inline-block;width:8px;height:19px;background:#ffd700;border-radius:1px;box-shadow:0 0 8px #ffd700;"></span>
+            <span style="display:inline-block;width:8px;height:21px;background:#8b0000;border-radius:1px;"></span>
+            <span style="display:inline-block;width:8px;height:17px;background:#4b0082;border-radius:1px;"></span>
+          </div>
+        </div>
+      </div>
+    </div>`);
   }
 }
 
@@ -237,14 +264,63 @@ function solveAperio() { solvePuzzle('1-3'); state.doorOpen = true; document.get
 
 function puzzle1_2() {
   if (isSolved('1-2')) { showModal('<h3>書桌</h3><p>抽屜已經打開了。</p>'); return; }
-  showModal(`<h3>書桌</h3>
-    <div class="diary-page">
-      <p>魔法日記：</p>
-      <p>📅 某頁畫著 🌑 ，邊角有符號 △</p>
-      <p>📅 某頁畫著 🌕 ，邊角有符號 ○</p>
-      <p>📅 某頁畫著 🌓 ，邊角有符號 ☆</p>
-      <p style="font-style:italic;color:#aaa;">「按照月相順序排列符號」</p>
-    </div>
+  state._diaryPage = state._diaryPage || 0;
+  showDiaryPage();
+}
+
+function showDiaryPage() {
+  const pages = [
+    `<div class="diary-visual">
+      <div class="diary-spread">
+        <div class="diary-left" onclick="flipDiary(-1)">
+          <div style="text-align:center;padding:20px;">
+            <div style="font-size:40px;">📖</div>
+            <p style="color:#5a3d2b;margin-top:10px;font-style:italic;">魔法日記</p>
+          </div>
+        </div>
+        <div class="diary-right" onclick="flipDiary(1)">
+          <div style="text-align:center;padding:15px;">
+            <div style="font-size:50px;margin:10px 0;">🌑</div>
+            <div style="position:absolute;bottom:8px;right:10px;font-size:18px;color:#666;">△</div>
+          </div>
+        </div>
+      </div>
+    </div>`,
+    `<div class="diary-visual">
+      <div class="diary-spread">
+        <div class="diary-left" onclick="flipDiary(-1)">
+          <div style="text-align:center;padding:15px;">
+            <div style="font-size:50px;margin:10px 0;">🌓</div>
+            <div style="position:absolute;bottom:8px;right:10px;font-size:18px;color:#666;">☆</div>
+          </div>
+        </div>
+        <div class="diary-right" onclick="flipDiary(1)">
+          <div style="text-align:center;padding:15px;">
+            <div style="font-size:50px;margin:10px 0;">🌕</div>
+            <div style="position:absolute;bottom:8px;right:10px;font-size:18px;color:#666;">○</div>
+          </div>
+        </div>
+      </div>
+    </div>`,
+    `<div class="diary-visual">
+      <div class="diary-spread">
+        <div class="diary-left" onclick="flipDiary(-1)">
+          <div style="text-align:center;padding:15px;">
+            <p style="color:#5a3d2b;font-size:13px;line-height:1.8;">筆記頁面上畫著各種塗鴉和星星...</p>
+          </div>
+        </div>
+        <div class="diary-right">
+          <div style="text-align:center;padding:15px;">
+            <p style="color:#5a3d2b;font-size:12px;">（最後一頁）</p>
+          </div>
+        </div>
+      </div>
+    </div>`
+  ];
+  const p = state._diaryPage;
+  showModal(`<div style="margin-bottom:15px;">${pages[p]}</div>
+    <p style="font-size:11px;color:#666;text-align:center;">點擊左右頁面翻頁</p>
+    <hr style="border-color:#333;margin:12px 0;">
     <p>抽屜上有符號鎖：</p>
     <div class="puzzle-input" id="symbol-input">
       <button class="symbol-btn" onclick="toggleSymbol(this,0)">？</button>
@@ -252,6 +328,11 @@ function puzzle1_2() {
       <button class="symbol-btn" onclick="toggleSymbol(this,2)">？</button>
     </div>
     <button onclick="checkDiary()">確認</button>`);
+}
+
+function flipDiary(dir) {
+  state._diaryPage = Math.max(0, Math.min(2, (state._diaryPage||0) + dir));
+  showDiaryPage();
 }
 
 const symbolCycle = ['？','△','☆','○'];
@@ -275,7 +356,13 @@ function clickCarpet() {
   if (!state.carpetLifted) { state.carpetLifted = true; showModal('<h3>地毯</h3><p>你掀開地毯角落，發現下面刻著圖案。</p><p>圖案顯示：一把鑰匙指向中間的位置，旁邊畫著一本書和一扇門。</p>'); }
   else { showModal('<h3>地毯</h3><p>地毯下的圖案：鑰匙→中間，書→門。</p>'); }
 }
-function clickClock() { showModal('<h3>掛鐘</h3><p>時鐘的指針停住了。短針指向3，長針指向3（3:15）。</p>'); }
+function clickClock() { showModal(`<div style="text-align:center;">
+  <div style="width:100px;height:100px;margin:10px auto;border-radius:50%;border:4px solid #b8860b;background:#1a1a2a;position:relative;">
+    <div style="position:absolute;top:50%;left:50%;width:2px;height:25px;background:#ffd700;transform-origin:bottom center;transform:translate(-50%,-100%) rotate(-90deg);"></div>
+    <div style="position:absolute;top:50%;left:50%;width:2px;height:35px;background:#ffd700;transform-origin:bottom center;transform:translate(-50%,-100%) rotate(90deg);"></div>
+    <div style="position:absolute;top:50%;left:50%;width:6px;height:6px;background:#ffd700;border-radius:50%;transform:translate(-50%,-50%);"></div>
+  </div>
+</div>`); }
 
 function puzzle1_4() {
   if (isSolved('1-4')) return;
@@ -296,8 +383,7 @@ function checkConstellation() {
 
 function puzzle1_5() {
   if (isSolved('1-5')) return;
-  showModal(`<h3>壁爐暗格</h3><p>壁爐裡有個暗格，上面有4位數密碼鎖。</p>
-    <div class="puzzle-input"><input type="text" maxlength="1" id="fp1" inputmode="numeric"><input type="text" maxlength="1" id="fp2" inputmode="numeric"><input type="text" maxlength="1" id="fp3" inputmode="numeric"><input type="text" maxlength="1" id="fp4" inputmode="numeric"></div>
+  showModal(`<div class="puzzle-input"><input type="text" maxlength="1" id="fp1" inputmode="numeric"><input type="text" maxlength="1" id="fp2" inputmode="numeric"><input type="text" maxlength="1" id="fp3" inputmode="numeric"><input type="text" maxlength="1" id="fp4" inputmode="numeric"></div>
     <button onclick="checkFireplace()">確認</button>`);
 }
 function checkFireplace() {
@@ -344,25 +430,54 @@ function renderRoom2() {
   `;
 }
 
-function clickCrystalBall() { showModal('<h3>水晶球</h3><p>透過水晶球，你隱約看到另一個房間的掛鐘...指針停住了。</p>'); }
+function clickCrystalBall() { showModal(`<div style="text-align:center;">
+  <div style="width:90px;height:90px;margin:10px auto;border-radius:50%;background:radial-gradient(circle,rgba(150,100,255,0.2),rgba(50,0,100,0.4));border:3px solid #9966cc;box-shadow:0 0 15px rgba(150,100,255,0.3);display:flex;align-items:center;justify-content:center;">
+    <div style="width:50px;height:50px;border-radius:50%;border:2px solid rgba(184,134,11,0.5);background:rgba(0,0,0,0.3);position:relative;">
+      <div style="position:absolute;top:50%;left:50%;width:1.5px;height:13px;background:rgba(255,215,0,0.7);transform-origin:bottom center;transform:translate(-50%,-100%) rotate(-90deg);"></div>
+      <div style="position:absolute;top:50%;left:50%;width:1.5px;height:18px;background:rgba(255,215,0,0.7);transform-origin:bottom center;transform:translate(-50%,-100%) rotate(90deg);"></div>
+    </div>
+  </div>
+  <p style="color:#aaa;font-size:11px;">模糊的影像...</p>
+</div>`); }
 function clickIngredients() { showModal('<h3>食材架</h3><p>各種魔法材料整齊排列著。</p>'); }
 function showRecipeWall() {
   const has = hasItem('recipePage');
-  showModal(`<h3>配方牆</h3><div class="diary-page"><p>☀️ 陽光藥水：</p><p>1. ${has?'火種點燃':'???'}</p><p>2. ${has?'加入彩虹露':'加入 ???'}</p><p>3. ${has?'加入星塵粉':'加入 ???'}</p><p>4. ${has?'加入月光粉':'加入 ???'}</p><p>5. ${has?'攪拌匙攪拌3次':'??? 攪拌?次'}</p></div>`);
+  showModal(`<div style="background:#f5e6c8;padding:15px;border-radius:4px;max-width:250px;margin:0 auto;">
+    <div style="text-align:center;color:#5a3d2b;font-size:13px;border-bottom:1px solid #d4c4a0;padding-bottom:8px;margin-bottom:10px;">☀️</div>
+    <div style="color:#5a3d2b;font-size:14px;line-height:2.2;">
+      <div>1. ${has?'🔥 → 🫕':'❓ → 🫕'}</div>
+      <div>2. ${has?'🌈 →':'❓ →'}</div>
+      <div>3. ${has?'✨ →':'❓ →'}</div>
+      <div>4. ${has?'🌙 →':'❓ →'}</div>
+      <div>5. ${has?'🥄 ×3':'❓ ×?'}</div>
+    </div>
+  </div>`);
 }
 
 function puzzle2_1() {
   if (isSolved('2-1')) return;
-  showModal(`<h3>音樂盒</h3><p>你轉動把手，旋律響起，彩色按鈕依序亮起：</p>
-    <p style="text-align:center;font-size:20px;"><span style="color:#ff4444;">●</span> → <span style="color:#4444ff;">●</span> → <span style="color:#ffd700;">●</span></p>
-    <p>底部有個小抽屜，上面有四個按鈕。</p>
+  showModal(`<div style="text-align:center;">
+    <div style="display:flex;gap:4px;justify-content:center;margin:10px 0;">
+      <span style="display:inline-block;width:20px;height:20px;border-radius:50%;background:#ff4444;box-shadow:0 0 5px #ff4444;"></span>
+      <span style="color:#666;line-height:20px;">→</span>
+      <span style="display:inline-block;width:20px;height:20px;border-radius:50%;background:#4444ff;box-shadow:0 0 5px #4444ff;"></span>
+      <span style="color:#666;line-height:20px;">→</span>
+      <span style="display:inline-block;width:20px;height:20px;border-radius:50%;background:#ffd700;box-shadow:0 0 5px #ffd700;"></span>
+    </div>
+    <div style="display:flex;gap:4px;justify-content:center;margin:15px 0;align-items:flex-end;height:40px;">
+      <div style="width:30px;height:35px;background:rgba(255,215,0,0.3);border-radius:3px;"></div>
+      <div style="width:30px;height:18px;background:rgba(255,215,0,0.3);border-radius:3px;"></div>
+      <div style="width:30px;height:18px;background:rgba(255,215,0,0.3);border-radius:3px;"></div>
+      <div style="width:30px;height:35px;background:rgba(255,215,0,0.3);border-radius:3px;"></div>
+    </div>
     <div id="rhythm-btns" style="display:flex;gap:10px;justify-content:center;margin:15px 0;">
       <button class="symbol-btn" onclick="rhythmPress(0)" id="rb0">♪</button>
       <button class="symbol-btn" onclick="rhythmPress(1)" id="rb1">♪</button>
       <button class="symbol-btn" onclick="rhythmPress(2)" id="rb2">♪</button>
       <button class="symbol-btn" onclick="rhythmPress(3)" id="rb3">♪</button>
-    </div><p style="font-size:11px;color:#888;">點擊切換：短(♪)/長(♩)</p>
-    <button onclick="checkRhythm()">確認</button>`);
+    </div>
+    <button onclick="checkRhythm()">確認</button>
+  </div>`);
 }
 let rhythmState=[0,0,0,0];
 function rhythmPress(idx){rhythmState[idx]=1-rhythmState[idx];document.getElementById('rb'+idx).textContent=rhythmState[idx]?'♩':'♪';document.getElementById('rb'+idx).classList.toggle('active',rhythmState[idx]);}
@@ -374,12 +489,17 @@ function checkRhythm(){
 function puzzle2_2() {
   if (isSolved('2-2')) return;
   owlLeft = 0; owlRight = 0;
-  showModal(`<h3>貓頭鷹掛畫</h3><p>貓頭鷹的兩隻眼睛可以旋轉。旁邊牆上貼著一張小紙條。</p>
-    <p style="color:#aaa;font-size:12px;font-style:italic;">紙條：「左眼月亮，右眼星星」</p>
+  showModal(`<div style="text-align:center;">
     <div style="display:flex;gap:20px;justify-content:center;margin:15px 0;">
-      <div><p>左眼</p><button class="symbol-btn" id="owl-left" onclick="rotateOwlEye('left')">☀️</button></div>
-      <div><p>右眼</p><button class="symbol-btn" id="owl-right" onclick="rotateOwlEye('right')">☀️</button></div>
-    </div><button onclick="checkOwl()">確認</button>`);
+      <div><button class="symbol-btn" id="owl-left" onclick="rotateOwlEye('left')" style="font-size:30px;">☀️</button></div>
+      <div style="font-size:40px;">🦉</div>
+      <div><button class="symbol-btn" id="owl-right" onclick="rotateOwlEye('right')" style="font-size:30px;">☀️</button></div>
+    </div>
+    <div style="margin:10px auto;padding:6px 10px;background:#f5e6c8;border-radius:2px;display:inline-block;transform:rotate(-2deg);box-shadow:1px 1px 3px rgba(0,0,0,0.3);">
+      <span style="font-size:11px;color:#5a3d2b;">🌙 👁️ &nbsp;&nbsp; 👁️ ⭐</span>
+    </div>
+    <div style="margin-top:12px;"><button onclick="checkOwl()">確認</button></div>
+  </div>`);
 }
 const owlEyes=['☀️','🌙','⭐','💧'];
 let owlLeft=0,owlRight=0;
@@ -409,8 +529,7 @@ function checkBottles(){
 
 function puzzle2_4() {
   if (isSolved('2-4')) return;
-  showModal(`<h3>櫥櫃</h3><p>櫥櫃上了鎖，有3位數密碼。</p>
-    <div class="puzzle-input"><input type="text" maxlength="1" id="cb1" inputmode="numeric"><input type="text" maxlength="1" id="cb2" inputmode="numeric"><input type="text" maxlength="1" id="cb3" inputmode="numeric"></div>
+  showModal(`<div class="puzzle-input"><input type="text" maxlength="1" id="cb1" inputmode="numeric"><input type="text" maxlength="1" id="cb2" inputmode="numeric"><input type="text" maxlength="1" id="cb3" inputmode="numeric"></div>
     <button onclick="checkCabinet()">確認</button>`);
 }
 function checkCabinet(){const code=['cb1','cb2','cb3'].map(id=>document.getElementById(id).value).join('');if(code==='945'){markSolved('2-4');addItem('magicFire');closeModal();showMessage('櫥櫃打開了！');renderRoom2();}else{showMessage('不對...');}}
