@@ -297,7 +297,7 @@ function clickBookshelf() {
     return;
   }
   // After solved, bookshelf for puzzle 1-3
-  if (!isSolved('1-3') && hasItem('crystalKey') && state.carpetLifted) {
+  if (!isSolved('1-3') && state._keyInserted && state.carpetLifted) {
     showModal('<h3>📚 書架</h3><p>書架上有一本書脊寫著「開啟 Aperio」。</p><button onclick="solveAperio()">取下「開啟 Aperio」</button>');
   } else {
     showModal('<h3>📚 書架</h3><p>書架上擺滿了各種魔法書。其中一本書脊寫著「開啟 Aperio」。</p>');
@@ -575,6 +575,7 @@ function checkRhythm() {
 // Puzzle 2-2: Owl Painting
 function puzzle2_2() {
   if (isSolved('2-2')) { showMessage('貓頭鷹已經張開嘴了'); return; }
+  owlLeft = 0; owlRight = 0;
   showModal(`<h3>🦉 貓頭鷹掛畫</h3>
     <p>貓頭鷹的兩隻眼睛可以旋轉！</p>
     <p style="color:#ffd700;">旁邊小紙條：「貓頭鷹看見的是：左眼月亮，右眼星星」</p>
@@ -752,6 +753,7 @@ function addToCauldron(key, itemId) {
   removeItem(itemId);
   closeModal();
   showMessage(`放入材料！`);
+  saveGame();
   puzzle2_5();
 }
 
