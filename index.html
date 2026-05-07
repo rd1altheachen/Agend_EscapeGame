@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>魔法學徒的畢業考試</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="game-container">
+  <div id="scene-area">
+    <div id="room1" class="room"></div>
+    <div id="room2" class="room hidden"></div>
+    <div id="overlay" class="hidden"></div>
+    <div id="modal" class="hidden">
+      <div id="modal-content"></div>
+      <button id="modal-close">✕</button>
+    </div>
+    <div id="message-box" class="hidden"></div>
+  </div>
+  <div id="inventory-bar">
+    <div id="inventory-slots"></div>
+  </div>
+  <div id="nav-bar">
+    <button id="btn-room1" class="nav-btn active">⭐ 星光書房</button>
+    <button id="btn-room2" class="nav-btn" disabled>🧪 藥水廚房</button>
+    <button id="btn-hint" class="nav-btn hint-btn">💡 提示</button>
+    <button id="btn-save" class="nav-btn">💾</button>
+  </div>
+</div>
+<div id="start-screen">
+  <div class="start-content">
+    <h1>🪄 魔法學徒的畢業考試</h1>
+    <p class="story-text">你是魔法學徒「小星」，今天是畢業考試日。<br>
+    導師貓頭鷹魔法師「奧利弗教授」把你鎖在魔法工坊裡，留下一封信：</p>
+    <blockquote>「親愛的小星，恭喜你來到最後的考驗！<br>
+    解開工坊裡的所有魔法謎題，集齊六顆魔法星星，就能打開大門畢業啦。<br>
+    提示：兩個房間的秘密是互相連結的喔～<br>
+    祝你好運！🦉」</blockquote>
+    <button id="btn-start">開始考試 ✨</button>
+    <button id="btn-load" class="hidden">繼續遊戲 📖</button>
+  </div>
+</div>
+<div id="end-screen" class="hidden">
+  <div class="end-content">
+    <h1>🎓 恭喜畢業！</h1>
+    <div class="stars-display">⭐⭐⭐⭐⭐⭐</div>
+    <p>小星成功解開了所有謎題，集齊六顆魔法星星！<br>
+    念出畢業咒語後，大門緩緩打開...<br><br>
+    奧利弗教授在門外微笑著等待：<br>
+    「做得好，小星！你已經是一位合格的魔法師了！」🦉✨</p>
+    <button id="btn-restart">再玩一次 🔄</button>
+  </div>
+</div>
+<script src="game.js"></script>
+</body>
+</html>
