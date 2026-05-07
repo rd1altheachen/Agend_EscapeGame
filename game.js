@@ -202,7 +202,7 @@ function getCurrentPuzzles() {
 }
 
 function checkEndGame() {
-  if (state.stars >= 6 && hasItem('scroll') && !state.hasScrollUsed) {
+  if (state.stars >= 6 && hasItem('scroll')) {
     showModal(`<h3>🌟 集齊六顆星星！</h3>
       <p>你已經集齊了所有魔法星星，手中還有畢業咒語卷軸。</p>
       <p>對著大門念出咒語吧！</p>
@@ -389,6 +389,7 @@ function clickCarpet() {
 // Puzzle 1-4: Constellation
 function puzzle1_4() {
   if (isSolved('1-4')) { showMessage('星座儀已經打開了'); return; }
+  if (!state.doorOpen) { showModal('<h3>🔭 星座儀</h3><p>天球可以旋轉，需要對準3個正確的星座。</p><p style="color:#aaa;">但你不知道該對準哪些...也許其他地方有線索？</p>'); return; }
   if (!state.musicBoxPlayed) { showModal('<h3>🔭 星座儀</h3><p>天球可以旋轉，需要對準3個正確的星座。</p><p style="color:#aaa;">但你不知道該對準哪些...也許其他地方有線索？</p>'); return; }
   if (!hasItem('starChart')) { showModal('<h3>🔭 星座儀</h3><p>你記得音樂盒的顏色順序是紅→藍→金，但需要知道顏色對應什麼星座...</p>'); return; }
   showModal(`<h3>🔭 星座儀</h3>
@@ -408,10 +409,12 @@ function checkConstellation() {
   const c2 = document.getElementById('c2').value;
   const c3 = document.getElementById('c3').value;
   if (c1 === 'leo' && c2 === 'aqua' && c3 === 'libra') {
-    solvePuzzle('1-4');
+    if (!state.solvedPuzzles.includes('1-4')) state.solvedPuzzles.push('1-4');
     addItem('magicWeight');
     closeModal();
+    showMessage('星座儀打開了！獲得魔法砝碼 ⚖️');
     renderRoom1();
+    saveGame();
   } else {
     showMessage('星座組合不對...再想想顏色的對應');
   }
@@ -435,10 +438,12 @@ function puzzle1_5() {
 function checkFireplace() {
   const code = ['fp1','fp2','fp3','fp4'].map(id => document.getElementById(id).value).join('');
   if (code === '2417') {
-    solvePuzzle('1-5');
+    if (!state.solvedPuzzles.includes('1-5')) state.solvedPuzzles.push('1-5');
     addItem('moonPowder');
     closeModal();
+    showMessage('壁爐暗格打開了！獲得月光粉 🌙');
     renderRoom1();
+    saveGame();
   } else {
     showMessage('密碼不正確...');
   }
@@ -448,11 +453,12 @@ function checkFireplace() {
 function puzzle1_6() {
   if (isSolved('1-6')) { showMessage('花已經綻放了 🌸'); return; }
   if (state.selectedItem === 'sunPotion') {
-    solvePuzzle('1-6');
+    if (!state.solvedPuzzles.includes('1-6')) state.solvedPuzzles.push('1-6');
     removeItem('sunPotion');
     closeModal();
-    showModal('<h3>🌸 花朵綻放！</h3><p>陽光藥水灑在花盆上，小花緩緩綻放...</p><p>花心裡藏著最後一顆魔法星星！⭐</p>');
+    showModal('<h3>🌸 花朵綻放！</h3><p>陽光藥水灑在花盆上，小花緩緩綻放...</p><p>所有謎題都解開了！快去對大門念出咒語吧！</p>');
     renderRoom1();
+    saveGame();
     setTimeout(() => checkEndGame(), 1500);
   } else {
     showModal('<h3>🌸 小花盆</h3><p>窗台上的小花緊閉著花瓣，似乎需要特殊的東西才能綻放...</p>');
