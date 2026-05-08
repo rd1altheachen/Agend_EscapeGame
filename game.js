@@ -6,7 +6,7 @@ const defaultState = () => ({
   solvedPuzzles: [],
   inventory: [],
   selectedItem: null,
-  carpetLifted: false,
+  carpetLifted: false, // unused legacy
   mirrorUsed: false,
   musicBoxPlayed: false,
   bottlesSorted: false,
@@ -19,24 +19,50 @@ let state = defaultState();
 
 // ===== ITEMS =====
 const ITEMS = {
-  starChart: { name: '星座對照表', icon: '📜', desc: '顏色與星座的對應：紅=獅子座、藍=水瓶座、金=天秤座' },
-  recipePage: { name: '藥水配方殘頁', icon: '📄', desc: '殘頁上寫著配方的完整步驟' },
-  crystalKey: { name: '水晶鑰匙', icon: '🔑', desc: '透明的水晶鑰匙，閃著微光' },
-  stirrer: { name: '攪拌匙', icon: '🥄', desc: '銀色的魔法攪拌匙' },
-  rainbowDew: { name: '彩虹露', icon: '🌈', desc: '七彩的露珠，閃閃發光' },
-  starDust: { name: '星塵粉', icon: '✨', desc: '閃亮的星塵粉末' },
-  magicWeight: { name: '魔法砝碼', icon: '⚖️', desc: '刻有符文的金色砝碼' },
-  moonPowder: { name: '月光粉', icon: '🌙', desc: '銀白色的月光粉末' },
-  sunPotion: { name: '陽光藥水', icon: '☀️', desc: '金色的陽光藥水，溫暖而明亮' },
-  magicFire: { name: '魔法火種', icon: '🔥', desc: '永不熄滅的小火焰' },
-  scroll: { name: '畢業咒語卷軸', icon: '📜', desc: '上面寫著一段古老的咒語...' }
+  starChart: { name: '星座對照表', icon: '📜' },
+  recipePage: { name: '藥水配方殘頁', icon: '📄' },
+  crystalKey: { name: '水晶鑰匙', icon: '🔑' },
+  spellBook: { name: '咒語書', icon: '📕' },
+  stirrer: { name: '攪拌匙', icon: '🥄' },
+  rainbowDew: { name: '彩虹露', icon: '🌈' },
+  starDust: { name: '星塵粉', icon: '✨' },
+  magicWeight: { name: '魔法砝碼', icon: '⚖️' },
+  moonPowder: { name: '月光粉', icon: '🌙' },
+  sunPotion: { name: '陽光藥水', icon: '☀️' },
+  magicFire: { name: '魔法火種', icon: '🔥' },
+  scroll: { name: '畢業咒語卷軸', icon: '📜' }
 };
+
+// Visual item views
+function showItemVisual(itemId) {
+  const visuals = {
+    starChart: `<div style="background:#f5e6c8;padding:20px;border-radius:8px;color:#333;">
+      <table style="margin:auto;border-collapse:collapse;"><tr><td style="padding:8px;"><span style="display:inline-block;width:20px;height:20px;background:#e74c3c;border-radius:50%;"></span></td><td style="padding:8px;font-size:24px;">♌</td></tr>
+      <tr><td style="padding:8px;"><span style="display:inline-block;width:20px;height:20px;background:#2980b9;border-radius:50%;"></span></td><td style="padding:8px;font-size:24px;">♒</td></tr>
+      <tr><td style="padding:8px;"><span style="display:inline-block;width:20px;height:20px;background:#f1c40f;border-radius:50%;"></span></td><td style="padding:8px;font-size:24px;">♎</td></tr></table></div>`,
+    recipePage: `<div style="background:#f5e6c8;padding:20px;border-radius:8px;color:#333;text-align:center;">
+      <p style="font-size:24px;">🔥 → 🌈 → ✨ → 🌙 → 🥄×3</p></div>`,
+    crystalKey: `<div style="text-align:center;font-size:64px;text-shadow:0 0 20px rgba(100,200,255,0.8);">🔑</div>`,
+    spellBook: `<div style="background:#8b4513;padding:20px;border-radius:8px;color:#f5e6c8;text-align:center;">
+      <p style="margin-bottom:10px;">📖 內頁：</p>
+      <p>🔑 → ⬜⬛⬜</p>
+      <p style="margin-top:8px;font-size:12px;">（鑰匙插中間孔）</p>
+      <hr style="border-color:#a0522d;margin:10px 0;">
+      <p style="font-style:italic;">✦ Aperio ✦</p></div>`,
+    scroll: `<div style="background:#f5e6c8;padding:20px;border-radius:8px;color:#333;text-align:center;">
+      <p style="font-size:11px;color:#888;">~卷軸~</p>
+      <p style="font-size:18px;font-style:italic;margin:10px 0;">「Lumina Stella Aperio」</p></div>`,
+  };
+  const v = visuals[itemId];
+  if (v) showModal(`<h3>${ITEMS[itemId].name}</h3>${v}`);
+  else showModal(`<div style="text-align:center;font-size:64px;">${ITEMS[itemId].icon}</div><p style="text-align:center;">${ITEMS[itemId].name}</p>`);
+}
 
 // ===== HINTS (vague → slightly specific → clear but no direct answer) =====
 const HINTS = {
   '1-1': ['這個房間裡有面鏡子...', '鏡中的世界和現實有什麼不同？', '仔細比對鏡中書架和現實書架的差異'],
   '1-2': ['書桌上有本日記，翻翻看', '日記裡的插圖和符號之間有什麼關聯？注意月亮的變化', '月亮從缺到圓的順序...對應的符號是什麼？'],
-  '1-3': ['門上有凹槽，地板上也許藏著線索', '你需要一把鑰匙和一句咒語', '鑰匙該插哪個孔？書架上有本書名字很特別...'],
+  '1-3': ['門上有凹槽，書架上也許還有東西沒拿', '你需要一把鑰匙和一本特別的書', '先用鑰匙點門，再用書點門'],
   '1-4': ['星座儀需要對準正確的星座，但線索不在這個房間', '另一個房間有個會發出顏色的東西...', '把顏色和你手上的某張表對照看看'],
   '1-5': ['壁爐裡有個需要密碼的暗格', '密碼和另一個房間裡某些東西的數量有關', '數一數那些排好的瓶子，每種顏色各有幾個？'],
   '1-6': ['窗台的花似乎需要什麼才能綻放', '也許某種藥水能讓它開花？', '你需要從另一個房間帶回某種金色的液體'],
@@ -124,14 +150,14 @@ function renderInventory() {
     el.textContent = item.icon;
     el.title = item.name;
     el.onclick = (e) => { e.stopPropagation(); selectItem(itemId); };
-    el.ondblclick = (e) => { e.stopPropagation(); showModal(`<h3>${item.name}</h3><p>${item.desc}</p>`); };
     slots.appendChild(el);
   });
 }
 function selectItem(itemId) {
-  state.selectedItem = state.selectedItem === itemId ? null : itemId;
+  if (state.selectedItem === itemId) { showItemVisual(itemId); return; }
+  state.selectedItem = itemId;
   renderInventory();
-  if (state.selectedItem) showMessage(`已選中：${ITEMS[itemId].name}`);
+  showMessage(ITEMS[itemId].name);
 }
 
 // ===== SCENE SWITCHING =====
@@ -206,7 +232,6 @@ function renderRoom1() {
     <div class="hotspot" style="left:45%;top:5%;width:8%;height:10%" onclick="clickClock()"></div>
     <div class="hotspot" style="right:3%;top:35%;width:14%;height:40%" onclick="puzzle1_3()"></div>
     <div class="hotspot" style="left:5%;bottom:28%;width:8%;height:15%" onclick="puzzle1_6()"></div>
-    <div class="hotspot" style="left:28%;bottom:5%;width:35%;height:12%" onclick="clickCarpet()"></div>
     <div class="hotspot" style="left:55%;bottom:25%;width:20%;height:22%" onclick="puzzle1_5()"></div>
   `;
 }
@@ -215,36 +240,9 @@ function puzzle1_1() {
   if (isSolved('1-1')) return;
   if (!state.mirrorUsed) {
     state.mirrorUsed = true;
-    showModal(`<div style="text-align:center;">
-      <div style="width:120px;height:160px;margin:10px auto;border-radius:50%;border:4px solid #b8860b;background:radial-gradient(ellipse,#1a1a4a,#2a2a6a);display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(100,100,200,0.3);">
-        <div style="font-size:11px;color:rgba(200,200,255,0.7);text-align:center;padding:10px;">
-          <div style="display:flex;gap:2px;justify-content:center;flex-wrap:wrap;">
-            <span style="display:inline-block;width:8px;height:20px;background:#8b4513;border-radius:1px;"></span>
-            <span style="display:inline-block;width:8px;height:18px;background:#2e8b57;border-radius:1px;"></span>
-            <span style="display:inline-block;width:8px;height:22px;background:#4169e1;border-radius:1px;"></span>
-            <span style="display:inline-block;width:8px;height:19px;background:#ffd700;border-radius:1px;box-shadow:0 0 8px #ffd700;"></span>
-            <span style="display:inline-block;width:8px;height:21px;background:#8b0000;border-radius:1px;"></span>
-            <span style="display:inline-block;width:8px;height:17px;background:#4b0082;border-radius:1px;"></span>
-          </div>
-        </div>
-      </div>
-      <p style="color:#aaa;font-size:12px;margin-top:8px;">鏡中映出書架的倒影...</p>
-    </div>`);
+    showModal(`<h3>魔法鏡</h3><p>你凝視魔法鏡...鏡中映出書房的景象。</p><p>但鏡中的書架似乎和現實有些不同。有什麼東西在鏡中微微發光...</p>`);
   } else {
-    showModal(`<div style="text-align:center;">
-      <div style="width:120px;height:160px;margin:10px auto;border-radius:50%;border:4px solid #b8860b;background:radial-gradient(ellipse,#1a1a4a,#2a2a6a);display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(100,100,200,0.3);">
-        <div style="font-size:11px;color:rgba(200,200,255,0.7);text-align:center;padding:10px;">
-          <div style="display:flex;gap:2px;justify-content:center;flex-wrap:wrap;">
-            <span style="display:inline-block;width:8px;height:20px;background:#8b4513;border-radius:1px;"></span>
-            <span style="display:inline-block;width:8px;height:18px;background:#2e8b57;border-radius:1px;"></span>
-            <span style="display:inline-block;width:8px;height:22px;background:#4169e1;border-radius:1px;"></span>
-            <span style="display:inline-block;width:8px;height:19px;background:#ffd700;border-radius:1px;box-shadow:0 0 8px #ffd700;"></span>
-            <span style="display:inline-block;width:8px;height:21px;background:#8b0000;border-radius:1px;"></span>
-            <span style="display:inline-block;width:8px;height:17px;background:#4b0082;border-radius:1px;"></span>
-          </div>
-        </div>
-      </div>
-    </div>`);
+    showModal(`<h3>魔法鏡</h3><p>鏡中的書架和現實的書架...仔細看，有個地方不一樣。</p>`);
   }
 }
 
@@ -255,72 +253,41 @@ function clickBookshelf() {
     showModal(`<h3>發現了！</h3><p>你找到了那本在鏡中發光的書。翻開後發現裡面夾著一張對照表。</p>`);
     renderRoom1(); return;
   }
-  if (!isSolved('1-3') && state._keyInserted) {
-    showModal('<h3>書架</h3><p>書架上有很多書...其中一本書脊上的文字似乎是某種咒語。</p><button onclick="solveAperio()">取下那本特別的書</button>');
-  } else { showModal('<h3>書架</h3><p>書架上擺滿了各種魔法書。其中一本書脊上寫著奇怪的文字。</p>'); }
+  if (!hasItem('spellBook') && !isSolved('1-3') && isSolved('1-1')) {
+    showModal('<h3>書架</h3><p>書架上有一本書散發著微弱的光芒...</p><button onclick="takeSpellBook()">取下那本書</button>');
+    return;
+  }
+  showModal('<h3>書架</h3><p>書架上擺滿了各種魔法書。</p>');
 }
 
-function solveAperio() { solvePuzzle('1-3'); state.doorOpen = true; document.getElementById('btn-room2').disabled = false; closeModal(); showMessage('🚪 魔法門開啟了！'); renderRoom1(); }
+function takeSpellBook() { addItem('spellBook'); closeModal(); }
+
+function puzzle1_3() {
+  if (state.doorOpen) { switchRoom(2); return; }
+  if (state.selectedItem === 'spellBook' && state._keyInserted) {
+    solvePuzzle('1-3'); state.doorOpen = true; removeItem('spellBook');
+    document.getElementById('btn-room2').disabled = false; closeModal();
+    showMessage('🚪 魔法門開啟了！'); renderRoom1(); return;
+  }
+  if (state.selectedItem === 'crystalKey') {
+    state._keyInserted = true; removeItem('crystalKey'); closeModal();
+    showModal('<h3>魔法門</h3><p>鑰匙插入了中間的凹槽。門上的符文微微亮起...</p>');
+    renderRoom1(); return;
+  }
+  if (state._keyInserted) { showModal('<h3>魔法門</h3><p>鑰匙已插入中間凹槽，符文在等待什麼...</p>'); }
+  else { showModal('<h3>魔法門</h3><p>門上有三個凹槽。門牢牢鎖著。</p>'); }
+}
 
 function puzzle1_2() {
   if (isSolved('1-2')) { showModal('<h3>書桌</h3><p>抽屜已經打開了。</p>'); return; }
-  state._diaryPage = state._diaryPage || 0;
-  showDiaryPage();
-}
-
-function showDiaryPage() {
-  const pages = [
-    `<div class="diary-visual">
-      <div class="diary-spread">
-        <div class="diary-left" onclick="flipDiary(-1)">
-          <div style="text-align:center;padding:20px;">
-            <div style="font-size:40px;">📖</div>
-            <p style="color:#5a3d2b;margin-top:10px;font-style:italic;">魔法日記</p>
-          </div>
-        </div>
-        <div class="diary-right" onclick="flipDiary(1)">
-          <div style="text-align:center;padding:15px;">
-            <div style="font-size:50px;margin:10px 0;">🌑</div>
-            <div style="position:absolute;bottom:8px;right:10px;font-size:18px;color:#666;">△</div>
-          </div>
-        </div>
-      </div>
-    </div>`,
-    `<div class="diary-visual">
-      <div class="diary-spread">
-        <div class="diary-left" onclick="flipDiary(-1)">
-          <div style="text-align:center;padding:15px;">
-            <div style="font-size:50px;margin:10px 0;">🌓</div>
-            <div style="position:absolute;bottom:8px;right:10px;font-size:18px;color:#666;">☆</div>
-          </div>
-        </div>
-        <div class="diary-right" onclick="flipDiary(1)">
-          <div style="text-align:center;padding:15px;">
-            <div style="font-size:50px;margin:10px 0;">🌕</div>
-            <div style="position:absolute;bottom:8px;right:10px;font-size:18px;color:#666;">○</div>
-          </div>
-        </div>
-      </div>
-    </div>`,
-    `<div class="diary-visual">
-      <div class="diary-spread">
-        <div class="diary-left" onclick="flipDiary(-1)">
-          <div style="text-align:center;padding:15px;">
-            <p style="color:#5a3d2b;font-size:13px;line-height:1.8;">筆記頁面上畫著各種塗鴉和星星...</p>
-          </div>
-        </div>
-        <div class="diary-right">
-          <div style="text-align:center;padding:15px;">
-            <p style="color:#5a3d2b;font-size:12px;">（最後一頁）</p>
-          </div>
-        </div>
-      </div>
-    </div>`
-  ];
-  const p = state._diaryPage;
-  showModal(`<div style="margin-bottom:15px;">${pages[p]}</div>
-    <p style="font-size:11px;color:#666;text-align:center;">點擊左右頁面翻頁</p>
-    <hr style="border-color:#333;margin:12px 0;">
+  showModal(`<h3>書桌</h3>
+    <div class="diary-page">
+      <p>魔法日記：</p>
+      <p>📅 右頁畫著 🌕 ，邊角有符號 ○</p>
+      <p>📅 左頁畫著 🌑 ，邊角有符號 △</p>
+      <p>📅 右頁畫著 🌓 ，邊角有符號 ☆</p>
+      <p style="font-style:italic;color:#aaa;">「按照月相順序排列符號」</p>
+    </div>
     <p>抽屜上有符號鎖：</p>
     <div class="puzzle-input" id="symbol-input">
       <button class="symbol-btn" onclick="toggleSymbol(this,0)">？</button>
@@ -328,11 +295,6 @@ function showDiaryPage() {
       <button class="symbol-btn" onclick="toggleSymbol(this,2)">？</button>
     </div>
     <button onclick="checkDiary()">確認</button>`);
-}
-
-function flipDiary(dir) {
-  state._diaryPage = Math.max(0, Math.min(2, (state._diaryPage||0) + dir));
-  showDiaryPage();
 }
 
 const symbolCycle = ['？','△','☆','○'];
@@ -344,25 +306,7 @@ function checkDiary() {
   } else { showMessage('不對...'); }
 }
 
-function puzzle1_3() {
-  if (state.doorOpen) { switchRoom(2); return; }
-  if (!hasItem('crystalKey')) { showModal('<h3>魔法門</h3><p>門上有三個凹槽。門牢牢鎖著。</p>'); return; }
-  if (!state.carpetLifted) { showModal('<h3>魔法門</h3><p>門上有三個凹槽（左、中、右）。你有鑰匙，但不確定該怎麼用...</p>'); return; }
-  showModal(`<h3>魔法門</h3><p>門上有三個凹槽。</p><button onclick="insertKey()">將鑰匙插入中間凹槽</button>`);
-}
-function insertKey() { state._keyInserted = true; removeItem('crystalKey'); closeModal(); showMessage('鑰匙插入了...似乎還需要什麼'); renderRoom1(); }
-
-function clickCarpet() {
-  if (!state.carpetLifted) { state.carpetLifted = true; showModal('<h3>地毯</h3><p>你掀開地毯角落，發現下面刻著圖案。</p><p>圖案顯示：一把鑰匙指向中間的位置，旁邊畫著一本書和一扇門。</p>'); }
-  else { showModal('<h3>地毯</h3><p>地毯下的圖案：鑰匙→中間，書→門。</p>'); }
-}
-function clickClock() { showModal(`<div style="text-align:center;">
-  <div style="width:100px;height:100px;margin:10px auto;border-radius:50%;border:4px solid #b8860b;background:#1a1a2a;position:relative;">
-    <div style="position:absolute;top:50%;left:50%;width:2px;height:25px;background:#ffd700;transform-origin:bottom center;transform:translate(-50%,-100%) rotate(-90deg);"></div>
-    <div style="position:absolute;top:50%;left:50%;width:2px;height:35px;background:#ffd700;transform-origin:bottom center;transform:translate(-50%,-100%) rotate(90deg);"></div>
-    <div style="position:absolute;top:50%;left:50%;width:6px;height:6px;background:#ffd700;border-radius:50%;transform:translate(-50%,-50%);"></div>
-  </div>
-</div>`); }
+function clickClock() { showModal('<h3>掛鐘</h3><p>時鐘的指針停住了。短針指向3，長針指向3。</p>'); }
 
 function puzzle1_4() {
   if (isSolved('1-4')) return;
@@ -377,26 +321,27 @@ function puzzle1_4() {
 }
 function checkConstellation() {
   if (document.getElementById('c1').value==='leo' && document.getElementById('c2').value==='aqua' && document.getElementById('c3').value==='libra') {
-    markSolved('1-4'); addItem('magicWeight'); closeModal(); renderRoom1();
+    solvePuzzle('1-4'); addItem('magicWeight'); closeModal(); renderRoom1();
   } else { showMessage('不對...'); }
 }
 
 function puzzle1_5() {
   if (isSolved('1-5')) return;
-  showModal(`<div class="puzzle-input"><input type="text" maxlength="1" id="fp1" inputmode="numeric"><input type="text" maxlength="1" id="fp2" inputmode="numeric"><input type="text" maxlength="1" id="fp3" inputmode="numeric"><input type="text" maxlength="1" id="fp4" inputmode="numeric"></div>
+  showModal(`<h3>壁爐暗格</h3><p>壁爐裡有個暗格，上面有4位數密碼鎖。</p>
+    <div class="puzzle-input"><input type="text" maxlength="1" id="fp1" inputmode="numeric"><input type="text" maxlength="1" id="fp2" inputmode="numeric"><input type="text" maxlength="1" id="fp3" inputmode="numeric"><input type="text" maxlength="1" id="fp4" inputmode="numeric"></div>
     <button onclick="checkFireplace()">確認</button>`);
 }
 function checkFireplace() {
   const code = ['fp1','fp2','fp3','fp4'].map(id=>document.getElementById(id).value).join('');
-  if (code==='2417') { markSolved('1-5'); addItem('moonPowder'); closeModal(); renderRoom1(); }
+  if (code==='2417') { solvePuzzle('1-5'); addItem('moonPowder'); closeModal(); renderRoom1(); }
   else { showMessage('不對...'); }
 }
 
 function puzzle1_6() {
   if (isSolved('1-6')) return;
   if (state.selectedItem==='sunPotion') {
-    markSolved('1-6'); removeItem('sunPotion'); closeModal();
-    showModal('<h3>花朵綻放了！</h3><p>所有謎題都解開了！</p>');
+    solvePuzzle('1-6'); removeItem('sunPotion'); closeModal();
+    showModal('<h3>花朵綻放了！</h3><p>花心裡藏著最後一顆魔法星星！</p>');
     renderRoom1(); setTimeout(()=>checkEndGame(),1500);
   } else { showModal('<h3>小花盆</h3><p>窗台上的小花緊閉著花瓣。</p>'); }
 }
@@ -430,54 +375,24 @@ function renderRoom2() {
   `;
 }
 
-function clickCrystalBall() { showModal(`<div style="text-align:center;">
-  <div style="width:90px;height:90px;margin:10px auto;border-radius:50%;background:radial-gradient(circle,rgba(150,100,255,0.2),rgba(50,0,100,0.4));border:3px solid #9966cc;box-shadow:0 0 15px rgba(150,100,255,0.3);display:flex;align-items:center;justify-content:center;">
-    <div style="width:50px;height:50px;border-radius:50%;border:2px solid rgba(184,134,11,0.5);background:rgba(0,0,0,0.3);position:relative;">
-      <div style="position:absolute;top:50%;left:50%;width:1.5px;height:13px;background:rgba(255,215,0,0.7);transform-origin:bottom center;transform:translate(-50%,-100%) rotate(-90deg);"></div>
-      <div style="position:absolute;top:50%;left:50%;width:1.5px;height:18px;background:rgba(255,215,0,0.7);transform-origin:bottom center;transform:translate(-50%,-100%) rotate(90deg);"></div>
-    </div>
-  </div>
-  <p style="color:#aaa;font-size:11px;">模糊的影像...</p>
-</div>`); }
-function clickIngredients() { showModal('<h3>食材架</h3><p>各種魔法材料整齊排列著。</p>'); }
+function clickCrystalBall() { showModal('<h3>水晶球</h3><p>你看到另一個房間的掛鐘...</p>'); }
+function clickIngredients() { showModal('<h3>食材架</h3>'); }
 function showRecipeWall() {
   const has = hasItem('recipePage');
-  showModal(`<div style="background:#f5e6c8;padding:15px;border-radius:4px;max-width:250px;margin:0 auto;">
-    <div style="text-align:center;color:#5a3d2b;font-size:13px;border-bottom:1px solid #d4c4a0;padding-bottom:8px;margin-bottom:10px;">☀️</div>
-    <div style="color:#5a3d2b;font-size:14px;line-height:2.2;">
-      <div>1. ${has?'🔥 → 🫕':'❓ → 🫕'}</div>
-      <div>2. ${has?'🌈 →':'❓ →'}</div>
-      <div>3. ${has?'✨ →':'❓ →'}</div>
-      <div>4. ${has?'🌙 →':'❓ →'}</div>
-      <div>5. ${has?'🥄 ×3':'❓ ×?'}</div>
-    </div>
-  </div>`);
+  showModal(`<h3>配方牆</h3><div class="diary-page"><p>☀️ 陽光藥水：</p><p>1. ${has?'火種點燃':'???'}</p><p>2. ${has?'加入彩虹露':'加入 ???'}</p><p>3. ${has?'加入星塵粉':'加入 ???'}</p><p>4. ${has?'加入月光粉':'加入 ???'}</p><p>5. ${has?'攪拌匙攪拌3次':'??? 攪拌?次'}</p></div>`);
 }
 
 function puzzle2_1() {
   if (isSolved('2-1')) return;
-  showModal(`<div style="text-align:center;">
-    <div style="display:flex;gap:4px;justify-content:center;margin:10px 0;">
-      <span style="display:inline-block;width:20px;height:20px;border-radius:50%;background:#ff4444;box-shadow:0 0 5px #ff4444;"></span>
-      <span style="color:#666;line-height:20px;">→</span>
-      <span style="display:inline-block;width:20px;height:20px;border-radius:50%;background:#4444ff;box-shadow:0 0 5px #4444ff;"></span>
-      <span style="color:#666;line-height:20px;">→</span>
-      <span style="display:inline-block;width:20px;height:20px;border-radius:50%;background:#ffd700;box-shadow:0 0 5px #ffd700;"></span>
-    </div>
-    <div style="display:flex;gap:4px;justify-content:center;margin:15px 0;align-items:flex-end;height:40px;">
-      <div style="width:30px;height:35px;background:rgba(255,215,0,0.3);border-radius:3px;"></div>
-      <div style="width:30px;height:18px;background:rgba(255,215,0,0.3);border-radius:3px;"></div>
-      <div style="width:30px;height:18px;background:rgba(255,215,0,0.3);border-radius:3px;"></div>
-      <div style="width:30px;height:35px;background:rgba(255,215,0,0.3);border-radius:3px;"></div>
-    </div>
+  showModal(`<h3>音樂盒</h3>
+    <p style="text-align:center;font-size:20px;"><span style="color:#ff4444;">●</span> → <span style="color:#4444ff;">●</span> → <span style="color:#ffd700;">●</span></p>
     <div id="rhythm-btns" style="display:flex;gap:10px;justify-content:center;margin:15px 0;">
       <button class="symbol-btn" onclick="rhythmPress(0)" id="rb0">♪</button>
       <button class="symbol-btn" onclick="rhythmPress(1)" id="rb1">♪</button>
       <button class="symbol-btn" onclick="rhythmPress(2)" id="rb2">♪</button>
       <button class="symbol-btn" onclick="rhythmPress(3)" id="rb3">♪</button>
-    </div>
-    <button onclick="checkRhythm()">確認</button>
-  </div>`);
+    </div><p style="font-size:11px;color:#888;">♪短 / ♩長</p>
+    <button onclick="checkRhythm()">確認</button>`);
 }
 let rhythmState=[0,0,0,0];
 function rhythmPress(idx){rhythmState[idx]=1-rhythmState[idx];document.getElementById('rb'+idx).textContent=rhythmState[idx]?'♩':'♪';document.getElementById('rb'+idx).classList.toggle('active',rhythmState[idx]);}
@@ -488,18 +403,12 @@ function checkRhythm(){
 
 function puzzle2_2() {
   if (isSolved('2-2')) return;
-  owlLeft = 0; owlRight = 0;
-  showModal(`<div style="text-align:center;">
+  showModal(`<h3>貓頭鷹掛畫</h3>
+    <p style="color:#aaa;font-size:12px;font-style:italic;">「左眼月亮，右眼星星」</p>
     <div style="display:flex;gap:20px;justify-content:center;margin:15px 0;">
-      <div><button class="symbol-btn" id="owl-left" onclick="rotateOwlEye('left')" style="font-size:30px;">☀️</button></div>
-      <div style="font-size:40px;">🦉</div>
-      <div><button class="symbol-btn" id="owl-right" onclick="rotateOwlEye('right')" style="font-size:30px;">☀️</button></div>
-    </div>
-    <div style="margin:10px auto;padding:6px 10px;background:#f5e6c8;border-radius:2px;display:inline-block;transform:rotate(-2deg);box-shadow:1px 1px 3px rgba(0,0,0,0.3);">
-      <span style="font-size:11px;color:#5a3d2b;">🌙 👁️ &nbsp;&nbsp; 👁️ ⭐</span>
-    </div>
-    <div style="margin-top:12px;"><button onclick="checkOwl()">確認</button></div>
-  </div>`);
+      <div><p>左</p><button class="symbol-btn" id="owl-left" onclick="rotateOwlEye('left')">☀️</button></div>
+      <div><p>右</p><button class="symbol-btn" id="owl-right" onclick="rotateOwlEye('right')">☀️</button></div>
+    </div><button onclick="checkOwl()">確認</button>`);
 }
 const owlEyes=['☀️','🌙','⭐','💧'];
 let owlLeft=0,owlRight=0;
@@ -510,8 +419,8 @@ function puzzle2_3() {
   if (isSolved('2-3')) return;
   if (!state._bottleOrder) state._bottleOrder=[3,5,6,1,4,0,2];
   const colors=[{name:'紫',color:'#9b59b6'},{name:'綠',color:'#27ae60'},{name:'藍',color:'#2980b9'},{name:'紅',color:'#e74c3c'},{name:'靛',color:'#34495e'},{name:'橙',color:'#e67e22'},{name:'黃',color:'#f1c40f'}];
-  showModal(`<h3>彩色瓶子</h3><p>架子上的瓶子被打亂了。牆上有張褪色的圖暗示了正確順序。</p>
-    <div class="bottle-rack" id="bottle-rack"></div><p style="font-size:11px;color:#888;">點擊兩個瓶子交換位置</p>
+  showModal(`<h3>彩色瓶子</h3>
+    <div class="bottle-rack" id="bottle-rack"></div><p style="font-size:11px;color:#888;">點擊交換</p>
     <button onclick="checkBottles()">確認</button>`);
   renderBottles(colors);
 }
@@ -529,7 +438,8 @@ function checkBottles(){
 
 function puzzle2_4() {
   if (isSolved('2-4')) return;
-  showModal(`<div class="puzzle-input"><input type="text" maxlength="1" id="cb1" inputmode="numeric"><input type="text" maxlength="1" id="cb2" inputmode="numeric"><input type="text" maxlength="1" id="cb3" inputmode="numeric"></div>
+  showModal(`<h3>櫥櫃</h3>
+    <div class="puzzle-input"><input type="text" maxlength="1" id="cb1" inputmode="numeric"><input type="text" maxlength="1" id="cb2" inputmode="numeric"><input type="text" maxlength="1" id="cb3" inputmode="numeric"></div>
     <button onclick="checkCabinet()">確認</button>`);
 }
 function checkCabinet(){const code=['cb1','cb2','cb3'].map(id=>document.getElementById(id).value).join('');if(code==='945'){markSolved('2-4');addItem('magicFire');closeModal();showMessage('櫥櫃打開了！');renderRoom2();}else{showMessage('不對...');}}
@@ -542,17 +452,17 @@ function puzzle2_5() {
   let html=`<h3>大鍋</h3><div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:10px 0;">`;
   steps.forEach(s=>{html+=`<span style="padding:6px 10px;border-radius:6px;background:${s.done?'rgba(255,215,0,0.2)':'rgba(255,255,255,0.05)'};border:1px ${s.done?'solid':'dashed'} ${s.done?'#ffd700':'#555'};font-size:18px;">${s.label}${s.done?' ✓':''}</span>`;});
   html+=`</div>`;
-  if(!allIn&&next){if(state.selectedItem===next.item)html+=`<button onclick="addToCauldron('${next.key}','${next.item}')">放入</button>`;else html+=`<p style="color:#888;font-size:13px;">鍋裡似乎還需要什麼...</p>`;}
-  else if(allIn){html+=`<p>已攪拌：${pb.stirCount}/3</p>`;if(state.selectedItem==='stirrer')html+=`<button onclick="stirCauldron()">攪拌</button>`;else html+=`<p style="color:#888;font-size:13px;">需要用什麼來攪拌...</p>`;}
+  if(!allIn&&next){if(state.selectedItem===next.item)html+=`<button onclick="addToCauldron('${next.key}','${next.item}')">放入</button>`;else html+=``;}
+  else if(allIn){html+=`<p>${pb.stirCount}/3</p>`;if(state.selectedItem==='stirrer')html+=`<button onclick="stirCauldron()">攪拌</button>`;else html+=``;}
   showModal(html);
 }
-function addToCauldron(key,itemId){state.potionBrewing[key]=true;removeItem(itemId);closeModal();saveGame();puzzle2_5();}
+function addToCauldron(key,itemId){state.potionBrewing[key]=true;removeItem(itemId);closeModal();puzzle2_5();}
 function stirCauldron(){state.potionBrewing.stirCount++;if(state.potionBrewing.stirCount>=3){markSolved('2-5');addItem('sunPotion');removeItem('stirrer');closeModal();showModal('<h3>藥水完成！</h3><p>大鍋中冒出金色光芒...</p>');renderRoom2();}else{closeModal();showMessage(`攪拌 ${state.potionBrewing.stirCount}/3`);puzzle2_5();}}
 
 function puzzle2_6() {
   if (isSolved('2-6')) return;
   if (state.selectedItem==='magicWeight'){markSolved('2-6');removeItem('magicWeight');addItem('scroll');closeModal();showModal('<h3>天秤平衡了！</h3><p>底座打開，裡面有一卷古老的卷軸。</p>');renderRoom2();saveGame();setTimeout(()=>checkEndGame(),1500);}
-  else{showModal('<h3>天秤</h3><p>天秤一邊放著神秘寶石，另一邊空著。需要放上等重的東西。</p>');}
+  else{showModal('<h3>天秤</h3>');}
 }
 
 // ===== INITIALIZATION =====

@@ -1,7 +1,7 @@
 {
   "mcpServers": {
-    "agend-escape-pm-t1501884597280178317": {
-      "command": "/home/altheachen/.agend/instances/escape-pm-t1501884597280178317/mcp-wrapper-agend.sh",
+    "agend-escape-dev-t1501884852977401876": {
+      "command": "/home/altheachen/.agend/instances/escape-dev-t1501884852977401876/mcp-wrapper-agend.sh",
       "args": []
     }
   }
