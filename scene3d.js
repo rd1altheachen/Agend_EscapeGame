@@ -11,9 +11,9 @@ function initThree() {
   renderer.shadowMap.enabled = true;
   container.insertBefore(renderer.domElement, container.firstChild);
 
-  camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 100);
-  camera.position.set(7, 6, 7);
-  camera.lookAt(0, 1, 0);
+  camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 100);
+  camera.position.set(0, 2.5, 8);
+  camera.lookAt(0, 2, 0);
 
   raycaster = new THREE.Raycaster();
   mouse = new THREE.Vector2();
@@ -81,12 +81,12 @@ function buildRoom1() {
   const s = new THREE.Scene();
   s.background = new THREE.Color(0x0a0e2a);
   // Lighting
-  const amb = new THREE.AmbientLight(0x334466, 0.6);
+  const amb = new THREE.AmbientLight(0x8899bb, 1.2);
   s.add(amb);
-  const dir = new THREE.DirectionalLight(0xffd700, 0.5);
+  const dir = new THREE.DirectionalLight(0xffd700, 0.8);
   dir.position.set(3, 8, 4);
   s.add(dir);
-  const point = new THREE.PointLight(0x6666ff, 0.4, 12);
+  const point = new THREE.PointLight(0x8888ff, 0.6, 15);
   point.position.set(0, 4, 0);
   s.add(point);
 
@@ -239,11 +239,11 @@ function buildRoom2() {
   const s = new THREE.Scene();
   s.background = new THREE.Color(0x3d2010);
   // Lighting
-  s.add(new THREE.AmbientLight(0x664433, 0.6));
-  const dir = new THREE.DirectionalLight(0xffaa44, 0.5);
+  s.add(new THREE.AmbientLight(0xbb8866, 1.2));
+  const dir = new THREE.DirectionalLight(0xffcc66, 0.8);
   dir.position.set(-2, 7, 3);
   s.add(dir);
-  const fire = new THREE.PointLight(0xff6600, 0.6, 6);
+  const fire = new THREE.PointLight(0xff6600, 0.8, 10);
   fire.position.set(0, 0.5, 0);
   s.add(fire);
 
