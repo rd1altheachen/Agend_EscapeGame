@@ -1,8 +1,8 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Segoe UI', sans-serif; background: #1a1a2e; overflow: hidden; height: 100vh; width: 100vw; }
-#game-container { display: flex; flex-direction: column; height: 100vh; width: 100vw; }
-#scene-area { flex: 1; position: relative; overflow: hidden; }
-#scene-area canvas { display: block; }
+body { font-family: 'Segoe UI', sans-serif; background: #1a1a2e; overflow: hidden; height: 100vh; height: 100dvh; width: 100vw; }
+#game-container { display: flex; flex-direction: column; height: 100vh; height: 100dvh; width: 100vw; overflow: hidden; }
+#scene-area { flex: 1; position: relative; overflow: hidden; min-height: 0; }
+#scene-area canvas { display: block; position: absolute; top: 0; left: 0; width: 100% !important; height: 100% !important; }
 .hidden { display: none !important; }
 
 /* Animations */

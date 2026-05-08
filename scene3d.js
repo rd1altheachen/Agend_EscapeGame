@@ -39,6 +39,7 @@ function initThree() {
 
   window.addEventListener('resize', onResize);
   setTimeout(onResize, 100);
+  setTimeout(onResize, 500);
 
   renderer.domElement.addEventListener('pointerdown', onPointerDown);
   renderer.domElement.addEventListener('pointermove', onPointerMove);
