@@ -164,12 +164,14 @@ function selectItem(itemId) {
 function switchRoom(roomNum) {
   if (roomNum === 2 && !state.doorOpen) { showMessage('門鎖著...'); return; }
   state.currentRoom = roomNum;
-  document.getElementById('room1').classList.toggle('hidden', roomNum !== 1);
-  document.getElementById('room2').classList.toggle('hidden', roomNum !== 2);
+  switchScene(roomNum);
   document.getElementById('btn-room1').classList.toggle('active', roomNum === 1);
   document.getElementById('btn-room2').classList.toggle('active', roomNum === 2);
   saveGame();
 }
+
+function renderRoom1() { updateStarCounter(); }
+function renderRoom2() { updateStarCounter(); }
 
 // ===== HINT SYSTEM =====
 function showHint() {
@@ -203,38 +205,7 @@ function checkEndGame() {
 }
 function useScroll() { state.hasScrollUsed = true; closeModal(); localStorage.removeItem('magicEscape_save'); document.getElementById('end-screen').classList.remove('hidden'); }
 
-// ===== ROOM 1 RENDERING =====
-function renderRoom1() {
-  const room = document.getElementById('room1');
-  room.innerHTML = `
-    <div id="star-counter">⭐ ${state.stars}/6</div>
-    <div class="r1-floor"></div>
-    <div class="r1-carpet"></div>
-    <div class="r1-bookshelf">
-      <div class="r1-shelf" style="top:20%"></div>
-      <div class="r1-shelf" style="top:45%"></div>
-      <div class="r1-shelf" style="top:70%"></div>
-      <div class="r1-books" style="top:5%;height:14%"><div class="r1-book" style="height:90%;background:#c0392b"></div><div class="r1-book" style="height:75%;background:#2980b9"></div><div class="r1-book" style="height:85%;background:#27ae60"></div><div class="r1-book" style="height:70%;background:#8e44ad"></div><div class="r1-book" style="height:80%;background:#d4ac0d"></div></div>
-      <div class="r1-books" style="top:22%;height:20%"><div class="r1-book" style="height:85%;background:#1a5276"></div><div class="r1-book" style="height:90%;background:#6c3483"></div><div class="r1-book" style="height:75%;background:#c0392b"></div><div class="r1-book" style="height:95%;background:#b7950b"></div><div class="r1-book" style="height:80%;background:#148f77"></div></div>
-      <div class="r1-books" style="top:47%;height:20%"><div class="r1-book" style="height:80%;background:#922b21"></div><div class="r1-book" style="height:90%;background:#1b4f72"></div><div class="r1-book" style="height:70%;background:#7d6608"></div><div class="r1-book" style="height:85%;background:#0e6655"></div></div>
-    </div>
-    <div class="r1-desk"><div class="r1-desk-top"></div><div class="r1-desk-leg" style="left:10%"></div><div class="r1-desk-leg" style="right:10%"></div><div class="r1-diary"></div><div class="r1-quill"></div></div>
-    <div class="r1-mirror"><div class="r1-mirror-frame"></div></div>
-    <div class="r1-constellation"><div class="r1-const-sphere"><div class="r1-const-ring"></div></div><div class="r1-const-base"></div></div>
-    <div class="r1-clock"><div class="r1-clock-hand1"></div><div class="r1-clock-hand2"></div></div>
-    <div class="r1-door"><div class="r1-door-rune">✦ ✧ ✦</div><div class="r1-door-knob"></div></div>
-    <div class="r1-flowerpot"><div class="r1-pot"></div><div class="r1-flower"></div></div>
-    <div class="r1-fireplace"><div class="r1-fire"></div></div>
-    <div class="hotspot" style="left:8%;top:8%;width:12%;height:20%" onclick="puzzle1_1()"></div>
-    <div class="hotspot" style="left:3%;top:15%;width:22%;height:55%" onclick="clickBookshelf()"></div>
-    <div class="hotspot" style="left:35%;top:55%;width:30%;height:20%" onclick="puzzle1_2()"></div>
-    <div class="hotspot" style="right:5%;top:18%;width:14%;height:25%" onclick="puzzle1_4()"></div>
-    <div class="hotspot" style="left:45%;top:5%;width:8%;height:10%" onclick="clickClock()"></div>
-    <div class="hotspot" style="right:3%;top:35%;width:14%;height:40%" onclick="puzzle1_3()"></div>
-    <div class="hotspot" style="left:5%;bottom:28%;width:8%;height:15%" onclick="puzzle1_6()"></div>
-    <div class="hotspot" style="left:55%;bottom:25%;width:20%;height:22%" onclick="puzzle1_5()"></div>
-  `;
-}
+// ===== ROOM 1 PUZZLE HANDLERS =====
 
 function puzzle1_1() {
   if (isSolved('1-1')) return;
@@ -369,34 +340,7 @@ function puzzle1_6() {
   } else { showModal('<h3>小花盆</h3><p>窗台上的小花緊閉著花瓣。</p>'); }
 }
 
-// ===== ROOM 2 RENDERING =====
-function renderRoom2() {
-  const room = document.getElementById('room2');
-  room.innerHTML = `
-    <div id="star-counter">⭐ ${state.stars}/6</div>
-    <div class="r2-floor"></div>
-    <div class="r2-cauldron"><div class="r2-pot-rim"></div><div class="r2-pot"></div><div class="r2-flame"><div class="r2-flame-inner"></div></div><div class="r2-steam"><div class="r2-steam-puff" style="left:20%"></div><div class="r2-steam-puff" style="left:50%;animation-delay:0.7s"></div><div class="r2-steam-puff" style="left:80%;animation-delay:1.4s"></div></div></div>
-    <div class="r2-recipe"><div class="r2-paper" style="top:5%;left:5%;transform:rotate(-2deg)"></div><div class="r2-paper" style="top:10%;left:30%;transform:rotate(1deg)"></div></div>
-    <div class="r2-musicbox"><div class="r2-box-lid"></div><div class="r2-box"></div><div class="r2-handle"></div></div>
-    <div class="r2-cabinet"><div class="r2-cab-door"></div><div class="r2-cab-door2"></div><div class="r2-cab-lock"></div></div>
-    <div class="r2-owl"><div class="r2-owl-frame"><div class="r2-owl-body"><div class="r2-owl-eye left"></div><div class="r2-owl-eye right"></div></div></div></div>
-    <div class="r2-bottles"><div class="r2-rack"></div><div class="r2-bottle" style="left:5%;height:35%;width:10%;background:#e74c3c;bottom:30%"></div><div class="r2-bottle" style="left:18%;height:30%;width:10%;background:#e67e22;bottom:30%"></div><div class="r2-bottle" style="left:31%;height:33%;width:10%;background:#f1c40f;bottom:30%"></div><div class="r2-bottle" style="left:44%;height:28%;width:10%;background:#27ae60;bottom:30%"></div><div class="r2-bottle" style="left:57%;height:32%;width:10%;background:#2980b9;bottom:30%"></div><div class="r2-bottle" style="left:70%;height:30%;width:10%;background:#34495e;bottom:30%"></div><div class="r2-bottle" style="left:83%;height:34%;width:10%;background:#9b59b6;bottom:30%"></div></div>
-    <div class="r2-scale"><div class="r2-scale-pole"></div><div class="r2-scale-beam"></div><div class="r2-scale-pan left"></div><div class="r2-scale-pan right"></div><div class="r2-scale-base"></div></div>
-    <div class="r2-crystal"></div>
-    <div class="r2-door"></div>
-    <div class="r2-shelf"><div class="r2-shelf-row" style="top:30%"></div><div class="r2-shelf-row" style="top:60%"></div></div>
-    <div class="hotspot" style="left:35%;top:42%;width:22%;height:30%" onclick="puzzle2_5()"></div>
-    <div class="hotspot" style="left:22%;top:5%;width:14%;height:22%" onclick="showRecipeWall()"></div>
-    <div class="hotspot" style="right:22%;top:10%;width:12%;height:16%" onclick="puzzle2_1()"></div>
-    <div class="hotspot" style="right:3%;top:12%;width:16%;height:45%" onclick="puzzle2_4()"></div>
-    <div class="hotspot" style="left:42%;top:3%;width:12%;height:18%" onclick="puzzle2_2()"></div>
-    <div class="hotspot" style="left:3%;top:50%;width:18%;height:22%" onclick="puzzle2_3()"></div>
-    <div class="hotspot" style="right:8%;top:55%;width:14%;height:22%" onclick="puzzle2_6()"></div>
-    <div class="hotspot" style="left:60%;top:58%;width:10%;height:10%" onclick="clickCrystalBall()"></div>
-    <div class="hotspot" style="left:2%;top:35%;width:10%;height:38%" onclick="switchRoom(1)"></div>
-    <div class="hotspot" style="left:3%;top:10%;width:16%;height:25%" onclick="clickIngredients()"></div>
-  `;
-}
+// ===== ROOM 2 PUZZLE HANDLERS =====
 
 function clickCrystalBall() { showModal(`<div style="text-align:center;"><div style="width:70px;height:70px;margin:10px auto;border-radius:50%;background:radial-gradient(circle,rgba(150,100,255,0.2),rgba(50,0,100,0.4));border:2px solid #9966cc;box-shadow:0 0 12px rgba(150,100,255,0.3);display:flex;align-items:center;justify-content:center;"><div style="width:35px;height:35px;border-radius:50%;border:2px solid rgba(184,134,11,0.5);background:rgba(0,0,0,0.3);position:relative;"><div style="position:absolute;top:50%;left:50%;width:1.5px;height:10px;background:rgba(255,215,0,0.6);transform-origin:bottom center;transform:translate(-50%,-100%) rotate(-90deg);"></div><div style="position:absolute;top:50%;left:50%;width:1px;height:14px;background:rgba(255,215,0,0.6);transform-origin:bottom center;transform:translate(-50%,-100%) rotate(90deg);"></div></div></div></div>`); }
 function clickIngredients() { showModal('<h3>食材架</h3>'); }
@@ -493,7 +437,7 @@ function puzzle2_6() {
 }
 
 // ===== INITIALIZATION =====
-function initGame(){renderRoom1();renderRoom2();renderInventory();updateStarCounter();if(state.doorOpen)document.getElementById('btn-room2').disabled=false;switchRoom(state.currentRoom);}
+function initGame(){initThree();renderInventory();updateStarCounter();if(state.doorOpen)document.getElementById('btn-room2').disabled=false;switchScene(state.currentRoom);document.getElementById('btn-room1').classList.toggle('active',state.currentRoom===1);document.getElementById('btn-room2').classList.toggle('active',state.currentRoom===2);}
 document.addEventListener('DOMContentLoaded',()=>{
   if(hasSave())document.getElementById('btn-load').classList.remove('hidden');
   document.getElementById('btn-start').onclick=()=>{state=defaultState();document.getElementById('start-screen').classList.add('hidden');initGame();};
@@ -505,5 +449,5 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.getElementById('btn-save').onclick=saveGame;
   document.getElementById('modal-close').onclick=closeModal;
   document.getElementById('overlay').onclick=closeModal;
-  document.getElementById('scene-area').addEventListener('click',(e)=>{if(e.target.classList.contains('room')){if(state.selectedItem){state.selectedItem=null;renderInventory();}}});
+  document.getElementById('scene-area').addEventListener('click',(e)=>{if(e.target.tagName==='CANVAS'){/* handled by Three.js raycaster */}});
 });

@@ -1,23 +1,16 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Segoe UI', sans-serif; background: #1a1a2e; overflow: hidden; height: 100vh; height: 100dvh; width: 100vw; }
-#game-container { display: flex; flex-direction: column; height: 100vh; height: 100dvh; width: 100vw; }
+body { font-family: 'Segoe UI', sans-serif; background: #1a1a2e; overflow: hidden; height: 100vh; width: 100vw; }
+#game-container { display: flex; flex-direction: column; height: 100vh; width: 100vw; }
 #scene-area { flex: 1; position: relative; overflow: hidden; }
-.room { width: 100%; height: 100%; position: absolute; top: 0; left: 0; }
+#scene-area canvas { display: block; width: 100%; height: 100%; }
 .hidden { display: none !important; }
 
-/* Hotspots - invisible, no visual hints */
-.hotspot { position: absolute; cursor: pointer; z-index: 10; border-radius: 5px; }
-
 /* Animations */
-@keyframes glow { 0%,100% { box-shadow: 0 0 5px gold; } 50% { box-shadow: 0 0 18px gold; } }
 @keyframes sparkle { 0% { opacity:0; transform:scale(0) rotate(0deg); } 50% { opacity:1; transform:scale(1) rotate(180deg); } 100% { opacity:0; transform:scale(0) rotate(360deg); } }
-@keyframes floatUp { 0% { opacity:1; transform:translateY(0); } 100% { opacity:0; transform:translateY(-40px); } }
-@keyframes itemFlyIn { 0% { transform:scale(2) translateY(-60px); opacity:0; } 100% { transform:scale(1) translateY(0); opacity:1; } }
-.sparkle-effect { position: absolute; pointer-events: none; animation: sparkle 0.8s ease-out forwards; font-size: 16px; }
-.item-fly-in { animation: itemFlyIn 0.5s ease-out; }
+.sparkle-effect { position: absolute; pointer-events: none; animation: sparkle 0.8s ease-out forwards; font-size: 16px; z-index: 60; }
 
 /* Inventory - always visible */
-#inventory-bar { height: 72px; background: rgba(15,15,35,0.97); border-top: 2px solid #ffd700; display: flex; align-items: center; padding: 5px 10px; overflow-x: auto; -webkit-overflow-scrolling: touch; min-height: 72px; flex-shrink: 0; }
+#inventory-bar { height: 72px; background: rgba(15,15,35,0.97); border-top: 2px solid #ffd700; display: flex; align-items: center; padding: 5px 10px; overflow-x: auto; -webkit-overflow-scrolling: touch; min-height: 72px; }
 #inventory-slots { display: flex; gap: 8px; min-width: min-content; align-items: center; height: 100%; }
 .inv-empty { color: rgba(255,215,0,0.3); font-size: 13px; padding: 0 15px; white-space: nowrap; }
 .inv-placeholder { width: 52px; height: 52px; border: 2px dashed rgba(255,215,0,0.2); border-radius: 10px; flex-shrink: 0; }
@@ -26,7 +19,7 @@ body { font-family: 'Segoe UI', sans-serif; background: #1a1a2e; overflow: hidde
 .inv-item.selected { border-color: #ffd700; background: rgba(255,215,0,0.25); box-shadow: 0 0 12px rgba(255,215,0,0.5); }
 
 /* Navigation */
-#nav-bar { height: 48px; background: rgba(10,10,30,0.97); display: flex; align-items: center; justify-content: center; gap: 8px; padding: 5px; border-top: 1px solid #333; flex-shrink: 0; }
+#nav-bar { height: 48px; background: rgba(10,10,30,0.97); display: flex; align-items: center; justify-content: center; gap: 8px; padding: 5px; border-top: 1px solid #333; }
 .nav-btn { padding: 8px 14px; border: none; border-radius: 20px; background: rgba(255,255,255,0.1); color: #fff; font-size: 14px; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
 .nav-btn:hover:not(:disabled) { background: rgba(255,255,255,0.2); }
 .nav-btn.active { background: rgba(255,215,0,0.3); border: 1px solid #ffd700; }
@@ -42,169 +35,21 @@ body { font-family: 'Segoe UI', sans-serif; background: #1a1a2e; overflow: hidde
 #modal-content p { margin: 8px 0; }
 #modal-content .puzzle-input { display: flex; gap: 5px; justify-content: center; margin: 15px 0; }
 #modal-content input[type="text"] { width: 45px; height: 45px; text-align: center; font-size: 20px; border: 2px solid #ffd700; border-radius: 8px; background: rgba(0,0,0,0.3); color: #fff; }
+#modal-content select { padding: 8px; border-radius: 8px; background: rgba(0,0,0,0.3); color: #fff; border: 1px solid #ffd700; font-size: 14px; }
 #modal-content button { padding: 10px 20px; border: none; border-radius: 10px; background: linear-gradient(135deg, #ffd700, #ff8c00); color: #1a1a2e; font-weight: bold; font-size: 15px; cursor: pointer; margin-top: 10px; }
 #modal-content button:hover { filter: brightness(1.1); }
 #modal-content .symbol-btn { width: 50px; height: 50px; font-size: 24px; margin: 5px; border-radius: 50%; }
 #modal-content .symbol-btn.active { background: #ffd700; }
 #modal-content .diary-page { background: rgba(255,248,220,0.1); padding: 15px; border-radius: 8px; margin: 10px 0; border-left: 3px solid #ffd700; }
 
-/* Diary visual */
-.diary-visual { display:flex; justify-content:center; }
-.diary-spread { display:flex; width:100%; max-width:320px; height:160px; border-radius:4px; overflow:hidden; box-shadow: 0 3px 10px rgba(0,0,0,0.3); }
-.diary-left, .diary-right { width:50%; background:#f5e6c8; position:relative; cursor:pointer; transition:background 0.2s; }
-.diary-left { border-right:1px solid #d4c4a0; }
-.diary-left:hover, .diary-right:hover { background:#efe0b8; }
-.diary-left::after { content:'◀'; position:absolute; bottom:5px; left:8px; color:rgba(0,0,0,0.2); font-size:10px; }
-.diary-right::after { content:'▶'; position:absolute; bottom:5px; right:8px; color:rgba(0,0,0,0.2); font-size:10px; }
-
 /* Message box */
 #message-box { position: absolute; bottom: 80px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.85); color: #ffd700; padding: 12px 24px; border-radius: 25px; font-size: 15px; z-index: 80; animation: fadeInUp 0.3s ease; white-space: nowrap; }
 @keyframes fadeInUp { from { opacity:0; transform:translate(-50%,10px); } to { opacity:1; transform:translate(-50%,0); } }
 
 /* Star counter */
-#star-counter { position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.6); padding: 8px 14px; border-radius: 20px; color: #ffd700; font-size: 16px; z-index: 50; }
+#star-counter { position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.6); padding: 8px 14px; border-radius: 20px; color: #ffd700; font-size: 16px; z-index: 50; pointer-events: none; }
 
-/* ===== ROOM 1: Starry Study ===== */
-#room1 {
-  background: linear-gradient(180deg, #0a0e2a 0%, #121a40 50%, #1a2550 100%);
-}
-#room1::before { /* stars */
-  content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 60%;
-  background: radial-gradient(1px 1px at 10% 15%, #fff 50%, transparent 100%),
-    radial-gradient(1px 1px at 25% 8%, #ffd700 50%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 40% 20%, #fff 50%, transparent 100%),
-    radial-gradient(1px 1px at 55% 5%, #aaccff 50%, transparent 100%),
-    radial-gradient(1px 1px at 70% 18%, #fff 50%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 85% 10%, #ffd700 50%, transparent 100%),
-    radial-gradient(1px 1px at 15% 30%, #fff 50%, transparent 100%),
-    radial-gradient(1px 1px at 60% 28%, #aaccff 50%, transparent 100%),
-    radial-gradient(1px 1px at 90% 25%, #fff 50%, transparent 100%);
-}
-/* Floor */
-.r1-floor { position: absolute; bottom: 0; left: 0; width: 100%; height: 25%; background: linear-gradient(180deg, #3d2b1f 0%, #2a1f15 100%); border-top: 3px solid #5a3d2b; }
-.r1-floor::before { content:''; position:absolute; top:0; left:0; width:100%; height:100%; background: repeating-linear-gradient(90deg, transparent, transparent 12%, rgba(0,0,0,0.1) 12%, rgba(0,0,0,0.1) 12.5%); }
-
-/* Bookshelf */
-.r1-bookshelf { position: absolute; left: 3%; top: 15%; width: 22%; height: 55%; background: #4a3222; border: 3px solid #6b4c32; border-radius: 4px; box-shadow: inset 0 0 15px rgba(0,0,0,0.5), 3px 3px 10px rgba(0,0,0,0.4); }
-.r1-shelf { position: absolute; left: 5%; width: 90%; height: 3px; background: #6b4c32; }
-.r1-books { position: absolute; left: 5%; width: 90%; display: flex; align-items: flex-end; gap: 2px; padding: 0 2px; }
-.r1-book { width: 8%; border-radius: 1px 1px 0 0; min-width: 4px; }
-
-/* Desk */
-.r1-desk { position: absolute; left: 35%; top: 55%; width: 30%; height: 20%; }
-.r1-desk-top { position: absolute; top: 0; left: 0; width: 100%; height: 35%; background: linear-gradient(135deg, #5a3d2b, #4a3020); border-radius: 5px 5px 0 0; border: 2px solid #6b4c32; box-shadow: 0 3px 8px rgba(0,0,0,0.4); }
-.r1-desk-leg { position: absolute; bottom: 0; width: 8%; height: 60%; background: #3d2b1f; border-radius: 2px; }
-.r1-diary { position: absolute; top: 5%; left: 20%; width: 20%; height: 25%; background: #8b4513; border-radius: 2px; border: 1px solid #a0522d; transform: rotate(-5deg); }
-.r1-quill { position: absolute; top: 2%; right: 20%; width: 2%; height: 30%; background: linear-gradient(180deg, #fff, #ddd); transform: rotate(15deg); border-radius: 0 0 1px 1px; }
-
-/* Magic Mirror */
-.r1-mirror { position: absolute; left: 8%; top: 8%; width: 12%; height: 20%; }
-.r1-mirror-frame { width: 100%; height: 100%; border-radius: 50%; border: 4px solid #b8860b; background: radial-gradient(ellipse, #1a1a4a, #2a2a6a, #0d0d2a); box-shadow: 0 0 15px rgba(100,100,200,0.3), inset 0 0 20px rgba(100,100,255,0.2); }
-
-/* Constellation device */
-.r1-constellation { position: absolute; right: 5%; top: 18%; width: 14%; height: 25%; }
-.r1-const-base { position: absolute; bottom: 0; left: 20%; width: 60%; height: 15%; background: #b8860b; border-radius: 3px; }
-.r1-const-sphere { position: absolute; top: 10%; left: 15%; width: 70%; height: 70%; border: 2px solid #daa520; border-radius: 50%; background: radial-gradient(circle, rgba(0,0,50,0.8), rgba(0,0,30,0.9)); box-shadow: 0 0 10px rgba(218,165,32,0.3); }
-.r1-const-ring { position: absolute; top: 20%; left: 5%; width: 90%; height: 60%; border: 1px solid rgba(218,165,32,0.5); border-radius: 50%; transform: rotateX(60deg); }
-
-/* Clock */
-.r1-clock { position: absolute; left: 45%; top: 5%; width: 8%; height: 0; padding-bottom: 8%; background: #2a2a2a; border: 3px solid #b8860b; border-radius: 50%; box-shadow: 0 0 8px rgba(0,0,0,0.5); }
-.r1-clock-hand1 { position: absolute; top: 50%; left: 50%; width: 2px; height: 30%; background: #ffd700; transform-origin: bottom center; transform: translateX(-50%) rotate(-90deg); }
-.r1-clock-hand2 { position: absolute; top: 50%; left: 50%; width: 2px; height: 40%; background: #ffd700; transform-origin: bottom center; transform: translateX(-50%) rotate(0deg); }
-
-/* Magic Door */
-.r1-door { position: absolute; right: 3%; top: 35%; width: 14%; height: 40%; background: linear-gradient(180deg, #2a1a3a, #1a0a2a); border: 3px solid #6a3a8a; border-radius: 40% 40% 0 0; box-shadow: 0 0 20px rgba(100,50,150,0.4), inset 0 0 15px rgba(100,50,150,0.2); }
-.r1-door-rune { position: absolute; top: 30%; left: 50%; transform: translateX(-50%); color: rgba(150,100,255,0.5); font-size: clamp(10px,2vw,18px); }
-.r1-door-knob { position: absolute; top: 55%; left: 20%; width: 12%; height: 0; padding-bottom: 12%; background: #b8860b; border-radius: 50%; }
-
-/* Flower pot */
-.r1-flowerpot { position: absolute; left: 5%; bottom: 28%; width: 8%; height: 15%; }
-.r1-pot { position: absolute; bottom: 0; left: 15%; width: 70%; height: 50%; background: #8b4513; border-radius: 5px 5px 15px 15px; }
-.r1-flower { position: absolute; top: 0; left: 30%; width: 40%; height: 55%; background: #2d5a2d; border-radius: 50% 50% 0 0; }
-
-/* Fireplace */
-.r1-fireplace { position: absolute; left: 55%; bottom: 25%; width: 20%; height: 22%; background: #5a2a1a; border: 3px solid #8b4513; border-radius: 30% 30% 0 0; box-shadow: inset 0 0 15px rgba(0,0,0,0.7); }
-.r1-fire { position: absolute; bottom: 10%; left: 30%; width: 40%; height: 40%; background: radial-gradient(ellipse at bottom, #ff6600, #ff3300, transparent); border-radius: 50% 50% 20% 20%; opacity: 0.7; }
-
-/* Carpet */
-.r1-carpet { position: absolute; left: 28%; bottom: 5%; width: 35%; height: 12%; background: radial-gradient(ellipse, #6a1a1a, #4a0a0a); border-radius: 50%; border: 2px solid #8b3030; box-shadow: inset 0 0 10px rgba(0,0,0,0.3); }
-
-/* ===== ROOM 2: Potion Kitchen ===== */
-#room2 {
-  background: linear-gradient(180deg, #3d2010 0%, #5a3520 40%, #4a2a18 100%);
-}
-#room2::before { /* brick texture */
-  content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 65%;
-  background: repeating-linear-gradient(0deg, transparent, transparent 8%, rgba(0,0,0,0.05) 8%, rgba(0,0,0,0.05) 8.5%),
-    repeating-linear-gradient(90deg, transparent, transparent 15%, rgba(0,0,0,0.03) 15%, rgba(0,0,0,0.03) 15.5%);
-}
-/* Stone floor */
-.r2-floor { position: absolute; bottom: 0; left: 0; width: 100%; height: 22%; background: linear-gradient(180deg, #4a4a4a, #3a3a3a); border-top: 2px solid #5a5a5a; }
-.r2-floor::before { content:''; position:absolute; top:0; left:0; width:100%; height:100%; background: repeating-linear-gradient(90deg, transparent, transparent 10%, rgba(0,0,0,0.1) 10%, rgba(0,0,0,0.1) 10.3%), repeating-linear-gradient(0deg, transparent, transparent 50%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.08) 50.5%); }
-
-/* Cauldron */
-.r2-cauldron { position: absolute; left: 35%; top: 42%; width: 22%; height: 30%; }
-.r2-pot { position: absolute; top: 20%; left: 10%; width: 80%; height: 65%; background: #1a1a1a; border-radius: 5% 5% 45% 45%; border: 3px solid #333; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
-.r2-pot-rim { position: absolute; top: 18%; left: 5%; width: 90%; height: 8%; background: #333; border-radius: 50%; }
-.r2-flame { position: absolute; bottom: 5%; left: 25%; width: 50%; height: 20%; }
-.r2-flame-inner { position: absolute; bottom: 0; left: 20%; width: 60%; height: 100%; background: radial-gradient(ellipse at bottom, #ff8800, #ff4400, transparent); border-radius: 50% 50% 20% 20%; animation: flicker 0.5s ease-in-out infinite alternate; }
-@keyframes flicker { from { transform: scaleY(1) scaleX(1); } to { transform: scaleY(1.1) scaleX(0.95); } }
-.r2-steam { position: absolute; top: 5%; left: 40%; width: 20%; height: 15%; }
-.r2-steam-puff { position: absolute; width: 10px; height: 10px; background: rgba(255,255,255,0.15); border-radius: 50%; animation: floatUp 2s ease-out infinite; }
-
-/* Recipe wall */
-.r2-recipe { position: absolute; left: 22%; top: 5%; width: 14%; height: 22%; }
-.r2-paper { position: absolute; width: 70%; height: 45%; background: #f5e6c8; border-radius: 2px; box-shadow: 1px 1px 3px rgba(0,0,0,0.3); }
-.r2-paper::after { content:''; position:absolute; top:20%; left:10%; width:80%; height:60%; background: repeating-linear-gradient(0deg, transparent, transparent 20%, rgba(0,0,0,0.1) 20%, rgba(0,0,0,0.1) 21%); }
-
-/* Music box */
-.r2-musicbox { position: absolute; right: 22%; top: 10%; width: 12%; height: 16%; }
-.r2-box { position: absolute; bottom: 0; left: 10%; width: 80%; height: 70%; background: linear-gradient(135deg, #6b3a1a, #4a2810); border: 2px solid #8b5a2a; border-radius: 4px; box-shadow: 2px 2px 5px rgba(0,0,0,0.4); }
-.r2-box-lid { position: absolute; top: 0; left: 5%; width: 90%; height: 35%; background: linear-gradient(180deg, #7a4a2a, #5a3218); border: 2px solid #8b5a2a; border-radius: 4px 4px 0 0; }
-.r2-handle { position: absolute; top: 40%; right: -10%; width: 15%; height: 20%; background: #b8860b; border-radius: 2px; }
-
-/* Cabinet */
-.r2-cabinet { position: absolute; right: 3%; top: 12%; width: 16%; height: 45%; background: linear-gradient(135deg, #5a3d2b, #4a3020); border: 3px solid #6b4c32; border-radius: 4px; box-shadow: 3px 3px 10px rgba(0,0,0,0.4); }
-.r2-cab-door { position: absolute; top: 5%; left: 8%; width: 38%; height: 90%; border: 1px solid #7a5a3a; border-radius: 2px; }
-.r2-cab-door2 { position: absolute; top: 5%; right: 8%; width: 38%; height: 90%; border: 1px solid #7a5a3a; border-radius: 2px; }
-.r2-cab-lock { position: absolute; top: 48%; left: 50%; transform: translateX(-50%); width: 10%; height: 5%; background: #b8860b; border-radius: 2px; }
-
-/* Owl painting */
-.r2-owl { position: absolute; left: 42%; top: 3%; width: 12%; height: 18%; }
-.r2-owl-frame { width: 100%; height: 100%; border: 3px solid #b8860b; background: #2a2a1a; border-radius: 3px; box-shadow: 2px 2px 5px rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; }
-.r2-owl-body { width: 50%; height: 60%; background: #5a4a3a; border-radius: 50% 50% 40% 40%; position: relative; }
-.r2-owl-eye { position: absolute; top: 20%; width: 25%; height: 25%; background: #ffd700; border-radius: 50%; }
-.r2-owl-eye.left { left: 15%; }
-.r2-owl-eye.right { right: 15%; }
-
-/* Bottles rack */
-.r2-bottles { position: absolute; left: 3%; top: 50%; width: 18%; height: 22%; }
-.r2-rack { position: absolute; bottom: 0; left: 0; width: 100%; height: 30%; background: #4a3222; border-radius: 3px; }
-.r2-bottle { position: absolute; bottom: 30%; border-radius: 4px 4px 8px 8px; }
-.r2-bottle::before { content:''; position:absolute; top:-5px; left:30%; width:40%; height:6px; background:inherit; filter:brightness(0.7); border-radius:2px 2px 0 0; }
-
-/* Scale */
-.r2-scale { position: absolute; right: 8%; top: 55%; width: 14%; height: 22%; }
-.r2-scale-base { position: absolute; bottom: 0; left: 30%; width: 40%; height: 10%; background: #b8860b; border-radius: 3px; }
-.r2-scale-pole { position: absolute; bottom: 10%; left: 48%; width: 4%; height: 60%; background: #8b6914; }
-.r2-scale-beam { position: absolute; top: 25%; left: 5%; width: 90%; height: 4%; background: #b8860b; border-radius: 2px; }
-.r2-scale-pan { position: absolute; top: 30%; width: 30%; height: 15%; border: 2px solid #8b6914; border-top: none; border-radius: 0 0 50% 50%; }
-.r2-scale-pan.left { left: 5%; }
-.r2-scale-pan.right { right: 5%; }
-
-/* Crystal ball */
-.r2-crystal { position: absolute; left: 60%; top: 58%; width: 10%; height: 0; padding-bottom: 10%; background: radial-gradient(circle at 35% 35%, rgba(200,200,255,0.4), rgba(100,50,150,0.3), rgba(30,0,50,0.6)); border-radius: 50%; border: 2px solid rgba(200,200,255,0.3); box-shadow: 0 0 15px rgba(150,100,255,0.2), inset 0 0 10px rgba(200,200,255,0.1); }
-.r2-crystal-base { position: absolute; left: 61%; top: calc(58% + 10vw - 5px); width: 8%; height: 3%; background: #4a3222; border-radius: 3px; }
-
-/* Door (room2) */
-.r2-door { position: absolute; left: 2%; top: 35%; width: 10%; height: 38%; background: linear-gradient(180deg, #2a1a3a, #1a0a2a); border: 2px solid #6a3a8a; border-radius: 30% 30% 0 0; box-shadow: 0 0 12px rgba(100,50,150,0.3); }
-
-/* Ingredient shelf */
-.r2-shelf { position: absolute; left: 3%; top: 10%; width: 16%; height: 25%; background: #4a3222; border: 2px solid #6b4c32; border-radius: 3px; }
-.r2-shelf-row { position: absolute; left: 5%; width: 90%; height: 2px; background: #6b4c32; }
-.r2-mini-bottle { position: absolute; border-radius: 2px 2px 4px 4px; }
-
-/* ===== Start/End Screens ===== */
+/* Start/End Screens */
 #start-screen, #end-screen { position: fixed; top:0; left:0; width:100%; height:100%; display:flex; align-items:center; justify-content:center; z-index:200; }
 #start-screen { background: linear-gradient(135deg, #0d1b3e, #1a2a5e, #2a1a4e); }
 #end-screen { background: linear-gradient(135deg, #1a3a1a, #2a4a2a, #1a4a3a); }
@@ -217,7 +62,7 @@ blockquote { background:rgba(255,215,0,0.1); border-left:3px solid #ffd700; padd
 .stars-display { font-size:40px; margin:20px 0; }
 .end-content p { font-size:16px; line-height:2; }
 
-/* Bottle drag puzzle */
+/* Bottle puzzle in modal */
 .bottle-rack { display:flex; gap:5px; justify-content:center; flex-wrap:wrap; margin:15px 0; }
 .bottle { width:36px; height:65px; border-radius:6px 6px 12px 12px; cursor:grab; display:flex; align-items:flex-end; justify-content:center; padding-bottom:4px; font-size:10px; color:rgba(255,255,255,0.8); border:2px solid rgba(255,255,255,0.3); position:relative; }
 .bottle::before { content:''; position:absolute; top:-7px; left:50%; transform:translateX(-50%); width:14px; height:8px; background:inherit; border-radius:2px 2px 0 0; filter:brightness(0.7); }
@@ -231,27 +76,4 @@ blockquote { background:rgba(255,215,0,0.1); border-left:3px solid #ffd700; padd
   .inv-placeholder { width:46px; height:46px; }
   #modal { padding:18px; min-width:250px; }
   .start-content h1, .end-content h1 { font-size:22px; }
-
-  /* Room 1 mobile layout - spread objects vertically */
-  .r1-bookshelf { left:2%; top:20%; width:28%; height:40%; }
-  .r1-mirror { left:2%; top:2%; width:16%; height:16%; }
-  .r1-desk { left:32%; top:55%; width:35%; height:18%; }
-  .r1-constellation { right:2%; top:2%; width:18%; height:20%; }
-  .r1-clock { left:40%; top:2%; width:10%; padding-bottom:10%; }
-  .r1-door { right:2%; top:30%; width:18%; height:35%; }
-  .r1-flowerpot { left:2%; bottom:28%; width:12%; height:12%; }
-  .r1-fireplace { left:50%; bottom:26%; width:24%; height:18%; }
-  .r1-carpet { left:20%; bottom:3%; width:40%; height:10%; }
-
-  /* Room 2 mobile layout */
-  .r2-cauldron { left:30%; top:40%; width:28%; height:28%; }
-  .r2-recipe { left:2%; top:2%; width:18%; height:18%; }
-  .r2-musicbox { right:2%; top:2%; width:16%; height:14%; }
-  .r2-cabinet { right:2%; top:20%; width:20%; height:35%; }
-  .r2-owl { left:35%; top:2%; width:16%; height:15%; }
-  .r2-bottles { left:2%; top:45%; width:22%; height:20%; }
-  .r2-scale { right:2%; top:58%; width:18%; height:18%; }
-  .r2-crystal { left:55%; top:2%; width:12%; padding-bottom:12%; }
-  .r2-door { left:2%; top:25%; width:14%; height:30%; }
-  .r2-shelf { left:2%; top:20%; width:20%; height:20%; }
 }
