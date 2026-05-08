@@ -240,9 +240,29 @@ function puzzle1_1() {
   if (isSolved('1-1')) return;
   if (!state.mirrorUsed) {
     state.mirrorUsed = true;
-    showModal(`<h3>魔法鏡</h3><p>你凝視魔法鏡...鏡中映出書房的景象。</p><p>但鏡中的書架似乎和現實有些不同。有什麼東西在鏡中微微發光...</p>`);
+    showModal(`<div style="text-align:center;">
+      <div style="width:100px;height:140px;margin:10px auto;border-radius:50%;border:4px solid #b8860b;background:radial-gradient(ellipse,#1a1a4a,#2a2a6a);display:flex;align-items:center;justify-content:center;box-shadow:0 0 15px rgba(100,100,200,0.3);">
+        <div style="display:flex;gap:2px;justify-content:center;flex-wrap:wrap;padding:8px;">
+          <span style="display:inline-block;width:7px;height:18px;background:#8b4513;border-radius:1px;"></span>
+          <span style="display:inline-block;width:7px;height:16px;background:#2e8b57;border-radius:1px;"></span>
+          <span style="display:inline-block;width:7px;height:20px;background:#4169e1;border-radius:1px;"></span>
+          <span style="display:inline-block;width:7px;height:17px;background:#ffd700;border-radius:1px;box-shadow:0 0 8px #ffd700;"></span>
+          <span style="display:inline-block;width:7px;height:19px;background:#8b0000;border-radius:1px;"></span>
+          <span style="display:inline-block;width:7px;height:15px;background:#4b0082;border-radius:1px;"></span>
+        </div>
+      </div></div>`);
   } else {
-    showModal(`<h3>魔法鏡</h3><p>鏡中的書架和現實的書架...仔細看，有個地方不一樣。</p>`);
+    showModal(`<div style="text-align:center;">
+      <div style="width:100px;height:140px;margin:10px auto;border-radius:50%;border:4px solid #b8860b;background:radial-gradient(ellipse,#1a1a4a,#2a2a6a);display:flex;align-items:center;justify-content:center;box-shadow:0 0 15px rgba(100,100,200,0.3);">
+        <div style="display:flex;gap:2px;justify-content:center;flex-wrap:wrap;padding:8px;">
+          <span style="display:inline-block;width:7px;height:18px;background:#8b4513;border-radius:1px;"></span>
+          <span style="display:inline-block;width:7px;height:16px;background:#2e8b57;border-radius:1px;"></span>
+          <span style="display:inline-block;width:7px;height:20px;background:#4169e1;border-radius:1px;"></span>
+          <span style="display:inline-block;width:7px;height:17px;background:#ffd700;border-radius:1px;box-shadow:0 0 8px #ffd700;"></span>
+          <span style="display:inline-block;width:7px;height:19px;background:#8b0000;border-radius:1px;"></span>
+          <span style="display:inline-block;width:7px;height:15px;background:#4b0082;border-radius:1px;"></span>
+        </div>
+      </div></div>`);
   }
 }
 
@@ -280,15 +300,13 @@ function puzzle1_3() {
 
 function puzzle1_2() {
   if (isSolved('1-2')) { showModal('<h3>書桌</h3><p>抽屜已經打開了。</p>'); return; }
-  showModal(`<h3>書桌</h3>
-    <div class="diary-page">
-      <p>魔法日記：</p>
-      <p>📅 右頁畫著 🌕 ，邊角有符號 ○</p>
-      <p>📅 左頁畫著 🌑 ，邊角有符號 △</p>
-      <p>📅 右頁畫著 🌓 ，邊角有符號 ☆</p>
-      <p style="font-style:italic;color:#aaa;">「按照月相順序排列符號」</p>
+  showModal(`<div class="diary-page" style="margin-bottom:12px;">
+      <div style="display:flex;justify-content:space-around;padding:10px;">
+        <div style="text-align:center;"><span style="font-size:30px;">🌕</span><br><span style="color:#666;">○</span></div>
+        <div style="text-align:center;"><span style="font-size:30px;">🌑</span><br><span style="color:#666;">△</span></div>
+        <div style="text-align:center;"><span style="font-size:30px;">🌓</span><br><span style="color:#666;">☆</span></div>
+      </div>
     </div>
-    <p>抽屜上有符號鎖：</p>
     <div class="puzzle-input" id="symbol-input">
       <button class="symbol-btn" onclick="toggleSymbol(this,0)">？</button>
       <button class="symbol-btn" onclick="toggleSymbol(this,1)">？</button>
@@ -306,7 +324,12 @@ function checkDiary() {
   } else { showMessage('不對...'); }
 }
 
-function clickClock() { showModal('<h3>掛鐘</h3><p>時鐘的指針停住了。短針指向3，長針指向3。</p>'); }
+function clickClock() { showModal(`<div style="text-align:center;">
+  <div style="width:80px;height:80px;margin:10px auto;border-radius:50%;border:3px solid #b8860b;background:#1a1a2a;position:relative;">
+    <div style="position:absolute;top:50%;left:50%;width:2px;height:20px;background:#ffd700;transform-origin:bottom center;transform:translate(-50%,-100%) rotate(-90deg);"></div>
+    <div style="position:absolute;top:50%;left:50%;width:1.5px;height:28px;background:#ffd700;transform-origin:bottom center;transform:translate(-50%,-100%) rotate(90deg);"></div>
+    <div style="position:absolute;top:50%;left:50%;width:5px;height:5px;background:#ffd700;border-radius:50%;transform:translate(-50%,-50%);"></div>
+  </div></div>`); }
 
 function puzzle1_4() {
   if (isSolved('1-4')) return;
@@ -375,11 +398,15 @@ function renderRoom2() {
   `;
 }
 
-function clickCrystalBall() { showModal('<h3>水晶球</h3><p>你看到另一個房間的掛鐘...</p>'); }
+function clickCrystalBall() { showModal(`<div style="text-align:center;"><div style="width:70px;height:70px;margin:10px auto;border-radius:50%;background:radial-gradient(circle,rgba(150,100,255,0.2),rgba(50,0,100,0.4));border:2px solid #9966cc;box-shadow:0 0 12px rgba(150,100,255,0.3);display:flex;align-items:center;justify-content:center;"><div style="width:35px;height:35px;border-radius:50%;border:2px solid rgba(184,134,11,0.5);background:rgba(0,0,0,0.3);position:relative;"><div style="position:absolute;top:50%;left:50%;width:1.5px;height:10px;background:rgba(255,215,0,0.6);transform-origin:bottom center;transform:translate(-50%,-100%) rotate(-90deg);"></div><div style="position:absolute;top:50%;left:50%;width:1px;height:14px;background:rgba(255,215,0,0.6);transform-origin:bottom center;transform:translate(-50%,-100%) rotate(90deg);"></div></div></div></div>`); }
 function clickIngredients() { showModal('<h3>食材架</h3>'); }
 function showRecipeWall() {
   const has = hasItem('recipePage');
-  showModal(`<h3>配方牆</h3><div class="diary-page"><p>☀️ 陽光藥水：</p><p>1. ${has?'火種點燃':'???'}</p><p>2. ${has?'加入彩虹露':'加入 ???'}</p><p>3. ${has?'加入星塵粉':'加入 ???'}</p><p>4. ${has?'加入月光粉':'加入 ???'}</p><p>5. ${has?'攪拌匙攪拌3次':'??? 攪拌?次'}</p></div>`);
+  showModal(`<div style="background:#f5e6c8;padding:15px;border-radius:4px;max-width:220px;margin:0 auto;text-align:center;">
+    <div style="font-size:20px;border-bottom:1px solid #d4c4a0;padding-bottom:8px;margin-bottom:10px;">☀️</div>
+    <div style="font-size:16px;line-height:2.2;color:#5a3d2b;">
+      ${has?'🔥→🫕<br>🌈→<br>✨→<br>🌙→<br>🥄 ×3':'❓→🫕<br>❓→<br>❓→<br>❓→<br>❓ ×?'}
+    </div></div>`);
 }
 
 function puzzle2_1() {
