@@ -109,7 +109,7 @@ function onPointerDown(e) {
   }
 }
 
-function mat(color) { return new THREE.MeshStandardMaterial({ color }); }
+function mat(color) { return new THREE.MeshBasicMaterial({ color }); }
 
 // ===== ROOM 1: Starry Study =====
 function buildRoom1() {
@@ -170,7 +170,7 @@ function buildRoom1() {
   // Mirror
   const mirror = new THREE.Group(); mirror.userData.action = () => puzzle1_1();
   mirror.add(new THREE.Mesh(new THREE.TorusGeometry(0.55,0.08,8,24), mat(0xb8860b)));
-  mirror.add(new THREE.Mesh(new THREE.CircleGeometry(0.55,24), new THREE.MeshStandardMaterial({color:0x4444aa,metalness:0.9,roughness:0.1})));
+  mirror.add(new THREE.Mesh(new THREE.CircleGeometry(0.55,24), new THREE.MeshBasicMaterial({color:0x4444aa})));
   mirror.rotation.y = Math.PI/2;
   mirror.position.set(-3.8, 2.5, -2);
   west.add(mirror); interactables1.west.push(mirror);
@@ -182,7 +182,7 @@ function buildRoom1() {
   const con = new THREE.Group(); con.userData.action = () => puzzle1_4();
   con.add(Object.assign(new THREE.Mesh(new THREE.CylinderGeometry(0.3,0.4,0.3,12), mat(0xb8860b)), {position: new THREE.Vector3(0,0.15,0)}));
   con.add(Object.assign(new THREE.Mesh(new THREE.CylinderGeometry(0.05,0.05,1.2,8), mat(0x8b6914)), {position: new THREE.Vector3(0,0.9,0)}));
-  con.add(Object.assign(new THREE.Mesh(new THREE.SphereGeometry(0.45,16,12), new THREE.MeshStandardMaterial({color:0x1a1a4a,wireframe:true})), {position: new THREE.Vector3(0,1.8,0)}));
+  con.add(Object.assign(new THREE.Mesh(new THREE.SphereGeometry(0.45,16,12), new THREE.MeshBasicMaterial({color:0x1a1a4a,wireframe:true})), {position: new THREE.Vector3(0,1.8,0)}));
   con.position.set(3.3, 0, -1.5);
   east.add(con); interactables1.east.push(con);
   // Door
@@ -277,7 +277,7 @@ function buildRoom2() {
   crystal.add(Object.assign(new THREE.Mesh(new THREE.BoxGeometry(0.06,0.9,0.06), mat(0x3d2b1f)), {position: new THREE.Vector3(-0.3,0.45,0)}));
   crystal.add(Object.assign(new THREE.Mesh(new THREE.BoxGeometry(0.06,0.9,0.06), mat(0x3d2b1f)), {position: new THREE.Vector3(0.3,0.45,0)}));
   crystal.add(Object.assign(new THREE.Mesh(new THREE.CylinderGeometry(0.1,0.12,0.12,8), mat(0x4a3222)), {position: new THREE.Vector3(0,1.0,0)}));
-  crystal.add(Object.assign(new THREE.Mesh(new THREE.SphereGeometry(0.25,16,12), new THREE.MeshStandardMaterial({color:0x9966ff,transparent:true,opacity:0.6,metalness:0.3,roughness:0.1})), {position: new THREE.Vector3(0,1.25,0)}));
+  crystal.add(Object.assign(new THREE.Mesh(new THREE.SphereGeometry(0.25,16,12), new THREE.MeshBasicMaterial({color:0x9966ff,transparent:true,opacity:0.6})), {position: new THREE.Vector3(0,1.25,0)}));
   crystal.position.set(-3, 0, -1.5);
   west.add(crystal); interactables2.west.push(crystal);
   // Door
