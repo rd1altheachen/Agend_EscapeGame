@@ -2,7 +2,7 @@
 body { font-family: 'Segoe UI', sans-serif; background: #1a1a2e; overflow: hidden; height: 100vh; width: 100vw; }
 #game-container { display: flex; flex-direction: column; height: 100vh; width: 100vw; }
 #scene-area { flex: 1; position: relative; overflow: hidden; }
-#scene-area canvas { display: block; width: 100%; height: 100%; }
+#scene-area canvas { display: block; }
 .hidden { display: none !important; }
 
 /* Animations */

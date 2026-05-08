@@ -35,12 +35,19 @@ function initThree() {
 
   animate();
 
-  window.addEventListener('resize', () => {
-    const w = container.clientWidth, h = container.clientHeight;
-    renderer.setSize(w, h);
-    camera.aspect = w / h;
-    camera.updateProjectionMatrix();
-  });
+  window.addEventListener('resize', onResize);
+  // Trigger resize after a frame to handle in-app browsers
+  setTimeout(onResize, 100);
+}
+
+function onResize() {
+  const container = document.getElementById('scene-area');
+  const w = container.clientWidth, h = container.clientHeight;
+  if (w === 0 || h === 0) return;
+  renderer.setSize(w, h);
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+}
 
   renderer.domElement.addEventListener('pointerdown', onPointerDown);
   renderer.domElement.addEventListener('pointermove', onPointerMove);
@@ -107,16 +114,16 @@ function mat(color) { return new THREE.MeshStandardMaterial({ color }); }
 // ===== ROOM 1: Starry Study =====
 function buildRoom1() {
   const s = new THREE.Scene();
-  s.background = new THREE.Color(0x1a2040);
-  s.add(new THREE.AmbientLight(0xffffff, 1.8));
-  const dir = new THREE.DirectionalLight(0xffd700, 0.6);
+  s.background = new THREE.Color(0x0a1030);
+  s.add(new THREE.AmbientLight(0xffffff, 2.2));
+  const dir = new THREE.DirectionalLight(0xffffff, 0.8);
   dir.position.set(2, 5, 2); s.add(dir);
 
   // Floor
-  s.add(Object.assign(new THREE.Mesh(new THREE.BoxGeometry(8,0.1,8), mat(0x3d2b1f)), {position: new THREE.Vector3(0,-0.05,0)}));
+  s.add(Object.assign(new THREE.Mesh(new THREE.BoxGeometry(8,0.1,8), mat(0x5a4030)), {position: new THREE.Vector3(0,-0.05,0)}));
 
   // 4 walls (always visible as backdrop)
-  const wm = mat(0x1a2550);
+  const wm = mat(0x2a3a6a);
   s.add(Object.assign(new THREE.Mesh(new THREE.BoxGeometry(8,5,0.15), wm.clone()), {position: new THREE.Vector3(0,2.5,-4)}));
   s.add(Object.assign(new THREE.Mesh(new THREE.BoxGeometry(0.15,5,8), wm.clone()), {position: new THREE.Vector3(-4,2.5,0)}));
   s.add(Object.assign(new THREE.Mesh(new THREE.BoxGeometry(0.15,5,8), wm.clone()), {position: new THREE.Vector3(4,2.5,0)}));
@@ -219,17 +226,17 @@ function buildRoom1() {
 // ===== ROOM 2: Potion Kitchen =====
 function buildRoom2() {
   const s = new THREE.Scene();
-  s.background = new THREE.Color(0x4a3020);
-  s.add(new THREE.AmbientLight(0xffffff, 1.8));
-  const dir = new THREE.DirectionalLight(0xffcc66, 0.6);
+  s.background = new THREE.Color(0x2a1a10);
+  s.add(new THREE.AmbientLight(0xffffff, 2.2));
+  const dir = new THREE.DirectionalLight(0xffffff, 0.8);
   dir.position.set(-2,5,2); s.add(dir);
-  s.add(Object.assign(new THREE.PointLight(0xff8800,0.4,8), {position: new THREE.Vector3(0,1,0)}));
+  s.add(Object.assign(new THREE.PointLight(0xff8800,0.6,10), {position: new THREE.Vector3(0,1,0)}));
 
   // Floor
-  s.add(Object.assign(new THREE.Mesh(new THREE.BoxGeometry(8,0.1,8), mat(0x555555)), {position: new THREE.Vector3(0,-0.05,0)}));
+  s.add(Object.assign(new THREE.Mesh(new THREE.BoxGeometry(8,0.1,8), mat(0x666666)), {position: new THREE.Vector3(0,-0.05,0)}));
 
   // 4 walls
-  const wm = mat(0x6b4020);
+  const wm = mat(0x8b5a30);
   s.add(Object.assign(new THREE.Mesh(new THREE.BoxGeometry(8,5,0.15), wm.clone()), {position: new THREE.Vector3(0,2.5,-4)}));
   s.add(Object.assign(new THREE.Mesh(new THREE.BoxGeometry(0.15,5,8), wm.clone()), {position: new THREE.Vector3(-4,2.5,0)}));
   s.add(Object.assign(new THREE.Mesh(new THREE.BoxGeometry(0.15,5,8), wm.clone()), {position: new THREE.Vector3(4,2.5,0)}));
