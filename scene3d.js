@@ -17,12 +17,12 @@ const CAM_TARGETS = {
 
 function initThree() {
   const container = document.getElementById('scene-area');
-  renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer = new THREE.WebGLRenderer({ antialias: false });
   renderer.setSize(container.clientWidth, container.clientHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   container.insertBefore(renderer.domElement, container.firstChild);
 
-  camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 100);
+  camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.5, 100);
   camera.position.set(0, 1.6, 0);
 
   raycaster = new THREE.Raycaster();
@@ -30,6 +30,8 @@ function initThree() {
 
   scene1 = buildRoom1();
   scene2 = buildRoom2();
+  // Disable frustum culling for iOS compatibility (camera inside room)
+  [scene1, scene2].forEach(s => s.traverse(child => { if(child.isMesh) child.frustumCulled = false; }));
   currentScene = scene1;
   setView('north');
 
