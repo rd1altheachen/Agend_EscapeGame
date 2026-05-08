@@ -118,7 +118,7 @@ function buildRoom1(){
   con.add(Object.assign(new THREE.Mesh(new THREE.SphereGeometry(0.4,16,12),new THREE.MeshStandardMaterial({color:0x1a1a4a,wireframe:true})),{position:new THREE.Vector3(0,1.5,0)}));
   // Gold ring
   con.add(Object.assign(new THREE.Mesh(new THREE.TorusGeometry(0.35,0.02,8,24),mat(0xdaa520)),{position:new THREE.Vector3(0,1.5,0),rotation:new THREE.Euler(Math.PI/3,0,0)}));
-  con.position.set(3.3,0,-0.8);
+  con.position.set(3.3,0,0);
   east.add(con);interactables1.east.push(con);
   // Magic Door (right side, z>0)
   const door=new THREE.Group();door.userData.action=()=>puzzle1_3();
@@ -158,7 +158,7 @@ function buildRoom1(){
   flower.add(Object.assign(new THREE.Mesh(new THREE.SphereGeometry(0.2,8,8),mat(0x2d8a2d)),{position:new THREE.Vector3(0,0.4,0)}));
   // Small flower
   flower.add(Object.assign(new THREE.Mesh(new THREE.SphereGeometry(0.06,6,6),mat(0xff69b4)),{position:new THREE.Vector3(0,0.55,0)}));
-  flower.position.set(-1.2,0,3.2);
+  flower.position.set(-0.6,0,3.2);
   south.add(flower);interactables1.south.push(flower);
   s.add(south);wallGroups1.south=south;
 
@@ -301,7 +301,7 @@ function buildRoom2(){
   scale.add(Object.assign(new THREE.Mesh(new THREE.CylinderGeometry(0.18,0.18,0.03,12),mat(0x8b6914)),{position:new THREE.Vector3(0.42,0.95,0)}));
   // Gem on one pan
   scale.add(Object.assign(new THREE.Mesh(new THREE.SphereGeometry(0.08,8,8),mat(0x9900ff)),{position:new THREE.Vector3(-0.42,1.0,0)}));
-  scale.position.set(1.2,0,3);
+  scale.position.set(0.4,0,3);
   south.add(scale);interactables2.south.push(scale);
   s.add(south);wallGroups2.south=south;
 
