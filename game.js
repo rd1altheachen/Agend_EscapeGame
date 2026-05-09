@@ -212,26 +212,56 @@ function puzzle1_1() {
   if (!state.mirrorUsed) {
     state.mirrorUsed = true;
     showModal(`<div style="text-align:center;">
-      <div style="width:100px;height:140px;margin:10px auto;border-radius:50%;border:4px solid #b8860b;background:radial-gradient(ellipse,#1a1a4a,#2a2a6a);display:flex;align-items:center;justify-content:center;box-shadow:0 0 15px rgba(100,100,200,0.3);">
-        <div style="display:flex;gap:2px;justify-content:center;flex-wrap:wrap;padding:8px;">
-          <span style="display:inline-block;width:7px;height:18px;background:#8b4513;border-radius:1px;"></span>
-          <span style="display:inline-block;width:7px;height:16px;background:#2e8b57;border-radius:1px;"></span>
-          <span style="display:inline-block;width:7px;height:20px;background:#4169e1;border-radius:1px;"></span>
-          <span style="display:inline-block;width:7px;height:17px;background:#ffd700;border-radius:1px;box-shadow:0 0 8px #ffd700;"></span>
-          <span style="display:inline-block;width:7px;height:19px;background:#8b0000;border-radius:1px;"></span>
-          <span style="display:inline-block;width:7px;height:15px;background:#4b0082;border-radius:1px;"></span>
+      <div style="width:120px;height:150px;margin:10px auto;border-radius:50%;border:4px solid #b8860b;background:radial-gradient(ellipse,#1a1a4a,#2a2a6a);display:flex;align-items:center;justify-content:center;box-shadow:0 0 15px rgba(100,100,200,0.3);">
+        <div style="padding:8px;">
+          <div style="display:flex;gap:2px;justify-content:center;margin-bottom:4px;">
+            <span style="display:inline-block;width:6px;height:14px;background:#c0392b;border-radius:1px;"></span>
+            <span style="display:inline-block;width:6px;height:16px;background:#2980b9;border-radius:1px;"></span>
+            <span style="display:inline-block;width:6px;height:13px;background:#27ae60;border-radius:1px;"></span>
+            <span style="display:inline-block;width:6px;height:15px;background:#8e44ad;border-radius:1px;"></span>
+            <span style="display:inline-block;width:6px;height:14px;background:#d4ac0d;border-radius:1px;"></span>
+          </div>
+          <div style="display:flex;gap:2px;justify-content:center;margin-bottom:4px;">
+            <span style="display:inline-block;width:6px;height:15px;background:#1a5276;border-radius:1px;"></span>
+            <span style="display:inline-block;width:6px;height:13px;background:#6c3483;border-radius:1px;"></span>
+            <span style="display:inline-block;width:7px;height:17px;background:#ffd700;border-radius:1px;box-shadow:0 0 8px #ffd700;"></span>
+            <span style="display:inline-block;width:6px;height:14px;background:#148f77;border-radius:1px;"></span>
+            <span style="display:inline-block;width:6px;height:16px;background:#922b21;border-radius:1px;"></span>
+          </div>
+          <div style="display:flex;gap:2px;justify-content:center;">
+            <span style="display:inline-block;width:6px;height:14px;background:#b7950b;border-radius:1px;"></span>
+            <span style="display:inline-block;width:6px;height:15px;background:#e74c3c;border-radius:1px;"></span>
+            <span style="display:inline-block;width:6px;height:13px;background:#2ecc71;border-radius:1px;"></span>
+            <span style="display:inline-block;width:6px;height:16px;background:#c0392b;border-radius:1px;"></span>
+            <span style="display:inline-block;width:6px;height:14px;background:#2980b9;border-radius:1px;"></span>
+          </div>
         </div>
       </div></div>`);
   } else {
     showModal(`<div style="text-align:center;">
-      <div style="width:100px;height:140px;margin:10px auto;border-radius:50%;border:4px solid #b8860b;background:radial-gradient(ellipse,#1a1a4a,#2a2a6a);display:flex;align-items:center;justify-content:center;box-shadow:0 0 15px rgba(100,100,200,0.3);">
-        <div style="display:flex;gap:2px;justify-content:center;flex-wrap:wrap;padding:8px;">
-          <span style="display:inline-block;width:7px;height:18px;background:#8b4513;border-radius:1px;"></span>
-          <span style="display:inline-block;width:7px;height:16px;background:#2e8b57;border-radius:1px;"></span>
-          <span style="display:inline-block;width:7px;height:20px;background:#4169e1;border-radius:1px;"></span>
-          <span style="display:inline-block;width:7px;height:17px;background:#ffd700;border-radius:1px;box-shadow:0 0 8px #ffd700;"></span>
-          <span style="display:inline-block;width:7px;height:19px;background:#8b0000;border-radius:1px;"></span>
-          <span style="display:inline-block;width:7px;height:15px;background:#4b0082;border-radius:1px;"></span>
+      <div style="width:120px;height:150px;margin:10px auto;border-radius:50%;border:4px solid #b8860b;background:radial-gradient(ellipse,#1a1a4a,#2a2a6a);display:flex;align-items:center;justify-content:center;box-shadow:0 0 15px rgba(100,100,200,0.3);">
+        <div style="padding:8px;">
+          <div style="display:flex;gap:2px;justify-content:center;margin-bottom:4px;">
+            <span style="display:inline-block;width:6px;height:14px;background:#c0392b;border-radius:1px;"></span>
+            <span style="display:inline-block;width:6px;height:16px;background:#2980b9;border-radius:1px;"></span>
+            <span style="display:inline-block;width:6px;height:13px;background:#27ae60;border-radius:1px;"></span>
+            <span style="display:inline-block;width:6px;height:15px;background:#8e44ad;border-radius:1px;"></span>
+            <span style="display:inline-block;width:6px;height:14px;background:#d4ac0d;border-radius:1px;"></span>
+          </div>
+          <div style="display:flex;gap:2px;justify-content:center;margin-bottom:4px;">
+            <span style="display:inline-block;width:6px;height:15px;background:#1a5276;border-radius:1px;"></span>
+            <span style="display:inline-block;width:6px;height:13px;background:#6c3483;border-radius:1px;"></span>
+            <span style="display:inline-block;width:7px;height:17px;background:#ffd700;border-radius:1px;box-shadow:0 0 8px #ffd700;"></span>
+            <span style="display:inline-block;width:6px;height:14px;background:#148f77;border-radius:1px;"></span>
+            <span style="display:inline-block;width:6px;height:16px;background:#922b21;border-radius:1px;"></span>
+          </div>
+          <div style="display:flex;gap:2px;justify-content:center;">
+            <span style="display:inline-block;width:6px;height:14px;background:#b7950b;border-radius:1px;"></span>
+            <span style="display:inline-block;width:6px;height:15px;background:#e74c3c;border-radius:1px;"></span>
+            <span style="display:inline-block;width:6px;height:13px;background:#2ecc71;border-radius:1px;"></span>
+            <span style="display:inline-block;width:6px;height:16px;background:#c0392b;border-radius:1px;"></span>
+            <span style="display:inline-block;width:6px;height:14px;background:#2980b9;border-radius:1px;"></span>
+          </div>
         </div>
       </div></div>`);
   }
