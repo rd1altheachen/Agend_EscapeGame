@@ -89,7 +89,7 @@ function buildRoom1(){
   shelf.add((function(){const _m=new THREE.Mesh(new THREE.BoxGeometry(0.5,2.8,1.8),mat(0x4a3222));_m.position.set(0,1.4,0);return _m;})());
   // Shelf boards
   for(let y of [0.6,1.2,1.8,2.4]){const sh=new THREE.Mesh(new THREE.BoxGeometry(0.52,0.04,1.8),mat(0x5a4232));sh.position.set(0,y,0);shelf.add(sh);}
-  // Books on shelves (standing upright, positioned on front face)
+  // Books on shelves (standing upright, positioned in front of shelf body)
   const bc=[0xc0392b,0x2980b9,0x27ae60,0x8e44ad,0xd4ac0d,0x1a5276,0x6c3483,0x148f77,0x922b21,0xb7950b,0xe74c3c,0x2ecc71];
   let bi=0;
   for(let row=0;row<3;row++){
@@ -97,7 +97,7 @@ function buildRoom1(){
       const h=0.3+Math.random()*0.15;
       const color=(row===1&&i===2)?0xffd700:bc[bi%12];
       const bk=new THREE.Mesh(new THREE.BoxGeometry(0.06+Math.random()*0.03,h,0.25),mat(color));
-      bk.position.set(0.2,0.65+row*0.6+h/2,-0.55+i*0.28);
+      bk.position.set(0.28,0.65+row*0.6+h/2,-0.55+i*0.28);
       shelf.add(bk);bi++;
     }
   }
