@@ -62,10 +62,12 @@ function buildRoom1(){
   const clock=new THREE.Group();clock.userData.action=()=>clickClock();
   const clockFace=new THREE.Mesh(new THREE.CylinderGeometry(0.45,0.45,0.08,24),mat(0xeeeeee));clockFace.rotation.set(Math.PI/2,0,0);clock.add(clockFace);
   clock.add(new THREE.Mesh(new THREE.TorusGeometry(0.45,0.05,8,24),mat(0xb8860b)));
-  const hand1=new THREE.Mesh(new THREE.BoxGeometry(0.03,0.28,0.03),mat(0x222222));
-  hand1.position.set(0,0.08,0.05);clock.add(hand1);
-  const hand2=new THREE.Mesh(new THREE.BoxGeometry(0.025,0.35,0.025),mat(0x222222));
-  hand2.position.set(0.04,-0.12,0.05);hand2.rotation.z=-Math.PI/6;clock.add(hand2);
+  // Hour hand (short, pointing to 3 = right, slightly past due to :15)
+  const hand1=new THREE.Mesh(new THREE.BoxGeometry(0.04,0.22,0.02),mat(0x222222));
+  hand1.position.set(0.09,0.02,0.05);hand1.rotation.z=-Math.PI/2-Math.PI/24;clock.add(hand1);
+  // Minute hand (long, pointing to 3 = 15 min = right)
+  const hand2=new THREE.Mesh(new THREE.BoxGeometry(0.03,0.32,0.02),mat(0x222222));
+  hand2.position.set(0.14,0,0.05);hand2.rotation.z=-Math.PI/2;clock.add(hand2);
   clock.position.set(0,3,-3.8);
   north.add(clock);interactables1.north.push(clock);
   // Fireplace (lower center)
@@ -87,22 +89,18 @@ function buildRoom1(){
   shelf.add((function(){const _m=new THREE.Mesh(new THREE.BoxGeometry(0.5,2.8,1.8),mat(0x4a3222));_m.position.set(0,1.4,0);return _m;})());
   // Shelf boards
   for(let y of [0.6,1.2,1.8,2.4]){const sh=new THREE.Mesh(new THREE.BoxGeometry(0.52,0.04,1.8),mat(0x5a4232));sh.position.set(0,y,0);shelf.add(sh);}
-  // Books on shelves (standing upright)
+  // Books on shelves (standing upright, positioned on front face)
   const bc=[0xc0392b,0x2980b9,0x27ae60,0x8e44ad,0xd4ac0d,0x1a5276,0x6c3483,0x148f77,0x922b21,0xb7950b,0xe74c3c,0x2ecc71];
   let bi=0;
   for(let row=0;row<3;row++){
     for(let i=0;i<5;i++){
       const h=0.3+Math.random()*0.15;
-      // Book: thin(x) x tall(y) x depth(z)
-      const bk=new THREE.Mesh(new THREE.BoxGeometry(0.06+Math.random()*0.03,h,0.25),mat(bc[bi%12]));
-      bk.position.set(0.08,0.35+row*0.6+h/2,-0.55+i*0.28);
+      const color=(row===1&&i===2)?0xffd700:bc[bi%12];
+      const bk=new THREE.Mesh(new THREE.BoxGeometry(0.06+Math.random()*0.03,h,0.25),mat(color));
+      bk.position.set(0.2,0.65+row*0.6+h/2,-0.55+i*0.28);
       shelf.add(bk);bi++;
     }
   }
-  // Special gold book (puzzle 1-1 target) - 2nd row, 3rd position
-  const goldBook=new THREE.Mesh(new THREE.BoxGeometry(0.08,0.38,0.25),mat(0xffd700));
-  goldBook.position.set(0.08,0.35+0.6+0.19,-0.55+2*0.28);
-  shelf.add(goldBook);
   shelf.position.set(-3.7,0,0.3);
   west.add(shelf);interactables1.west.push(shelf);
   // Mirror (upper, offset from shelf)
