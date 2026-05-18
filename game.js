@@ -385,15 +385,28 @@ function showRecipeWall() {
 
 function puzzle2_1() {
   if (isSolved('2-1')) return;
-  showModal(`<h3>音樂盒</h3>
-    <p style="text-align:center;font-size:20px;"><span style="color:#ff4444;">●</span> → <span style="color:#4444ff;">●</span> → <span style="color:#ffd700;">●</span></p>
+  showModal(`<div style="text-align:center;">
+    <div style="display:flex;gap:4px;justify-content:center;margin:10px 0;">
+      <span style="display:inline-block;width:20px;height:20px;border-radius:50%;background:#ff4444;"></span>
+      <span style="color:#666;line-height:20px;">→</span>
+      <span style="display:inline-block;width:20px;height:20px;border-radius:50%;background:#4444ff;"></span>
+      <span style="color:#666;line-height:20px;">→</span>
+      <span style="display:inline-block;width:20px;height:20px;border-radius:50%;background:#ffd700;"></span>
+    </div>
+    <div style="display:flex;gap:6px;justify-content:center;margin:15px 0;align-items:flex-end;height:50px;">
+      <div style="width:25px;height:45px;background:rgba(255,215,0,0.4);border:1px solid rgba(255,215,0,0.6);border-radius:3px;"></div>
+      <div style="width:25px;height:22px;background:rgba(255,215,0,0.4);border:1px solid rgba(255,215,0,0.6);border-radius:3px;"></div>
+      <div style="width:25px;height:22px;background:rgba(255,215,0,0.4);border:1px solid rgba(255,215,0,0.6);border-radius:3px;"></div>
+      <div style="width:25px;height:45px;background:rgba(255,215,0,0.4);border:1px solid rgba(255,215,0,0.6);border-radius:3px;"></div>
+    </div>
     <div id="rhythm-btns" style="display:flex;gap:10px;justify-content:center;margin:15px 0;">
       <button class="symbol-btn" onclick="rhythmPress(0)" id="rb0">♪</button>
       <button class="symbol-btn" onclick="rhythmPress(1)" id="rb1">♪</button>
       <button class="symbol-btn" onclick="rhythmPress(2)" id="rb2">♪</button>
       <button class="symbol-btn" onclick="rhythmPress(3)" id="rb3">♪</button>
-    </div><p style="font-size:11px;color:#888;">♪短 / ♩長</p>
-    <button onclick="checkRhythm()">確認</button>`);
+    </div>
+    <button onclick="checkRhythm()">確認</button>
+  </div>`);
 }
 let rhythmState=[0,0,0,0];
 function rhythmPress(idx){rhythmState[idx]=1-rhythmState[idx];document.getElementById('rb'+idx).textContent=rhythmState[idx]?'♩':'♪';document.getElementById('rb'+idx).classList.toggle('active',rhythmState[idx]);}
@@ -419,7 +432,7 @@ function checkOwl(){if(owlLeft===1&&owlRight===2){solvePuzzle('2-2');addItem('ra
 
 function puzzle2_3() {
   if (isSolved('2-3')) return;
-  if (!state._bottleOrder) state._bottleOrder=[3,5,6,1,4,0,2];
+  if (!state._bottleOrder) state._bottleOrder=[0,4,6,2,5,1,3];
   const colors=[{name:'紫',color:'#9b59b6'},{name:'綠',color:'#27ae60'},{name:'藍',color:'#2980b9'},{name:'紅',color:'#e74c3c'},{name:'靛',color:'#34495e'},{name:'橙',color:'#e67e22'},{name:'黃',color:'#f1c40f'}];
   showModal(`<h3>彩色瓶子</h3>
     <div class="bottle-rack" id="bottle-rack"></div><p style="font-size:11px;color:#888;">點擊交換</p>
