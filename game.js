@@ -170,8 +170,8 @@ function switchRoom(roomNum) {
   saveGame();
 }
 
-function renderRoom1() { updateStarCounter(); }
-function renderRoom2() { updateStarCounter(); }
+function renderRoom1() { updateStarCounter(); renderScene(); }
+function renderRoom2() { updateStarCounter(); renderScene(); }
 
 // ===== HINT SYSTEM =====
 function showHint() {
@@ -481,7 +481,7 @@ function puzzle2_6() {
 }
 
 // ===== INITIALIZATION =====
-function initGame(){initThree();renderInventory();updateStarCounter();if(state.doorOpen)document.getElementById('btn-room2').disabled=false;switchScene(state.currentRoom);document.getElementById('btn-room1').classList.toggle('active',state.currentRoom===1);document.getElementById('btn-room2').classList.toggle('active',state.currentRoom===2);}
+function initGame(){initScene2D();renderInventory();updateStarCounter();if(state.doorOpen)document.getElementById('btn-room2').disabled=false;switchScene(state.currentRoom);document.getElementById('btn-room1').classList.toggle('active',state.currentRoom===1);document.getElementById('btn-room2').classList.toggle('active',state.currentRoom===2);}
 document.addEventListener('DOMContentLoaded',()=>{
   if(hasSave())document.getElementById('btn-load').classList.remove('hidden');
   document.getElementById('btn-start').onclick=()=>{state=defaultState();document.getElementById('start-screen').classList.add('hidden');initGame();};
@@ -493,5 +493,5 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.getElementById('btn-save').onclick=saveGame;
   document.getElementById('modal-close').onclick=closeModal;
   document.getElementById('overlay').onclick=closeModal;
-  document.getElementById('scene-area').addEventListener('click',(e)=>{if(e.target.tagName==='CANVAS'){/* handled by Three.js raycaster */}});
+  document.getElementById('scene-area').addEventListener('click',(e)=>{});
 });

@@ -2,7 +2,11 @@
 body { font-family: 'Segoe UI', sans-serif; background: #1a1a2e; overflow: hidden; height: 100vh; height: 100dvh; width: 100vw; }
 #game-container { display: flex; flex-direction: column; height: 100vh; height: 100dvh; width: 100vw; overflow: hidden; }
 #scene-area { flex: 1; position: relative; overflow: hidden; min-height: 0; }
-#scene-area canvas { display: block; position: absolute; top: 0; left: 0; width: 100% !important; height: 100% !important; }
+#scene-objects { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+.scene-object { position: absolute; transform: translate(-50%, -50%); cursor: pointer; image-rendering: pixelated; transition: transform 0.15s, filter 0.15s; display: flex; align-items: center; justify-content: center; }
+.scene-object:hover { transform: translate(-50%, -50%) scale(1.08); filter: brightness(1.2) drop-shadow(0 0 8px rgba(255,215,0,0.5)); }
+.scene-object img { width: 100%; height: 100%; object-fit: contain; image-rendering: pixelated; pointer-events: none; }
+.wall-label { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.4); font-size: 12px; pointer-events: none; z-index: 5; }
 .hidden { display: none !important; }
 
 /* Animations */
