@@ -9,28 +9,31 @@
 html,body{height:100%;background:#111;font-family:sans-serif;overflow:hidden}
 #app{display:flex;flex-direction:column;align-items:center;height:100dvh;width:100%}
 #scene-wrap{position:relative;width:100%;max-width:390px;aspect-ratio:390/550;background:#000;overflow:hidden;flex-shrink:0}
-#scene-wrap img{width:100%;height:100%;object-fit:cover;display:block}
+#scene-wrap>div>img{width:100%;height:100%;object-fit:cover;display:block}
 .placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#999;font-size:24px;background:#fff}
-/* Hotspots - no hover effect */
 .hotspot{position:absolute;cursor:pointer;border:none;background:transparent;z-index:5}
-/* Circular nav hitboxes */
-.nav-circle{position:absolute;bottom:4%;width:12%;aspect-ratio:1;border-radius:50%;cursor:pointer;z-index:10;border:2px solid transparent;transition:border-color .3s,box-shadow .3s}
+.nav-circle{position:absolute;bottom:3%;width:12%;aspect-ratio:1;border-radius:50%;cursor:pointer;z-index:10;border:2px solid transparent;transition:border-color .3s,box-shadow .3s}
 .nav-circle.flash{border-color:rgba(255,255,255,.8);box-shadow:0 0 12px rgba(255,255,255,.6)}
-.nav-circle-l{left:5%}
-.nav-circle-r{right:5%}
-/* Dialogue box */
-#dialogue{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.75);color:#fff;padding:12px;font-size:14px;line-height:1.5;z-index:50;cursor:pointer;display:none}
-/* Closeup overlay */
-#closeup{position:absolute;inset:0;background:#000;z-index:40;display:none;flex-direction:column;align-items:center;justify-content:center}
-#closeup.active{display:flex}
-#closeup img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
-.closeup-back{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);padding:8px 24px;background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.4);border-radius:20px;cursor:pointer;z-index:45;font-size:14px}
+.nav-circle-l{left:7%}
+.nav-circle-r{right:7%}
+/* Debug hitbox visibility */
+.show-hitbox .hotspot{border:2px dashed red!important}
+.show-hitbox .nav-circle{border:2px dashed red!important}
+/* Dialogue */
+#dialogue{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.75);color:#fff;padding:12px;font-size:14px;line-height:1.5;z-index:60;cursor:pointer;display:none}
+/* Popup overlay */
+#popup-overlay{position:absolute;inset:0;background:rgba(0,0,0,.5);z-index:40;display:none;align-items:center;justify-content:center}
+#popup-overlay.active{display:flex}
+.popup-frame{position:relative;width:360px;height:240px;background:url('assets/ui/popup-frame.png') center/contain no-repeat}
+.popup-content{position:absolute;top:12px;left:25px;width:310px;height:170px;overflow:hidden}
+.popup-content img{width:100%;height:100%;object-fit:cover;display:block}
+.popup-back{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);padding:4px 20px;background:transparent;color:#fff;border:none;cursor:pointer;font-size:13px;z-index:45}
 /* Keyhole diamond hitboxes */
-.keyhole{position:absolute;width:10%;aspect-ratio:1;transform:rotate(45deg);cursor:pointer;border:2px solid rgba(255,215,0,.3);z-index:45}
-/* Orrery closeup */
+.keyhole{position:absolute;width:36px;height:36px;transform:rotate(45deg);cursor:pointer;border:2px solid rgba(255,215,0,.3);z-index:45}
+/* Orrery */
 .orrery-slot{position:absolute;display:flex;flex-direction:column;align-items:center;z-index:45}
-.orrery-placeholder{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;font-weight:bold;text-align:center}
-.orrery-btn{width:32px;height:32px;border-radius:50%;border:1px solid rgba(255,255,255,.4);background:rgba(255,255,255,.1);color:#fff;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;margin:4px 0}
+.orrery-placeholder{width:70px;height:70px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;font-weight:bold;text-align:center}
+.orrery-btn{width:28px;height:28px;border-radius:50%;border:1px solid rgba(255,255,255,.4);background:rgba(255,255,255,.15);color:#fff;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;margin:2px 0}
 /* Inventory */
 #inventory{display:flex;width:100%;max-width:390px;background:#1a1a2e;border-top:2px solid #ffd700;padding:6px 8px;justify-content:center;gap:6px}
 .inv-slot{width:42px;height:42px;border:2px dashed rgba(255,215,0,.3);border-radius:8px}
@@ -43,7 +46,6 @@ html,body{height:100%;background:#111;font-family:sans-serif;overflow:hidden}
 #debug-panel{display:none;position:fixed;top:10px;right:10px;background:rgba(0,0,0,.9);color:#0f0;padding:12px;border-radius:8px;font-size:12px;z-index:999;max-height:80vh;overflow-y:auto}
 #debug-panel label{display:block;margin:4px 0;cursor:pointer}
 #debug-panel input[type=checkbox]{margin-right:6px}
-/* Key animation */
 @keyframes flyIn{from{transform:translate(-50%,-200%) scale(1.5);opacity:1}to{transform:translate(-50%,-50%) scale(.5);opacity:0}}
 @keyframes goldGlow{0%{box-shadow:0 0 0 rgba(255,215,0,0)}50%{box-shadow:0 0 40px rgba(255,215,0,.8)}100%{box-shadow:0 0 0 rgba(255,215,0,0)}}
 @keyframes fadeOut{from{opacity:1}to{opacity:0}}
@@ -53,7 +55,7 @@ html,body{height:100%;background:#111;font-family:sans-serif;overflow:hidden}
 <div id="app">
   <div id="scene-wrap">
     <div id="scene-content"></div>
-    <div id="closeup"></div>
+    <div id="popup-overlay"></div>
     <div id="dialogue" onclick="hideDialogue()"></div>
   </div>
   <div id="inventory">
@@ -69,6 +71,8 @@ html,body{height:100%;background:#111;font-family:sans-serif;overflow:hidden}
 </div>
 <div id="debug-panel">
   <strong>Debug Panel</strong><hr style="border-color:#333;margin:6px 0">
+  <label><input type="checkbox" onchange="toggleHitbox(this.checked)">顯示 HitBox</label>
+  <hr style="border-color:#333;margin:6px 0">
   <div id="debug-flags"></div>
   <button onclick="gameState.inventory.push('crystal_key');renderDebug()" style="margin-top:8px;padding:4px 8px;font-size:11px">+水晶鑰匙</button>
   <button onclick="gameState.inventory.push('magic_weight');renderDebug()" style="margin-top:4px;padding:4px 8px;font-size:11px">+魔法砝碼</button>
@@ -76,7 +80,7 @@ html,body{height:100%;background:#111;font-family:sans-serif;overflow:hidden}
 <script>
 const VIEWS=['north','east','south','west'];
 const LABELS={north:'北牆',east:'東牆',south:'南牆',west:'西牆'};
-let currentRoom=1,viewIdx=1; // start on east wall for testing
+let currentRoom=1,viewIdx=1;
 
 const gameState={
   inventory:[],
@@ -87,27 +91,28 @@ const gameState={
   doorOpen:false,
 };
 
-// Orrery puzzle state
 const CONSTELLATIONS=['紅獅子','藍獅子','藍水瓶','金水瓶','金天秤','紅天秤'];
 const CONSTELLATION_COLORS={紅獅子:'#c0392b',藍獅子:'#2980b9',藍水瓶:'#3498db',金水瓶:'#f39c12',金天秤:'#f1c40f',紅天秤:'#e74c3c'};
-let orrerySlots=[0,0,0]; // indices into CONSTELLATIONS
+let orrerySlots=[0,0,0];
 
 function showDialogue(text){
   const d=document.getElementById('dialogue');
-  d.textContent=text;
-  d.style.display='block';
+  d.textContent=text;d.style.display='block';
 }
 function hideDialogue(){document.getElementById('dialogue').style.display='none';}
+
+function toggleHitbox(on){
+  document.getElementById('scene-wrap').classList.toggle('show-hitbox',on);
+}
 
 function render(){
   const el=document.getElementById('scene-content');
   const view=VIEWS[viewIdx];
-  document.getElementById('closeup').classList.remove('active');
-  document.getElementById('closeup').innerHTML='';
+  closePopup();
   if(currentRoom===1&&view==='east'){
     el.innerHTML=`<img src="assets/scene-room1-east.png" alt="東牆">
-      <div class="hotspot" style="top:25%;left:8%;width:30%;height:38%" onclick="clickOrrery()"></div>
-      <div class="hotspot" style="top:15%;left:47%;width:33%;height:70%" onclick="clickDoor()"></div>
+      <div class="hotspot" style="top:30%;left:8%;width:30%;height:33%" onclick="clickOrrery()"></div>
+      <div class="hotspot" style="top:15%;left:47%;width:33%;height:63%" onclick="clickDoor()"></div>
       <div class="nav-circle nav-circle-l" onclick="navFlash(this,-1)"></div>
       <div class="nav-circle nav-circle-r" onclick="navFlash(this,1)"></div>`;
   } else {
@@ -122,7 +127,6 @@ function navFlash(el,dir){
   el.classList.add('flash');
   setTimeout(()=>{el.classList.remove('flash');rotate(dir);},300);
 }
-
 function rotate(d){viewIdx=(viewIdx+d+4)%4;render();}
 function switchRoom(r){
   currentRoom=r;viewIdx=0;render();
@@ -130,69 +134,66 @@ function switchRoom(r){
   document.getElementById('btn-r2').classList.toggle('active',r===2);
 }
 
-// --- Door interaction ---
-function clickDoor(){
-  showKeyholeCloseup();
+// --- Popup system ---
+function showPopup(html){
+  const o=document.getElementById('popup-overlay');
+  o.innerHTML=`<div class="popup-frame">${html}</div>`;
+  o.classList.add('active');
+}
+function closePopup(){
+  const o=document.getElementById('popup-overlay');
+  o.classList.remove('active');o.innerHTML='';
 }
 
-function showKeyholeCloseup(){
-  const c=document.getElementById('closeup');
-  c.classList.add('active');
-  // Use the east wall image cropped to keyhole area via object-position
-  c.innerHTML=`
-    <img src="assets/scene-room1-east.png" style="object-fit:cover;object-position:68% 42%;transform:scale(3)">
-    <div class="keyhole" style="top:32%;left:30%" onclick="clickKeyhole('left')"></div>
-    <div class="keyhole" style="top:32%;left:58%" onclick="clickKeyhole('right')"></div>
-    <div class="keyhole" style="top:52%;left:44%" onclick="clickKeyhole('middle')"></div>
-    <div class="closeup-back" onclick="closeCloseup()">返回</div>`;
+// --- Door ---
+function clickDoor(){
+  showPopup(`
+    <div class="popup-content">
+      <img src="assets/scene-room1-east.png" style="object-position:68% 43%;transform:scale(2.8)">
+    </div>
+    <div class="keyhole" style="top:55px;left:110px" onclick="clickKeyhole('left')"></div>
+    <div class="keyhole" style="top:55px;left:195px" onclick="clickKeyhole('right')"></div>
+    <div class="keyhole" style="top:105px;left:152px" onclick="clickKeyhole('middle')"></div>
+    <button class="popup-back" onclick="closePopup()">返回</button>`);
 }
 
 function clickKeyhole(pos){
   const hasKey=gameState.inventory.includes('crystal_key');
   if(!hasKey){showDialogue('沒有鑰匙');return;}
   if(!gameState.hasCarpetClue||!gameState.hasSpellClue){showDialogue('好像還缺什麼東西');return;}
-  if(pos!=='middle')return; // wrong hole - no response
-  // Correct! Animate key insertion
+  if(pos!=='middle')return;
   animateDoorOpen();
 }
 
 function animateDoorOpen(){
-  const c=document.getElementById('closeup');
-  // Key fly-in animation
+  const frame=document.querySelector('.popup-frame');
   const key=document.createElement('div');
   key.style.cssText='position:absolute;top:50%;left:50%;width:30px;height:30px;background:#ffd700;border-radius:4px;z-index:46;animation:flyIn .5s forwards';
-  c.appendChild(key);
+  frame.appendChild(key);
   setTimeout(()=>{
-    // Gold glow
-    c.style.animation='goldGlow .5s';
+    frame.style.animation='goldGlow .5s';
     setTimeout(()=>{
-      // Fade out and switch room
-      c.style.animation='fadeOut .5s forwards';
+      document.getElementById('popup-overlay').style.animation='fadeOut .5s forwards';
       setTimeout(()=>{
+        document.getElementById('popup-overlay').style.animation='';
         gameState.doorOpen=true;
-        c.style.animation='';
-        c.classList.remove('active');
-        c.innerHTML='';
+        closePopup();
         switchRoom(2);
       },500);
     },500);
   },500);
 }
 
-// --- Orrery interaction ---
+// --- Orrery ---
 function clickOrrery(){
-  showOrreryCloseup();
-}
-
-function showOrreryCloseup(){
-  const c=document.getElementById('closeup');
-  c.classList.add('active');
-  c.innerHTML=`
-    <img src="assets/scene-room1-east.png" style="object-fit:cover;object-position:20% 40%;transform:scale(2.8)">
-    <div class="orrery-slot" style="top:20%;left:15%" id="os0"></div>
-    <div class="orrery-slot" style="top:20%;left:42%" id="os1"></div>
-    <div class="orrery-slot" style="top:20%;left:69%" id="os2"></div>
-    <div class="closeup-back" onclick="closeCloseup()">返回</div>`;
+  showPopup(`
+    <div class="popup-content">
+      <img src="assets/scene-room1-east.png" style="object-position:20% 38%;transform:scale(2.8)">
+    </div>
+    <div class="orrery-slot" style="top:25px;left:30px" id="os0"></div>
+    <div class="orrery-slot" style="top:25px;left:140px" id="os1"></div>
+    <div class="orrery-slot" style="top:25px;left:250px" id="os2"></div>
+    <button class="popup-back" onclick="closePopup()">返回</button>`);
   renderOrrerySlots();
 }
 
@@ -216,25 +217,14 @@ function cycleOrrery(slot,dir){
 }
 
 function checkOrreryAnswer(){
-  // Correct: 紅獅子(0), 藍水瓶(2), 金天秤(4)
   const correct=orrerySlots[0]===0&&orrerySlots[1]===2&&orrerySlots[2]===4;
   if(!correct)return;
   if(!gameState.hasStarChart||!gameState.hasMusicBoxClue){
-    showDialogue('好像還缺什麼東西');
-    return;
+    showDialogue('好像還缺什麼東西');return;
   }
-  // Success!
   showDialogue('星座儀發出柔和的光芒…你獲得了魔法砝碼！');
-  if(!gameState.inventory.includes('magic_weight')){
-    gameState.inventory.push('magic_weight');
-  }
-  setTimeout(()=>closeCloseup(),1500);
-}
-
-function closeCloseup(){
-  const c=document.getElementById('closeup');
-  c.classList.remove('active');
-  c.innerHTML='';
+  if(!gameState.inventory.includes('magic_weight'))gameState.inventory.push('magic_weight');
+  setTimeout(()=>closePopup(),1500);
 }
 
 // --- Debug ---
@@ -243,11 +233,9 @@ function toggleDebug(){
   p.style.display=p.style.display==='none'?'block':'none';
   renderDebug();
 }
-
 function renderDebug(){
   const flags=['hasStarChart','hasMusicBoxClue','hasCarpetClue','hasSpellClue','doorOpen'];
-  const el=document.getElementById('debug-flags');
-  el.innerHTML=flags.map(f=>`<label><input type="checkbox" ${gameState[f]?'checked':''} onchange="gameState['${f}']=this.checked">${f}</label>`).join('')
+  document.getElementById('debug-flags').innerHTML=flags.map(f=>`<label><input type="checkbox" ${gameState[f]?'checked':''} onchange="gameState['${f}']=this.checked">${f}</label>`).join('')
     +`<p style="margin-top:8px;color:#aaa">inventory: ${JSON.stringify(gameState.inventory)}</p>`;
 }
 
