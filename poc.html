@@ -12,10 +12,10 @@ html,body{height:100%;background:#111;font-family:sans-serif;overflow:hidden}
 #scene-wrap>div>img{width:100%;height:100%;object-fit:cover;display:block}
 .placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#999;font-size:24px;background:#fff}
 .hotspot{position:absolute;cursor:pointer;border:none;background:transparent;z-index:5}
-.nav-circle{position:absolute;bottom:3%;width:12%;aspect-ratio:1;border-radius:50%;cursor:pointer;z-index:10;border:2px solid transparent;transition:border-color .3s,box-shadow .3s}
+.nav-circle{position:absolute;bottom:5%;width:12%;aspect-ratio:1;border-radius:50%;cursor:pointer;z-index:10;border:2px solid transparent;transition:border-color .3s,box-shadow .3s}
 .nav-circle.flash{border-color:rgba(255,255,255,.8);box-shadow:0 0 12px rgba(255,255,255,.6)}
-.nav-circle-l{left:7%}
-.nav-circle-r{right:7%}
+.nav-circle-l{left:5%}
+.nav-circle-r{right:5%}
 /* Debug hitbox visibility */
 .show-hitbox .hotspot{border:2px dashed red!important}
 .show-hitbox .nav-circle{border:2px dashed red!important}
@@ -112,7 +112,7 @@ function render(){
   if(currentRoom===1&&view==='east'){
     el.innerHTML=`<img src="assets/scene-room1-east.png" alt="東牆">
       <div class="hotspot" style="top:33%;left:8%;width:25%;height:22%" onclick="clickOrrery()"></div>
-      <div class="hotspot" style="top:15%;left:47%;width:33%;height:63%" onclick="clickDoor()"></div>
+      <div class="hotspot" style="top:5%;left:43%;width:42%;height:80%" onclick="clickDoor()"></div>
       <div class="nav-circle nav-circle-l" onclick="navFlash(this,-1)"></div>
       <div class="nav-circle nav-circle-r" onclick="navFlash(this,1)"></div>`;
   } else {
