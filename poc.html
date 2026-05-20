@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>2D Scene POC</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;background:#111;font-family:sans-serif;overflow:hidden}
+#app{display:flex;flex-direction:column;align-items:center;height:100dvh;width:100%}
+#scene-wrap{position:relative;width:100%;max-width:390px;aspect-ratio:390/550;background:#fff;overflow:hidden;flex-shrink:0}
+#scene-img{width:100%;height:100%;object-fit:cover;display:block}
+.placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#999;font-size:24px;background:#fff}
+/* Hotspots */
+.hotspot{position:absolute;cursor:pointer;border:2px solid transparent;border-radius:4px;transition:border-color .2s,box-shadow .2s}
+.hotspot:hover{border-color:rgba(255,215,0,.7);box-shadow:0 0 12px rgba(255,215,0,.5)}
+/* Arrows inside scene */
+.arrow{position:absolute;bottom:8%;width:44px;height:44px;background:rgba(0,0,0,.4);color:#fff;border:none;border-radius:50%;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10}
+.arrow:hover{background:rgba(0,0,0,.6)}
+.arrow-l{left:6%}
+.arrow-r{right:6%}
+/* Inventory */
+#inventory{display:flex;gap:0;width:100%;max-width:390px;background:#1a1a2e;border-top:2px solid #ffd700;padding:6px 8px;justify-content:center;gap:6px}
+.inv-slot{width:42px;height:42px;border:2px dashed rgba(255,215,0,.3);border-radius:8px}
+/* Toolbar */
+#toolbar{display:flex;width:100%;max-width:390px;background:#0d0d1a;padding:6px 8px;justify-content:center;gap:8px}
+#toolbar button{padding:8px 16px;border:none;border-radius:16px;background:rgba(255,255,255,.1);color:#fff;font-size:14px;cursor:pointer}
+#toolbar button.active{background:rgba(255,215,0,.3);border:1px solid #ffd700}
+#toolbar button:hover{background:rgba(255,255,255,.2)}
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="scene-wrap">
+    <div id="scene-content"></div>
+    <button class="arrow arrow-l" onclick="rotate(-1)">◀</button>
+    <button class="arrow arrow-r" onclick="rotate(1)">▶</button>
+  </div>
+  <div id="inventory">
+    <div class="inv-slot"></div><div class="inv-slot"></div><div class="inv-slot"></div>
+    <div class="inv-slot"></div><div class="inv-slot"></div><div class="inv-slot"></div>
+  </div>
+  <div id="toolbar">
+    <button id="btn-r1" class="active" onclick="switchRoom(1)">⭐ 房間1</button>
+    <button id="btn-r2" onclick="switchRoom(2)">🧪 房間2</button>
+    <button onclick="console.log('提示')">💡 提示</button>
+  </div>
+</div>
+<script>
+const VIEWS=['north','east','south','west'];
+const LABELS={north:'北牆',east:'東牆',south:'南牆',west:'西牆'};
+let currentRoom=1,viewIdx=0;
+
+// East wall hotspots (% based for responsive)
+const HOTSPOTS=[
+  {name:'星座儀',top:'25%',left:'5%',width:'35%',height:'50%'},
+  {name:'魔法門',top:'10%',left:'55%',width:'40%',height:'80%'},
+  {name:'鑰匙孔-左',top:'45%',left:'60%',width:'8%',height:'6%'},
+  {name:'鑰匙孔-中',top:'45%',left:'72%',width:'8%',height:'6%'},
+  {name:'鑰匙孔-右',top:'45%',left:'84%',width:'8%',height:'6%'},
+];
+
+function render(){
+  const el=document.getElementById('scene-content');
+  const view=VIEWS[viewIdx];
+  if(currentRoom===1&&view==='east'){
+    el.innerHTML=`<img id="scene-img" src="assets/scene-room1-east.png" alt="東牆">`;
+    HOTSPOTS.forEach(h=>{
+      const d=document.createElement('div');
+      d.className='hotspot';
+      d.style.cssText=`top:${h.top};left:${h.left};width:${h.width};height:${h.height}`;
+      d.title=h.name;
+      d.onclick=()=>console.log('clicked:',h.name);
+      el.appendChild(d);
+    });
+  } else {
+    const room=currentRoom===1?'房間1':'房間2';
+    el.innerHTML=`<div class="placeholder">${room} — ${LABELS[view]}</div>`;
+  }
+}
+
+function rotate(d){viewIdx=(viewIdx+d+4)%4;render();}
+function switchRoom(r){
+  currentRoom=r;viewIdx=0;render();
+  document.getElementById('btn-r1').classList.toggle('active',r===1);
+  document.getElementById('btn-r2').classList.toggle('active',r===2);
+}
+render();
+</script>
+</body>
+</html>
