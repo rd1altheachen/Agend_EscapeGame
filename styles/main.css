@@ -9,7 +9,8 @@ html,body{height:100%;background:#111;font-family:sans-serif;overflow:hidden}
 .nav-circle.flash{border-color:rgba(255,255,255,.8);box-shadow:0 0 12px rgba(255,255,255,.6)}
 .show-hitbox .hotspot{border:2px dashed red!important}
 .show-hitbox .nav-circle{border:2px dashed red!important}
-#dialogue{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.75);color:#fff;padding:12px;font-size:14px;line-height:1.5;z-index:60;cursor:pointer;display:none}
+#dialogue{position:absolute;inset:0;display:none;align-items:center;justify-content:center;z-index:60;cursor:pointer;background:transparent}
+#dialogue .dialogue-bar{background:rgba(0,0,0,.8);color:#fff;padding:14px 24px;font-size:14px;line-height:1.5;text-align:center;border-radius:4px;max-width:80%;pointer-events:none}
 #popup-overlay{position:absolute;inset:0;background:rgba(0,0,0,.5);z-index:40;display:none;align-items:center;justify-content:center}
 #popup-overlay.active{display:flex}
 .popup-frame{position:relative;width:360px;height:240px}

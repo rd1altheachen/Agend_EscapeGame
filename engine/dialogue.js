@@ -3,10 +3,11 @@ const el = document.getElementById('dialogue');
 el.addEventListener('click', hideDialogue);
 
 export function showDialogue(text) {
-  el.textContent = text;
-  el.style.display = 'block';
+  el.innerHTML = `<div class="dialogue-bar">${text}</div>`;
+  el.style.display = 'flex';
 }
 
 export function hideDialogue() {
   el.style.display = 'none';
+  el.innerHTML = '';
 }
