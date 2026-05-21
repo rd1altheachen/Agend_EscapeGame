@@ -85,10 +85,8 @@ function openOrreryPopup() {
     <div class="orrery-slot" style="top:40px;left:30px" id="os0"></div>
     <div class="orrery-slot" style="top:40px;left:140px" id="os1"></div>
     <div class="orrery-slot" style="top:40px;left:250px" id="os2"></div>
-    <button class="popup-back" id="orrery-confirm" style="bottom:38px;right:30px;left:auto;transform:none;background:rgba(255,215,0,.2);border:1px solid #ffd700;border-radius:12px;padding:4px 16px">確認</button>
     <button class="popup-back" id="orrery-back">返回</button>`);
   document.getElementById('orrery-back').addEventListener('click', closePopup);
-  document.getElementById('orrery-confirm').addEventListener('click', checkOrreryAnswer);
   renderOrrerySlots();
 }
 
@@ -101,7 +99,7 @@ function renderOrrerySlots() {
     const data = puzzle.optionData[name];
     el.innerHTML = `
       <div class="orrery-btn" data-slot="${i}" data-dir="-1">▲</div>
-      <div class="orrery-placeholder" style="background:${data.bg}"><img src="${data.img}" style="width:48px;height:48px;object-fit:contain"></div>
+      <div class="orrery-placeholder" style="background:#fff"><img src="${data.img}" style="width:48px;height:48px;object-fit:contain"></div>
       <div class="orrery-label">${name}</div>
       <div class="orrery-btn" data-slot="${i}" data-dir="1">▼</div>`;
     el.querySelectorAll('.orrery-btn').forEach(btn => {
