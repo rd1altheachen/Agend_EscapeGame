@@ -130,8 +130,8 @@ function checkOrreryAnswer() {
 // --- Door Popup ---
 function openDoorPopup() {
   openPopup(`
-    <div class="popup-content">
-      <img src="assets/scene-room1-east.png" style="position:absolute;top:-391px;left:-371px;width:780px;height:1100px;max-width:none">
+    <div class="popup-content" style="top:35px">
+      <img src="assets/scene-room1-east.png" style="position:absolute;top:-311px;left:-391px;width:702px;height:990px;max-width:none">
     </div>
     <div class="keyhole" style="top:80px;left:110px" data-hole="left"></div>
     <div class="keyhole" style="top:80px;left:162px" data-hole="middle"></div>
