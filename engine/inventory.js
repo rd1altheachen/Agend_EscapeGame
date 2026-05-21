@@ -66,14 +66,16 @@ function onSlotClick(itemId) {
   const def = ITEM_DEFS[itemId];
   if (!def) return;
 
-  if (def.type === 'view') {
+  // Toggle selection (only one at a time)
+  selectedItemId = selectedItemId === itemId ? null : itemId;
+  renderInventory();
+
+  // View type also shows content
+  if (def.type === 'view' && selectedItemId === itemId) {
     showDialogue(def.viewText);
     if (def.flagOnRead) setFlag(def.flagOnRead, true);
     if (!gameState.readItems) gameState.readItems = [];
     if (!gameState.readItems.includes(itemId)) gameState.readItems.push(itemId);
-  } else if (def.type === 'use') {
-    selectedItemId = selectedItemId === itemId ? null : itemId;
-    renderInventory();
   }
 }
 
