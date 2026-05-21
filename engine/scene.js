@@ -80,7 +80,7 @@ function handleAction(action) {
 function openOrreryPopup() {
   openPopup(`
     <div class="popup-content" style="top:27px">
-      <img src="assets/scene-room1-east.png" style="position:absolute;top:-330px;left:-20px;width:780px;height:1100px;max-width:none">
+      <img src="assets/scene-room1-east.png" style="position:absolute;top:-280px;left:-20px;width:780px;height:1100px;max-width:none">
     </div>
     <div class="orrery-slot" style="top:37px;left:37px" id="os0"></div>
     <div class="orrery-slot" style="top:37px;left:140px" id="os1"></div>
