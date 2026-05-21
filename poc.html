@@ -92,7 +92,14 @@ const gameState={
 };
 
 const CONSTELLATIONS=['紅獅子','藍獅子','藍水瓶','金水瓶','金天秤','紅天秤'];
-const CONSTELLATION_COLORS={紅獅子:'#c0392b',藍獅子:'#2980b9',藍水瓶:'#3498db',金水瓶:'#f39c12',金天秤:'#f1c40f',紅天秤:'#e74c3c'};
+const CONSTELLATION_DATA={
+  紅獅子:{img:'assets/constellations/constellation-lion.png',bg:'#c0392b'},
+  藍獅子:{img:'assets/constellations/constellation-lion.png',bg:'#2980b9'},
+  藍水瓶:{img:'assets/constellations/constellation-aquarius.png',bg:'#2980b9'},
+  金水瓶:{img:'assets/constellations/constellation-aquarius.png',bg:'#f39c12'},
+  金天秤:{img:'assets/constellations/constellation-libra.png',bg:'#f39c12'},
+  紅天秤:{img:'assets/constellations/constellation-libra.png',bg:'#c0392b'},
+};
 let orrerySlots=[0,0,0];
 
 function showDialogue(text){
@@ -202,10 +209,11 @@ function renderOrrerySlots(){
     const el=document.getElementById('os'+i);
     if(!el)return;
     const name=CONSTELLATIONS[orrerySlots[i]];
-    const color=CONSTELLATION_COLORS[name];
+    const d=CONSTELLATION_DATA[name];
     el.innerHTML=`
       <div class="orrery-btn" onclick="cycleOrrery(${i},-1)">▲</div>
-      <div class="orrery-placeholder" style="background:${color}">${name}</div>
+      <div class="orrery-placeholder" style="background:${d.bg}"><img src="${d.img}" style="width:60px;height:60px;filter:brightness(0) invert(1);object-fit:contain"></div>
+      <div style="color:#fff;font-size:9px;margin-top:2px">${name}</div>
       <div class="orrery-btn" onclick="cycleOrrery(${i},1)">▼</div>`;
   }
 }
