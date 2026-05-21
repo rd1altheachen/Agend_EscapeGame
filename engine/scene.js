@@ -134,8 +134,8 @@ function openDoorPopup() {
       <img src="assets/scene-room1-east.png" style="position:absolute;top:-321px;left:-331px;width:702px;height:990px;max-width:none">
     </div>
     <div class="keyhole" style="top:100px;left:80px" data-hole="left"></div>
-    <div class="keyhole" style="top:100px;left:162px" data-hole="middle"></div>
-    <div class="keyhole" style="top:100px;left:244px" data-hole="right"></div>
+    <div class="keyhole" style="top:100px;left:165px" data-hole="middle"></div>
+    <div class="keyhole" style="top:100px;left:247px" data-hole="right"></div>
     <button class="popup-back" id="door-back">返回</button>`);
   document.getElementById('door-back').addEventListener('click', closePopup);
   document.querySelectorAll('.keyhole').forEach(kh => {
