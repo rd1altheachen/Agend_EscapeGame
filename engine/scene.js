@@ -79,12 +79,12 @@ function handleAction(action) {
 // --- Orrery Popup ---
 function openOrreryPopup() {
   openPopup(`
-    <div class="popup-content">
-      <img src="assets/scene-room1-east.png" style="width:300%;height:300%;object-fit:none;object-position:-30px -150px">
+    <div class="popup-content" style="top:27px">
+      <img src="assets/scene-room1-east.png" style="width:300%;height:300%;object-fit:none;object-position:0px -150px">
     </div>
-    <div class="orrery-slot" style="top:25px;left:30px" id="os0"></div>
-    <div class="orrery-slot" style="top:25px;left:140px" id="os1"></div>
-    <div class="orrery-slot" style="top:25px;left:250px" id="os2"></div>
+    <div class="orrery-slot" style="top:37px;left:37px" id="os0"></div>
+    <div class="orrery-slot" style="top:37px;left:140px" id="os1"></div>
+    <div class="orrery-slot" style="top:37px;left:243px" id="os2"></div>
     <button class="popup-back" id="orrery-back">返回</button>`);
   document.getElementById('orrery-back').addEventListener('click', closePopup);
   renderOrrerySlots();
