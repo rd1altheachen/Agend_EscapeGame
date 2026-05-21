@@ -11,7 +11,7 @@ html,body{height:100%;background:#111;font-family:sans-serif;overflow:hidden}
 .show-hitbox .nav-circle{border:2px dashed red!important}
 #dialogue{position:absolute;inset:0;display:none;align-items:center;justify-content:center;z-index:60;cursor:pointer;background:transparent}
 #dialogue .dialogue-bar{background:rgba(0,0,0,.8);color:#fff;padding:14px 24px;font-size:14px;line-height:1.5;text-align:center;border-radius:4px;max-width:80%;pointer-events:none}
-#popup-overlay{position:absolute;inset:0;background:rgba(0,0,0,.5);z-index:40;display:none;align-items:center;justify-content:center}
+#popup-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:40;display:none;align-items:center;justify-content:center}
 #popup-overlay.active{display:flex}
 .popup-frame{position:relative;width:360px;height:240px}
 .popup-frame-bg{position:absolute;inset:0;background:url('../assets/ui/popup-frame.png') center/contain no-repeat;z-index:2;pointer-events:none}

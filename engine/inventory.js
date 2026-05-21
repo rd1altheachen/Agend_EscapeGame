@@ -19,7 +19,7 @@ const ITEM_DEFS = {
     type: 'view',
     icon: '📖',
     color: '#f1c40f',
-    viewImage: 'assets/items/star-chart.png',
+    viewCustom: true,
     flagOnRead: 'hasStarChart',
   },
   magic_weight: {
@@ -73,7 +73,23 @@ function onSlotClick(itemId) {
 
   // View type also shows content
   if (def.type === 'view' && selectedItemId === itemId) {
-    if (def.viewImage) {
+    if (def.viewCustom) {
+      openPopup(`
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:3">
+          <div style="width:320px;height:200px;background:url('assets/ui/parchment-bg.png') center/cover;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:20px">
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px 16px">
+              <img src="assets/icons/constellation-gemini.png" style="width:48px;height:48px">
+              <img src="assets/icons/constellation-lion.png" style="width:48px;height:48px">
+              <img src="assets/icons/constellation-libra.png" style="width:48px;height:48px">
+              <img src="assets/icons/constellation-scorpio.png" style="width:48px;height:48px">
+              <img src="assets/icons/constellation-aquarius.png" style="width:48px;height:48px">
+              <img src="assets/icons/constellation-sagittarius.png" style="width:48px;height:48px">
+            </div>
+          </div>
+        </div>
+        <button class="popup-back" id="view-back">關閉</button>`);
+      document.getElementById('view-back').addEventListener('click', closePopup);
+    } else if (def.viewImage) {
       openPopup(`
         <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:3">
           <img src="${def.viewImage}" style="max-width:90%;max-height:90%;object-fit:contain;border-radius:4px">
@@ -99,7 +115,7 @@ export function renderInventory() {
     if (itemId) {
       const def = ITEM_DEFS[itemId];
       if (def) {
-        slot.innerHTML = `<span class="inv-icon" style="background:${def.color}">${def.icon}</span><span class="inv-name">${def.name}</span>`;
+        slot.innerHTML = `<span class="inv-icon" style="background:${def.color}">${def.icon}</span>`;
         slot.classList.add('inv-filled');
         if (selectedItemId === itemId) slot.classList.add('inv-selected');
         slot.addEventListener('click', () => onSlotClick(itemId));
