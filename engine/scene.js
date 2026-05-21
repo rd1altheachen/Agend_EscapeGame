@@ -131,11 +131,11 @@ function checkOrreryAnswer() {
 function openDoorPopup() {
   openPopup(`
     <div class="popup-content">
-      <img src="assets/scene-room1-east.png" style="object-position:68% 43%;transform:scale(2.8)">
+      <img src="assets/scene-room1-east.png" style="position:absolute;top:-391px;left:-371px;width:780px;height:1100px;max-width:none">
     </div>
-    <div class="keyhole" style="top:55px;left:110px" data-hole="left"></div>
-    <div class="keyhole" style="top:55px;left:195px" data-hole="right"></div>
-    <div class="keyhole" style="top:105px;left:152px" data-hole="middle"></div>
+    <div class="keyhole" style="top:80px;left:110px" data-hole="left"></div>
+    <div class="keyhole" style="top:80px;left:162px" data-hole="middle"></div>
+    <div class="keyhole" style="top:80px;left:214px" data-hole="right"></div>
     <button class="popup-back" id="door-back">返回</button>`);
   document.getElementById('door-back').addEventListener('click', closePopup);
   document.querySelectorAll('.keyhole').forEach(kh => {
