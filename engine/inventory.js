@@ -75,8 +75,8 @@ function onSlotClick(itemId) {
   if (def.type === 'view' && selectedItemId === itemId) {
     if (def.viewCustom) {
       openPopup(`
-        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:3">
-          <div style="width:320px;height:200px;background:url('assets/ui/parchment-bg.png') center/cover;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:20px">
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2">
+          <div style="width:256px;height:160px;background:url('assets/ui/parchment-bg.png') center/cover;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:16px">
             <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px 16px">
               <img src="assets/icons/constellation-gemini.png" style="width:48px;height:48px">
               <img src="assets/icons/constellation-lion.png" style="width:48px;height:48px">
@@ -91,7 +91,7 @@ function onSlotClick(itemId) {
       document.getElementById('view-back').addEventListener('click', closePopup);
     } else if (def.viewImage) {
       openPopup(`
-        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:3">
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2">
           <img src="${def.viewImage}" style="max-width:90%;max-height:90%;object-fit:contain;border-radius:4px">
         </div>
         <button class="popup-back" id="view-back">關閉</button>`);
