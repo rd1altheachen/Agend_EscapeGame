@@ -4,7 +4,8 @@ const STORAGE_KEY = 'escape_game_save';
 export const gameState = {
   currentRoom: 'room1',
   wallIndex: 1, // 0=north,1=east,2=south,3=west
-  inventory: [],
+  inventory: ['crystal_key', 'star_chart'],
+  readItems: [],
   hasStarChart: false,
   hasMusicBoxClue: false,
   hasCarpetClue: false,

@@ -1,6 +1,6 @@
 // engine/debug.js — Debug panel
 import { gameState } from './state.js';
-import { renderInventory } from './inventory.js';
+import { addItem, renderInventory } from './inventory.js';
 
 const panel = document.getElementById('debug-panel');
 
@@ -31,13 +31,11 @@ export function setupDebugPanel() {
     document.getElementById('scene-wrap').classList.toggle('show-hitbox', this.checked);
   });
   document.getElementById('debug-add-key').addEventListener('click', () => {
-    gameState.inventory.push('crystal_key');
-    renderInventory();
+    addItem('crystal_key');
     renderDebug();
   });
   document.getElementById('debug-add-weight').addEventListener('click', () => {
-    gameState.inventory.push('magic_weight');
-    renderInventory();
+    addItem('magic_weight');
     renderDebug();
   });
 }

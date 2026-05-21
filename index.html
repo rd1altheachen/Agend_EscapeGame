@@ -31,13 +31,14 @@
 </div>
 <script type="module">
 import { initScene } from './engine/scene.js';
-import { renderInventory } from './engine/inventory.js';
+import { renderInventory, initInventorySceneListener } from './engine/inventory.js';
 import { initDebug, setupDebugPanel } from './engine/debug.js';
 
 renderInventory();
 initDebug();
 setupDebugPanel();
 initScene();
+initInventorySceneListener();
 </script>
 </body>
 </html>

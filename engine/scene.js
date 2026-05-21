@@ -2,7 +2,7 @@
 import { gameState, setFlag } from './state.js';
 import { showDialogue } from './dialogue.js';
 import { openPopup, closePopup, getPopupFrame, getOverlay } from './popup.js';
-import { addItem, hasItem } from './inventory.js';
+import { addItem, hasItem, getSelectedItem, removeItem, clearSelection } from './inventory.js';
 
 const WALLS = ['north', 'east', 'south', 'west'];
 const LABELS = { north: '北牆', east: '東牆', south: '南牆', west: '西牆' };
@@ -145,10 +145,16 @@ function openDoorPopup() {
 
 function clickKeyhole(pos) {
   const puzzle = puzzlesData['magic-door'];
-  if (!hasItem(puzzle.requiredItem)) { showDialogue(puzzle.noItemMessage); return; }
+  const selected = getSelectedItem();
+  if (selected !== puzzle.requiredItem) {
+    showDialogue(selected ? '這個物品不適用於此處' : puzzle.noItemMessage);
+    return;
+  }
   const missingFlag = puzzle.requiredFlags.some(f => !gameState[f]);
   if (missingFlag) { showDialogue(puzzle.missingFlagMessage); return; }
   if (pos !== puzzle.correctHole) return;
+  removeItem(puzzle.requiredItem);
+  clearSelection();
   animateDoorOpen();
 }
 
