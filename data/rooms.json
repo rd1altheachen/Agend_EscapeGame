@@ -1,0 +1,40 @@
+{
+  "room1": {
+    "name": "星光書房",
+    "walls": {
+      "north": { "image": null, "hotspots": [], "navButtons": { "left": { "left": "2%", "bottom": "4%" }, "right": { "right": "2%", "bottom": "4%" } } },
+      "east": {
+        "image": "assets/scene-room1-east.png",
+        "hotspots": [
+          {
+            "id": "orrery",
+            "type": "puzzle",
+            "bounds": { "top": "37%", "left": "8%", "width": "25%", "height": "18%" },
+            "action": "openOrreryPopup"
+          },
+          {
+            "id": "magic-door",
+            "type": "puzzle",
+            "bounds": { "top": "8%", "left": "47%", "width": "49%", "height": "76%" },
+            "action": "openDoorPopup"
+          }
+        ],
+        "navButtons": {
+          "left": { "left": "2%", "bottom": "4%" },
+          "right": { "right": "2%", "bottom": "4%" }
+        }
+      },
+      "south": { "image": null, "hotspots": [], "navButtons": { "left": { "left": "2%", "bottom": "4%" }, "right": { "right": "2%", "bottom": "4%" } } },
+      "west": { "image": null, "hotspots": [], "navButtons": { "left": { "left": "2%", "bottom": "4%" }, "right": { "right": "2%", "bottom": "4%" } } }
+    }
+  },
+  "room2": {
+    "name": "煉金工坊",
+    "walls": {
+      "north": { "image": null, "hotspots": [], "navButtons": { "left": { "left": "2%", "bottom": "4%" }, "right": { "right": "2%", "bottom": "4%" } } },
+      "east": { "image": null, "hotspots": [], "navButtons": { "left": { "left": "2%", "bottom": "4%" }, "right": { "right": "2%", "bottom": "4%" } } },
+      "south": { "image": null, "hotspots": [], "navButtons": { "left": { "left": "2%", "bottom": "4%" }, "right": { "right": "2%", "bottom": "4%" } } },
+      "west": { "image": null, "hotspots": [], "navButtons": { "left": { "left": "2%", "bottom": "4%" }, "right": { "right": "2%", "bottom": "4%" } } }
+    }
+  }
+}
