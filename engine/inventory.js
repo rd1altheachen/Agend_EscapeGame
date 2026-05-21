@@ -1,6 +1,7 @@
 // engine/inventory.js — Inventory system with use/view item types
 import { gameState, setFlag } from './state.js';
 import { showDialogue } from './dialogue.js';
+import { openPopup, closePopup } from './popup.js';
 
 const SLOT_COUNT = 6;
 let selectedItemId = null;
@@ -18,7 +19,7 @@ const ITEM_DEFS = {
     type: 'view',
     icon: '📖',
     color: '#f1c40f',
-    viewText: '紅＝獅子座\n藍＝水瓶座\n金＝天秤座',
+    viewImage: 'assets/items/star-chart.png',
     flagOnRead: 'hasStarChart',
   },
   magic_weight: {
@@ -72,7 +73,16 @@ function onSlotClick(itemId) {
 
   // View type also shows content
   if (def.type === 'view' && selectedItemId === itemId) {
-    showDialogue(def.viewText);
+    if (def.viewImage) {
+      openPopup(`
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:3">
+          <img src="${def.viewImage}" style="max-width:90%;max-height:90%;object-fit:contain;border-radius:4px">
+        </div>
+        <button class="popup-back" id="view-back">關閉</button>`);
+      document.getElementById('view-back').addEventListener('click', closePopup);
+    } else if (def.viewText) {
+      showDialogue(def.viewText);
+    }
     if (def.flagOnRead) setFlag(def.flagOnRead, true);
     if (!gameState.readItems) gameState.readItems = [];
     if (!gameState.readItems.includes(itemId)) gameState.readItems.push(itemId);

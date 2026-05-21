@@ -1,16 +1,16 @@
 {
   "orrery": {
     "type": "selector",
-    "options": ["紅獅子", "藍獅子", "藍水瓶", "金水瓶", "金天秤", "紅天秤"],
+    "options": ["黑雙子", "紅獅子", "金天秤", "紫天蠍", "藍水瓶", "綠射手"],
     "optionData": {
-      "紅獅子": { "img": "assets/constellations/constellation-lion.png", "bg": "#c0392b" },
-      "藍獅子": { "img": "assets/constellations/constellation-lion.png", "bg": "#2980b9" },
-      "藍水瓶": { "img": "assets/constellations/constellation-aquarius.png", "bg": "#2980b9" },
-      "金水瓶": { "img": "assets/constellations/constellation-aquarius.png", "bg": "#f39c12" },
-      "金天秤": { "img": "assets/constellations/constellation-libra.png", "bg": "#f39c12" },
-      "紅天秤": { "img": "assets/constellations/constellation-libra.png", "bg": "#c0392b" }
+      "黑雙子": { "img": "assets/icons/constellation-gemini.png", "bg": "#2c3e50" },
+      "紅獅子": { "img": "assets/icons/constellation-lion.png", "bg": "#c0392b" },
+      "金天秤": { "img": "assets/icons/constellation-libra.png", "bg": "#f39c12" },
+      "紫天蠍": { "img": "assets/icons/constellation-scorpio.png", "bg": "#8e44ad" },
+      "藍水瓶": { "img": "assets/icons/constellation-aquarius.png", "bg": "#2980b9" },
+      "綠射手": { "img": "assets/icons/constellation-sagittarius.png", "bg": "#27ae60" }
     },
-    "answer": [0, 2, 4],
+    "answer": [1, 4, 2],
     "requiredFlags": ["hasStarChart", "hasMusicBoxClue"],
     "missingFlagMessage": "好像還缺什麼東西",
     "reward": { "item": "magic_weight", "message": "星座儀發出柔和的光芒…你獲得了魔法砝碼！" }
