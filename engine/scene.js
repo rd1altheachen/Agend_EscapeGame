@@ -80,7 +80,7 @@ function handleAction(action) {
 function openOrreryPopup() {
   openPopup(`
     <div class="popup-content">
-      <img src="assets/scene-room1-east.png" style="object-position:5% 35%;transform:scale(3.5)">
+      <img src="assets/scene-room1-east.png" style="width:300%;height:300%;object-fit:none;object-position:-30px -150px">
     </div>
     <div class="orrery-slot" style="top:25px;left:30px" id="os0"></div>
     <div class="orrery-slot" style="top:25px;left:140px" id="os1"></div>
@@ -100,7 +100,6 @@ function renderOrrerySlots() {
     el.innerHTML = `
       <div class="orrery-btn" data-slot="${i}" data-dir="-1">▲</div>
       <div class="orrery-placeholder" style="background:${data.bg}"><img src="${data.img}"></div>
-      <div class="orrery-label">${name}</div>
       <div class="orrery-btn" data-slot="${i}" data-dir="1">▼</div>`;
     el.querySelectorAll('.orrery-btn').forEach(btn => {
       btn.addEventListener('click', () => {
