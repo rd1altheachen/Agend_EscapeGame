@@ -47,13 +47,13 @@ function render() {
       const b = h.bounds;
       html += `<div class="hotspot" data-action="${h.action}" style="top:${b.top};left:${b.left};width:${b.width};height:${b.height}"></div>`;
     });
-    html += `<div class="nav-arrow nav-arrow-l" data-nav="-1">◀</div>`;
-    html += `<div class="nav-arrow nav-arrow-r" data-nav="1">▶</div>`;
+    html += `<div class="nav-arrow nav-arrow-l" data-nav="-1"></div>`;
+    html += `<div class="nav-arrow nav-arrow-r" data-nav="1"></div>`;
     el.innerHTML = html;
   } else {
     el.innerHTML = `<div class="placeholder">${room.name} — ${LABELS[wallName]}</div>
-      <div class="nav-arrow nav-arrow-l" data-nav="-1">◀</div>
-      <div class="nav-arrow nav-arrow-r" data-nav="1">▶</div>`;
+      <div class="nav-arrow nav-arrow-l" data-nav="-1"></div>
+      <div class="nav-arrow nav-arrow-r" data-nav="1"></div>`;
   }
 
   // Bind events
