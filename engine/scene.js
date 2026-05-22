@@ -42,7 +42,7 @@ function render() {
   const wall = room.walls[wallName];
 
   if (wall.image) {
-    let html = `<img src="${wall.image}" alt="${LABELS[wallName]}">`;
+    let html = `<img class="scene-bg" src="${wall.image}" alt="${LABELS[wallName]}">`;
     wall.hotspots.forEach(h => {
       const b = h.bounds;
       html += `<div class="hotspot" data-action="${h.action}" style="top:${b.top};left:${b.left};width:${b.width};height:${b.height}"></div>`;
