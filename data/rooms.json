@@ -2,7 +2,7 @@
   "room1": {
     "name": "星光書房",
     "walls": {
-      "north": { "image": null, "hotspots": [], "navButtons": { "left": { "left": "2%", "bottom": "4%" }, "right": { "right": "2%", "bottom": "4%" } } },
+      "north": { "image": "assets/scene-room1-north.png", "hotspots": [], "navButtons": { "left": { "left": "2%", "bottom": "4%" }, "right": { "right": "2%", "bottom": "4%" } } },
       "east": {
         "image": "assets/scene-room1-east.png",
         "hotspots": [
