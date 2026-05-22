@@ -227,7 +227,9 @@ function openCarpetPopup() {
   openPopup(`
     <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2">
       <div style="width:280px;padding:24px;background:#2c2c2c;border-radius:8px;border:2px solid #8b6914;text-align:center;color:#ffd700;font-size:14px;line-height:1.8">
-        圖案：三個孔，箭頭指向中間<br>旁邊寫著 <strong>Aperio</strong>
+        <h3 style="margin:0 0 8px">地毯下的圖案</h3>
+        <p style="margin:0 0 10px">你掀開地毯的角落，發現地板上刻著古老的圖案...</p>
+        <img src="assets/carpet-clue.png" style="max-width:100%;border-radius:8px;">
       </div>
     </div>
     <button class="popup-back" id="carpet-back">返回</button>`);
