@@ -193,7 +193,7 @@ function openFireplaceDialPopup() {
 function renderDial() {
   const container = document.getElementById('dial-container');
   if (!container) return;
-  const positions = [70, 117, 163, 210];
+  const positions = [73, 117, 163, 207];
   container.innerHTML = positions.map((x, i) => `
     <div class="dial-slot" style="left:${x + 15}px">
       <div class="dial-btn" data-slot="${i}" data-dir="-1">▲</div>
