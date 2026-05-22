@@ -48,7 +48,7 @@
           {
             "id": "mirror",
             "type": "puzzle",
-            "bounds": { "top": "16%", "left": "54%", "width": "36%", "height": "33%" },
+            "bounds": { "top": "16%", "left": "64%", "width": "25%", "height": "33%" },
             "action": "clickMirror"
           },
           {
