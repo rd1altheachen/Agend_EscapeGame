@@ -82,9 +82,9 @@ function openOrreryPopup() {
     <div class="popup-content" style="top:27px">
       <img src="assets/scene-room1-east.png" style="position:absolute;top:-420px;left:-20px;width:780px;height:1100px;max-width:none">
     </div>
-    <div class="orrery-slot" style="top:40px;left:30px" id="os0"></div>
-    <div class="orrery-slot" style="top:40px;left:140px" id="os1"></div>
-    <div class="orrery-slot" style="top:40px;left:250px" id="os2"></div>
+    <div class="orrery-slot" style="top:70px;left:60px" id="os0"></div>
+    <div class="orrery-slot" style="top:70px;left:150px" id="os1"></div>
+    <div class="orrery-slot" style="top:70px;left:240px" id="os2"></div>
     <button class="popup-back" id="orrery-back">返回</button>`);
   document.getElementById('orrery-back').addEventListener('click', closePopup);
   renderOrrerySlots();
