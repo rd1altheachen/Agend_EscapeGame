@@ -262,7 +262,7 @@ function clickGoldBook() {
   setFlag('goldBookTaken', true);
   addItem('star_chart');
   const img = document.querySelector('.scene-obj[src*="book-gold-star"]');
-  if (img) img.remove();
+  if (img) { img.style.visibility = 'hidden'; requestAnimationFrame(() => img.remove()); }
 }
 
 // --- West Wall: Blue Key Book ---
@@ -272,7 +272,7 @@ function clickBlueBook() {
   setFlag('blueBookTaken', true);
   addItem('spell_book');
   const img = document.querySelector('.scene-obj[src*="book-blue-key"]');
-  if (img) img.remove();
+  if (img) { img.style.visibility = 'hidden'; requestAnimationFrame(() => img.remove()); }
 }
 
 // --- Carpet Popup ---
