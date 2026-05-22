@@ -247,7 +247,7 @@ function clickMirror() {
   el.appendChild(img);
   let count = 0;
   const flash = () => {
-    if (count >= 6) { img.remove(); setFlag('mirrorUsed', true); return; }
+    if (count >= 4) { img.remove(); setFlag('mirrorUsed', true); return; }
     img.style.opacity = count % 2 === 0 ? '1' : '0';
     count++;
     setTimeout(flash, 500);
