@@ -51,8 +51,8 @@ function render() {
     html += `<img class="nav-arrow nav-arrow-r" src="assets/ui/arrow-right.png" data-nav="1">`;
     // Overlay book items on west wall (disappear when taken)
     if (gameState.currentRoom === 'room1' && wallName === 'west') {
-      if (!gameState.goldBookTaken) html += `<img class="scene-obj" src="assets/items/book-gold-star.png" style="position:absolute;top:30%;left:24%;height:11%">`;
-      if (!gameState.blueBookTaken) html += `<img class="scene-obj" src="assets/items/book-blue-key.png" style="position:absolute;top:68%;left:10%;height:11%">`;
+      if (!gameState.goldBookTaken) html += `<img class="scene-obj" src="assets/items/book-gold-star.png" style="position:absolute;top:39.3%;left:33%;height:11.6%">`;
+      if (!gameState.blueBookTaken) html += `<img class="scene-obj" src="assets/items/book-blue-key.png" style="position:absolute;top:70.2%;left:11.5%;height:11.6%">`;
     }
     el.innerHTML = html;
   } else {
@@ -258,10 +258,9 @@ function clickMirror() {
 // --- West Wall: Gold Star Book (puzzle 1-1) ---
 function clickGoldBook() {
   if (gameState.goldBookTaken) return;
-  if (!gameState.mirrorUsed) { showDialogue('這本書似乎沒什麼特別...'); return; }
+  if (!gameState.mirrorUsed) return;
   setFlag('goldBookTaken', true);
   addItem('star_chart');
-  showDialogue('你取下了金色星星書，獲得了星座對照表！');
   render();
 }
 
@@ -271,7 +270,6 @@ function clickBlueBook() {
   if (!gameState.carpetViewed) return;
   setFlag('blueBookTaken', true);
   addItem('spell_book');
-  showDialogue('你取下了藍色鑰匙書，獲得了咒語書！');
   render();
 }
 

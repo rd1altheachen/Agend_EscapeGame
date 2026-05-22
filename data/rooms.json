@@ -54,13 +54,13 @@
           {
             "id": "book-gold-star",
             "type": "puzzle",
-            "bounds": { "top": "30%", "left": "22%", "width": "8%", "height": "12%" },
+            "bounds": { "top": "39%", "left": "33%", "width": "7%", "height": "12%" },
             "action": "clickGoldBook"
           },
           {
             "id": "book-blue-key",
             "type": "puzzle",
-            "bounds": { "top": "68%", "left": "8%", "width": "8%", "height": "12%" },
+            "bounds": { "top": "70%", "left": "11%", "width": "7%", "height": "12%" },
             "action": "clickBlueBook"
           }
         ],
