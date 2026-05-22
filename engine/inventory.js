@@ -28,6 +28,12 @@ const ITEM_DEFS = {
     icon: '⚖️',
     color: '#9b59b6',
   },
+  moonlight_powder: {
+    name: '月光粉',
+    type: 'use',
+    icon: '✨',
+    color: '#7f8c8d',
+  },
 };
 
 export function getItemDef(itemId) {

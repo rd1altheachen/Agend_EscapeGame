@@ -2,7 +2,24 @@
   "room1": {
     "name": "星光書房",
     "walls": {
-      "north": { "image": "assets/scene-room1-north.png", "hotspots": [], "navButtons": { "left": { "left": "2%", "bottom": "4%" }, "right": { "right": "2%", "bottom": "4%" } } },
+      "north": {
+        "image": "assets/scene-room1-north.png",
+        "hotspots": [
+          {
+            "id": "fireplace",
+            "type": "puzzle",
+            "bounds": { "top": "20%", "left": "25%", "width": "50%", "height": "45%" },
+            "action": "openFireplaceDialPopup"
+          },
+          {
+            "id": "carpet",
+            "type": "puzzle",
+            "bounds": { "top": "80%", "left": "60%", "width": "20%", "height": "15%" },
+            "action": "openCarpetPopup"
+          }
+        ],
+        "navButtons": { "left": { "left": "2%", "bottom": "4%" }, "right": { "right": "2%", "bottom": "4%" } }
+      },
       "east": {
         "image": "assets/scene-room1-east.png",
         "hotspots": [

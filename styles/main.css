@@ -7,8 +7,13 @@ html,body{height:100%;background:#111;font-family:sans-serif;overflow:hidden}
 .hotspot{position:absolute;cursor:pointer;border:none;background:transparent;z-index:5}
 .nav-circle{position:absolute;width:12%;aspect-ratio:1;border-radius:50%;cursor:pointer;z-index:10;border:2px solid transparent;transition:border-color .3s,box-shadow .3s}
 .nav-circle.flash{border-color:rgba(255,255,255,.8);box-shadow:0 0 12px rgba(255,255,255,.6)}
+.nav-arrow{position:absolute;bottom:4%;width:40px;height:40px;border-radius:50%;background:radial-gradient(circle,#ffd700 0%,#b8860b 100%);border:2px solid #8b6914;cursor:pointer;z-index:10;display:flex;align-items:center;justify-content:center;font-size:16px;color:#4a3000;font-weight:bold;box-shadow:0 2px 6px rgba(0,0,0,.4);transition:box-shadow .3s,transform .1s}
+.nav-arrow:active{transform:scale(.9)}
+.nav-arrow.flash{box-shadow:0 0 12px rgba(255,255,255,.8)}
+.nav-arrow-l{left:5%}
+.nav-arrow-r{right:5%}
 .show-hitbox .hotspot{border:2px dashed red!important}
-.show-hitbox .nav-circle{border:2px dashed red!important}
+.show-hitbox .nav-arrow{border:2px dashed red!important}
 #dialogue{position:absolute;inset:0;display:none;align-items:center;justify-content:center;z-index:60;cursor:pointer;background:transparent}
 #dialogue .dialogue-bar{background:rgba(0,0,0,.8);color:#fff;padding:14px 24px;font-size:14px;line-height:1.5;text-align:center;border-radius:4px;max-width:80%;pointer-events:none}
 #popup-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:40;display:none;align-items:center;justify-content:center}
@@ -24,6 +29,10 @@ html,body{height:100%;background:#111;font-family:sans-serif;overflow:hidden}
 .orrery-placeholder img{width:40px;height:40px;object-fit:contain}
 .orrery-btn{width:28px;height:28px;border-radius:50%;border:1px solid rgba(255,255,255,.4);background:rgba(255,255,255,.15);color:#fff;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;margin:2px 0}
 .orrery-label{color:#fff;font-size:9px;margin-top:2px;text-align:center}
+.dial-container{position:absolute;top:40px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:4}
+.dial-slot{display:flex;flex-direction:column;align-items:center}
+.dial-num{width:40px;height:50px;background:#1a1a2e;border:2px solid #ffd700;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:24px;color:#ffd700;font-weight:bold}
+.dial-btn{width:32px;height:24px;background:rgba(255,215,0,.2);border:1px solid #ffd700;border-radius:4px;color:#ffd700;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;margin:3px 0}
 #inventory{display:flex;width:100%;max-width:390px;background:#1a1a2e;border-top:2px solid #ffd700;padding:6px 8px;justify-content:center;gap:6px}
 .inv-slot{width:42px;height:42px;border:2px dashed rgba(255,215,0,.3);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;position:relative}
 .inv-filled{border-style:solid;border-color:rgba(255,215,0,.4)}

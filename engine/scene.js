@@ -47,19 +47,17 @@ function render() {
       const b = h.bounds;
       html += `<div class="hotspot" data-action="${h.action}" style="top:${b.top};left:${b.left};width:${b.width};height:${b.height}"></div>`;
     });
-    const nav = wall.navButtons;
-    html += `<div class="nav-circle" data-nav="-1" style="bottom:${nav.left.bottom};left:${nav.left.left}"></div>`;
-    html += `<div class="nav-circle" data-nav="1" style="bottom:${nav.right.bottom};right:${nav.right.right}"></div>`;
+    html += `<div class="nav-arrow nav-arrow-l" data-nav="-1">◀</div>`;
+    html += `<div class="nav-arrow nav-arrow-r" data-nav="1">▶</div>`;
     el.innerHTML = html;
   } else {
-    const nav = wall.navButtons;
     el.innerHTML = `<div class="placeholder">${room.name} — ${LABELS[wallName]}</div>
-      <div class="nav-circle" data-nav="-1" style="bottom:${nav.left.bottom};left:${nav.left.left}"></div>
-      <div class="nav-circle" data-nav="1" style="bottom:${nav.right.bottom};right:${nav.right.right}"></div>`;
+      <div class="nav-arrow nav-arrow-l" data-nav="-1">◀</div>
+      <div class="nav-arrow nav-arrow-r" data-nav="1">▶</div>`;
   }
 
   // Bind events
-  el.querySelectorAll('.nav-circle').forEach(btn => {
+  el.querySelectorAll('.nav-arrow').forEach(btn => {
     btn.addEventListener('click', () => {
       btn.classList.add('flash');
       const dir = parseInt(btn.dataset.nav);
@@ -74,6 +72,8 @@ function render() {
 function handleAction(action) {
   if (action === 'openOrreryPopup') openOrreryPopup();
   else if (action === 'openDoorPopup') openDoorPopup();
+  else if (action === 'openFireplaceDialPopup') openFireplaceDialPopup();
+  else if (action === 'openCarpetPopup') openCarpetPopup();
 }
 
 // --- Orrery Popup ---
@@ -174,6 +174,66 @@ function animateDoorOpen() {
       }, 500);
     }, 500);
   }, 500);
+}
+
+// --- Fireplace Dial Popup ---
+let dialValues = [0, 0, 0, 0];
+
+function openFireplaceDialPopup() {
+  openPopup(`
+    <div class="popup-content" style="top:27px">
+      <img src="assets/ui/password-dial-bg.png" style="width:100%;height:100%;object-fit:contain">
+    </div>
+    <div class="dial-container" id="dial-container"></div>
+    <button class="popup-back" id="dial-back">返回</button>`);
+  document.getElementById('dial-back').addEventListener('click', closePopup);
+  renderDial();
+}
+
+function renderDial() {
+  const container = document.getElementById('dial-container');
+  if (!container) return;
+  container.innerHTML = '';
+  for (let i = 0; i < 4; i++) {
+    container.innerHTML += `
+      <div class="dial-slot">
+        <div class="dial-btn" data-slot="${i}" data-dir="-1">▲</div>
+        <div class="dial-num">${dialValues[i]}</div>
+        <div class="dial-btn" data-slot="${i}" data-dir="1">▼</div>
+      </div>`;
+  }
+  container.querySelectorAll('.dial-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const slot = parseInt(btn.dataset.slot);
+      const dir = parseInt(btn.dataset.dir);
+      dialValues[slot] = (dialValues[slot] + dir + 10) % 10;
+      renderDial();
+      checkDialAnswer();
+    });
+  });
+}
+
+function checkDialAnswer() {
+  // Correct: 0655
+  if (dialValues[0] === 0 && dialValues[1] === 6 && dialValues[2] === 5 && dialValues[3] === 5) {
+    showDialogue('壁爐發出一陣輕響…你獲得了月光粉！');
+    addItem('moonlight_powder');
+    setTimeout(() => closePopup(), 1500);
+  }
+}
+
+// --- Carpet Popup ---
+function openCarpetPopup() {
+  openPopup(`
+    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2">
+      <div style="width:280px;padding:24px;background:#2c2c2c;border-radius:8px;border:2px solid #8b6914;text-align:center;color:#ffd700;font-size:14px;line-height:1.8">
+        圖案：三個孔，箭頭指向中間<br>旁邊寫著 <strong>Aperio</strong>
+      </div>
+    </div>
+    <button class="popup-back" id="carpet-back">返回</button>`);
+  document.getElementById('carpet-back').addEventListener('click', closePopup);
+  setFlag('hasCarpetClue', true);
+  setFlag('hasSpellClue', true);
 }
 
 // Expose switchRoom for toolbar buttons

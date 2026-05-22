@@ -15,6 +15,12 @@
     "missingFlagMessage": "好像還缺什麼東西",
     "reward": { "item": "magic_weight", "message": "星座儀發出柔和的光芒…你獲得了魔法砝碼！" }
   },
+  "fireplace": {
+    "type": "dial",
+    "digits": 4,
+    "answer": [0, 6, 5, 5],
+    "reward": { "item": "moonlight_powder", "message": "壁爐發出一陣輕響…你獲得了月光粉！" }
+  },
   "magic-door": {
     "type": "keyhole",
     "requiredItem": "crystal_key",
