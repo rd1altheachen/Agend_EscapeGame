@@ -49,6 +49,11 @@ function render() {
     });
     html += `<img class="nav-arrow nav-arrow-l" src="assets/ui/arrow-left.png" data-nav="-1">`;
     html += `<img class="nav-arrow nav-arrow-r" src="assets/ui/arrow-right.png" data-nav="1">`;
+    // Overlay book items on west wall (disappear when taken)
+    if (gameState.currentRoom === 'room1' && wallName === 'west') {
+      if (!gameState.goldBookTaken) html += `<img class="scene-obj" src="assets/items/book-gold-star.png" style="position:absolute;top:30%;left:24%;height:11%">`;
+      if (!gameState.blueBookTaken) html += `<img class="scene-obj" src="assets/items/book-blue-key.png" style="position:absolute;top:68%;left:10%;height:11%">`;
+    }
     el.innerHTML = html;
   } else {
     el.innerHTML = `<div class="placeholder">${room.name} — ${LABELS[wallName]}</div>
@@ -74,6 +79,9 @@ function handleAction(action) {
   else if (action === 'openDoorPopup') openDoorPopup();
   else if (action === 'openFireplaceDialPopup') openFireplaceDialPopup();
   else if (action === 'openCarpetPopup') openCarpetPopup();
+  else if (action === 'clickMirror') clickMirror();
+  else if (action === 'clickGoldBook') clickGoldBook();
+  else if (action === 'clickBlueBook') clickBlueBook();
 }
 
 // --- Orrery Popup ---
@@ -145,17 +153,27 @@ function openDoorPopup() {
 
 function clickKeyhole(pos) {
   const puzzle = puzzlesData['magic-door'];
+  // If key already inserted, check if spellBook read to open
+  if (gameState._keyInserted) {
+    if (!gameState.spellBookRead) { showDialogue('鑰匙已插入，但似乎還需要什麼咒語...'); return; }
+    animateDoorOpen();
+    return;
+  }
+  // Insert key
   const selected = getSelectedItem();
   if (selected !== puzzle.requiredItem) {
     showDialogue(selected ? '這個物品不適用於此處' : puzzle.noItemMessage);
     return;
   }
-  const missingFlag = puzzle.requiredFlags.some(f => !gameState[f]);
-  if (missingFlag) { showDialogue(puzzle.missingFlagMessage); return; }
   if (pos !== puzzle.correctHole) return;
   removeItem(puzzle.requiredItem);
   clearSelection();
-  animateDoorOpen();
+  setFlag('_keyInserted', true);
+  if (gameState.spellBookRead) {
+    animateDoorOpen();
+  } else {
+    showDialogue('鑰匙插入了鎖孔，但門沒有打開…似乎還需要什麼。');
+  }
 }
 
 function animateDoorOpen() {
@@ -219,6 +237,44 @@ function checkDialAnswer() {
   }
 }
 
+// --- West Wall: Mirror ---
+function clickMirror() {
+  if (gameState.goldBookTaken) return;
+  const el = document.getElementById('scene-content');
+  const img = document.createElement('img');
+  img.src = 'assets/items/book-gold-star.png';
+  img.style.cssText = 'position:absolute;top:28%;left:72%;height:14%;opacity:0;z-index:6;pointer-events:none';
+  el.appendChild(img);
+  let count = 0;
+  const flash = () => {
+    if (count >= 6) { img.remove(); setFlag('mirrorUsed', true); return; }
+    img.style.opacity = count % 2 === 0 ? '1' : '0';
+    count++;
+    setTimeout(flash, 500);
+  };
+  flash();
+}
+
+// --- West Wall: Gold Star Book (puzzle 1-1) ---
+function clickGoldBook() {
+  if (gameState.goldBookTaken) return;
+  if (!gameState.mirrorUsed) { showDialogue('這本書似乎沒什麼特別...'); return; }
+  setFlag('goldBookTaken', true);
+  addItem('star_chart');
+  showDialogue('你取下了金色星星書，獲得了星座對照表！');
+  render();
+}
+
+// --- West Wall: Blue Key Book ---
+function clickBlueBook() {
+  if (gameState.blueBookTaken) return;
+  if (!gameState.carpetViewed) return;
+  setFlag('blueBookTaken', true);
+  addItem('spell_book');
+  showDialogue('你取下了藍色鑰匙書，獲得了咒語書！');
+  render();
+}
+
 // --- Carpet Popup ---
 function openCarpetPopup() {
   openPopup(`
@@ -229,6 +285,7 @@ function openCarpetPopup() {
   document.getElementById('carpet-back').addEventListener('click', closePopup);
   setFlag('hasCarpetClue', true);
   setFlag('hasSpellClue', true);
+  setFlag('carpetViewed', true);
 }
 
 // Expose switchRoom for toolbar buttons

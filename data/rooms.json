@@ -42,7 +42,30 @@
         }
       },
       "south": { "image": null, "hotspots": [], "navButtons": { "left": { "left": "2%", "bottom": "4%" }, "right": { "right": "2%", "bottom": "4%" } } },
-      "west": { "image": null, "hotspots": [], "navButtons": { "left": { "left": "2%", "bottom": "4%" }, "right": { "right": "2%", "bottom": "4%" } } }
+      "west": {
+        "image": "assets/scene-room1-west.png",
+        "hotspots": [
+          {
+            "id": "mirror",
+            "type": "puzzle",
+            "bounds": { "top": "12%", "left": "58%", "width": "38%", "height": "45%" },
+            "action": "clickMirror"
+          },
+          {
+            "id": "book-gold-star",
+            "type": "puzzle",
+            "bounds": { "top": "30%", "left": "22%", "width": "8%", "height": "12%" },
+            "action": "clickGoldBook"
+          },
+          {
+            "id": "book-blue-key",
+            "type": "puzzle",
+            "bounds": { "top": "68%", "left": "8%", "width": "8%", "height": "12%" },
+            "action": "clickBlueBook"
+          }
+        ],
+        "navButtons": { "left": { "left": "2%", "bottom": "4%" }, "right": { "right": "2%", "bottom": "4%" } }
+      }
     }
   },
   "room2": {

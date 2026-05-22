@@ -34,6 +34,14 @@ const ITEM_DEFS = {
     icon: '✨',
     color: '#7f8c8d',
   },
+  spell_book: {
+    name: '咒語書',
+    type: 'view',
+    icon: '📕',
+    color: '#2980b9',
+    viewImage: 'assets/ui/book-page-aperio.png',
+    flagOnRead: 'spellBookRead',
+  },
 };
 
 export function getItemDef(itemId) {

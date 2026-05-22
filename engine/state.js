@@ -11,6 +11,12 @@ export const gameState = {
   hasCarpetClue: false,
   hasSpellClue: false,
   doorOpen: false,
+  mirrorUsed: false,
+  carpetViewed: false,
+  spellBookRead: false,
+  _keyInserted: false,
+  goldBookTaken: false,
+  blueBookTaken: false,
 };
 
 export function setFlag(name, value) {
