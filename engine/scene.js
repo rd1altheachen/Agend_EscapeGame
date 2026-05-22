@@ -182,9 +182,9 @@ let dialValues = [0, 0, 0, 0];
 function openFireplaceDialPopup() {
   openPopup(`
     <div class="popup-content">
-      <img src="assets/ui/password-dial-bg.png" style="width:100%;height:100%;object-fit:contain">
+      <img src="assets/ui/password-dial-bg.png" style="position:absolute;top:35px;left:15px;width:280px;height:100px">
+      <div class="dial-overlay" id="dial-container"></div>
     </div>
-    <div class="dial-container" id="dial-container"></div>
     <button class="popup-back" id="dial-back">返回</button>`);
   document.getElementById('dial-back').addEventListener('click', closePopup);
   renderDial();
@@ -193,15 +193,13 @@ function openFireplaceDialPopup() {
 function renderDial() {
   const container = document.getElementById('dial-container');
   if (!container) return;
-  container.innerHTML = '';
-  for (let i = 0; i < 4; i++) {
-    container.innerHTML += `
-      <div class="dial-slot">
-        <div class="dial-btn" data-slot="${i}" data-dir="-1">▲</div>
-        <div class="dial-num">${dialValues[i]}</div>
-        <div class="dial-btn" data-slot="${i}" data-dir="1">▼</div>
-      </div>`;
-  }
+  const positions = [70, 117, 163, 210];
+  container.innerHTML = positions.map((x, i) => `
+    <div class="dial-slot" style="left:${x + 15}px">
+      <div class="dial-btn" data-slot="${i}" data-dir="-1">▲</div>
+      <div class="dial-num">${dialValues[i]}</div>
+      <div class="dial-btn" data-slot="${i}" data-dir="1">▼</div>
+    </div>`).join('');
   container.querySelectorAll('.dial-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const slot = parseInt(btn.dataset.slot);
@@ -214,8 +212,7 @@ function renderDial() {
 }
 
 function checkDialAnswer() {
-  // Correct: 0655
-  if (dialValues[0] === 0 && dialValues[1] === 6 && dialValues[2] === 5 && dialValues[3] === 5) {
+  if (dialValues[0] === 2 && dialValues[1] === 4 && dialValues[2] === 1 && dialValues[3] === 7) {
     showDialogue('壁爐發出一陣輕響…你獲得了月光粉！');
     addItem('moonlight_powder');
     setTimeout(() => closePopup(), 1500);
