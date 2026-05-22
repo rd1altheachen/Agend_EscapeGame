@@ -261,7 +261,8 @@ function clickGoldBook() {
   if (!gameState.mirrorUsed) return;
   setFlag('goldBookTaken', true);
   addItem('star_chart');
-  render();
+  const img = document.querySelector('.scene-obj[src*="book-gold-star"]');
+  if (img) img.remove();
 }
 
 // --- West Wall: Blue Key Book ---
@@ -270,7 +271,8 @@ function clickBlueBook() {
   if (!gameState.carpetViewed) return;
   setFlag('blueBookTaken', true);
   addItem('spell_book');
-  render();
+  const img = document.querySelector('.scene-obj[src*="book-blue-key"]');
+  if (img) img.remove();
 }
 
 // --- Carpet Popup ---
