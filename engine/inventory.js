@@ -1,7 +1,7 @@
 // engine/inventory.js — Inventory system with use/view item types
 import { gameState, setFlag } from './state.js';
 import { showDialogue } from './dialogue.js';
-import { openPopup, closePopup } from './popup.js';
+import { openPopup, closePopup, openInvPopup, closeInvPopup } from './popup.js';
 
 const SLOT_COUNT = 6;
 let selectedItemId = null;
@@ -88,7 +88,7 @@ function onSlotClick(itemId) {
   // View type also shows content
   if (def.type === 'view' && selectedItemId === itemId) {
     if (def.viewCustom) {
-      openPopup(`
+      openInvPopup(`
         <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2">
           <div style="width:256px;height:160px;background:url('assets/ui/parchment-bg.png') center/cover;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:16px">
             <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px 16px">
@@ -102,14 +102,14 @@ function onSlotClick(itemId) {
           </div>
         </div>
         <button class="popup-back" id="view-back">關閉</button>`);
-      document.getElementById('view-back').addEventListener('click', () => { closePopup(); clearSelection(); });
+      document.getElementById('view-back').addEventListener('click', () => { closeInvPopup(); clearSelection(); });
     } else if (def.viewImage) {
-      openPopup(`
+      openInvPopup(`
         <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2">
           <img src="${def.viewImage}" style="max-width:90%;max-height:90%;object-fit:contain;border-radius:4px">
         </div>
         <button class="popup-back" id="view-back">關閉</button>`);
-      document.getElementById('view-back').addEventListener('click', () => { closePopup(); clearSelection(); });
+      document.getElementById('view-back').addEventListener('click', () => { closeInvPopup(); clearSelection(); });
     } else if (def.viewText) {
       showDialogue(def.viewText);
     }
