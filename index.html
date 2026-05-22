@@ -4,6 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
 <title>密室逃脫 — 星光書房</title>
+<script>
+(function(){
+  window.addEventListener('pageshow',function(e){if(e.persisted)window.location.reload();});
+  fetch('./version.json?t='+Date.now()).then(r=>r.json()).then(d=>{
+    var v=localStorage.getItem('app_version');
+    if(v&&v!==d.version){localStorage.setItem('app_version',d.version);window.location.reload(true);}
+    else{localStorage.setItem('app_version',d.version);}
+  }).catch(function(){});
+})();
+</script>
 <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
