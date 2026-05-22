@@ -99,8 +99,7 @@ function renderOrrerySlots() {
     const data = puzzle.optionData[name];
     el.innerHTML = `
       <div class="orrery-btn" data-slot="${i}" data-dir="-1">▲</div>
-      <div class="orrery-placeholder" style="background:#fff"><img src="${data.img}" style="width:48px;height:48px;object-fit:contain"></div>
-      <div class="orrery-label">${name}</div>
+      <div class="orrery-placeholder" style="background:#fff"><img src="${data.img}" style="width:40px;height:40px;object-fit:contain"></div>
       <div class="orrery-btn" data-slot="${i}" data-dir="1">▼</div>`;
     el.querySelectorAll('.orrery-btn').forEach(btn => {
       btn.addEventListener('click', () => {

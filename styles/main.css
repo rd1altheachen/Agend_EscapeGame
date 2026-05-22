@@ -13,15 +13,15 @@ html,body{height:100%;background:#111;font-family:sans-serif;overflow:hidden}
 #dialogue .dialogue-bar{background:rgba(0,0,0,.8);color:#fff;padding:14px 24px;font-size:14px;line-height:1.5;text-align:center;border-radius:4px;max-width:80%;pointer-events:none}
 #popup-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:40;display:none;align-items:center;justify-content:center}
 #popup-overlay.active{display:flex}
-.popup-frame{position:relative;width:360px;height:240px}
+.popup-frame{position:relative;width:360px;height:240px;margin-top:-300px}
 .popup-frame-bg{position:absolute;inset:0;background:url('../assets/ui/popup-frame.png') center/contain no-repeat;z-index:3;pointer-events:none}
 .popup-content{position:absolute;top:15px;left:25px;width:310px;height:170px;overflow:hidden;z-index:1}
 .popup-content img{width:100%;height:100%;object-fit:cover;display:block}
 .popup-back{position:absolute;bottom:17px;left:50%;transform:translateX(-50%);padding:4px 20px;background:transparent;color:#fff;border:none;cursor:pointer;font-size:13px;z-index:4}
 .keyhole{position:absolute;width:36px;height:36px;transform:rotate(45deg);cursor:pointer;border:2px solid rgba(255,215,0,.3);z-index:4}
 .orrery-slot{position:absolute;display:flex;flex-direction:column;align-items:center;z-index:4}
-.orrery-placeholder{width:70px;height:70px;border-radius:50%;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.orrery-placeholder img{width:48px;height:48px;object-fit:contain}
+.orrery-placeholder{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.orrery-placeholder img{width:40px;height:40px;object-fit:contain}
 .orrery-btn{width:28px;height:28px;border-radius:50%;border:1px solid rgba(255,255,255,.4);background:rgba(255,255,255,.15);color:#fff;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;margin:2px 0}
 .orrery-label{color:#fff;font-size:9px;margin-top:2px;text-align:center}
 #inventory{display:flex;width:100%;max-width:390px;background:#1a1a2e;border-top:2px solid #ffd700;padding:6px 8px;justify-content:center;gap:6px}

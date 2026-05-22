@@ -88,14 +88,14 @@ function onSlotClick(itemId) {
           </div>
         </div>
         <button class="popup-back" id="view-back">關閉</button>`);
-      document.getElementById('view-back').addEventListener('click', closePopup);
+      document.getElementById('view-back').addEventListener('click', () => { closePopup(); clearSelection(); });
     } else if (def.viewImage) {
       openPopup(`
         <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2">
           <img src="${def.viewImage}" style="max-width:90%;max-height:90%;object-fit:contain;border-radius:4px">
         </div>
         <button class="popup-back" id="view-back">關閉</button>`);
-      document.getElementById('view-back').addEventListener('click', closePopup);
+      document.getElementById('view-back').addEventListener('click', () => { closePopup(); clearSelection(); });
     } else if (def.viewText) {
       showDialogue(def.viewText);
     }
