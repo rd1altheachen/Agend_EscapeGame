@@ -10,8 +10,9 @@ export function initDebug() {
 }
 
 function toggleDebug() {
-  panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
-  renderDebug();
+  const isHidden = getComputedStyle(panel).display === 'none';
+  panel.style.display = isHidden ? 'block' : 'none';
+  if (isHidden) renderDebug();
 }
 
 function renderDebug() {
