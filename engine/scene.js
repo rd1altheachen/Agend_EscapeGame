@@ -79,7 +79,7 @@ function handleAction(action) {
 // --- Orrery Popup ---
 function openOrreryPopup() {
   openPopup(`
-    <div class="popup-content" style="top:27px">
+    <div class="popup-content">
       <img src="assets/scene-room1-east.png" style="position:absolute;top:-420px;left:-20px;width:780px;height:1100px;max-width:none">
     </div>
     <div class="orrery-slot" style="top:60px;left:62px" id="os0"></div>
@@ -130,7 +130,7 @@ function checkOrreryAnswer() {
 // --- Door Popup ---
 function openDoorPopup() {
   openPopup(`
-    <div class="popup-content" style="top:35px">
+    <div class="popup-content">
       <img src="assets/scene-room1-east.png" style="position:absolute;top:-321px;left:-331px;width:702px;height:990px;max-width:none">
     </div>
     <div class="keyhole" style="top:100px;left:80px" data-hole="left"></div>
@@ -181,7 +181,7 @@ let dialValues = [0, 0, 0, 0];
 
 function openFireplaceDialPopup() {
   openPopup(`
-    <div class="popup-content" style="top:27px">
+    <div class="popup-content">
       <img src="assets/ui/password-dial-bg.png" style="width:100%;height:100%;object-fit:contain">
     </div>
     <div class="dial-container" id="dial-container"></div>
@@ -225,12 +225,8 @@ function checkDialAnswer() {
 // --- Carpet Popup ---
 function openCarpetPopup() {
   openPopup(`
-    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2">
-      <div style="width:280px;padding:24px;background:#2c2c2c;border-radius:8px;border:2px solid #8b6914;text-align:center;color:#ffd700;font-size:14px;line-height:1.8">
-        <h3 style="margin:0 0 8px">地毯下的圖案</h3>
-        <p style="margin:0 0 10px">你掀開地毯的角落，發現地板上刻著古老的圖案...</p>
-        <img src="assets/carpet-clue.png" style="max-width:100%;border-radius:8px;">
-      </div>
+    <div class="popup-content">
+      <img src="assets/carpet-clue.png" style="max-width:100%;max-height:100%;object-fit:contain;">
     </div>
     <button class="popup-back" id="carpet-back">返回</button>`);
   document.getElementById('carpet-back').addEventListener('click', closePopup);
