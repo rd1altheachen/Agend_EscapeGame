@@ -17,7 +17,12 @@
 <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-<div id="app">
+<div id="loading" style="position:fixed;inset:0;background:#0d0d2b;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;color:#ffd700;font-size:16px">
+  <div>載入中...</div>
+  <div style="width:200px;height:6px;background:#1a1a3e;border-radius:3px;margin-top:12px;overflow:hidden"><div id="load-bar" style="width:0%;height:100%;background:#ffd700;transition:width .2s"></div></div>
+  <div id="load-pct" style="margin-top:8px;font-size:12px;color:#999">0%</div>
+</div>
+<div id="app" style="display:none">
   <div id="scene-wrap">
     <div id="scene-content"></div>
     <div id="popup-overlay"></div>
@@ -45,11 +50,48 @@ import { initScene } from './engine/scene.js';
 import { renderInventory, initInventorySceneListener } from './engine/inventory.js';
 import { initDebug, setupDebugPanel } from './engine/debug.js';
 
-renderInventory();
-initDebug();
-setupDebugPanel();
-initScene();
-initInventorySceneListener();
+const PRELOAD_IMAGES = [
+  'assets/scene-room1-north.png','assets/scene-room1-east.png',
+  'assets/scene-room1-south.png','assets/scene-room1-west.png',
+  'assets/carpet-clue.png','assets/items/book-gold-star.png',
+  'assets/items/book-blue-key.png','assets/items/key-in-lock.png',
+  'assets/items/star-chart.png','assets/items/item-crystal-key.png',
+  'assets/ui/arrow-left.png','assets/ui/arrow-right.png',
+  'assets/ui/popup-frame.png','assets/ui/password-dial-bg.png',
+  'assets/ui/parchment-bg.png','assets/ui/book-page-aperio.png',
+  'assets/icons/constellation-gemini.png','assets/icons/constellation-lion.png',
+  'assets/icons/constellation-libra.png','assets/icons/constellation-scorpio.png',
+  'assets/icons/constellation-aquarius.png','assets/icons/constellation-sagittarius.png',
+];
+
+let loaded = 0;
+const total = PRELOAD_IMAGES.length;
+const bar = document.getElementById('load-bar');
+const pct = document.getElementById('load-pct');
+
+function onLoad() {
+  loaded++;
+  const p = Math.round(loaded / total * 100);
+  bar.style.width = p + '%';
+  pct.textContent = `${loaded}/${total}`;
+  if (loaded >= total) startGame();
+}
+
+function startGame() {
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('app').style.display = '';
+  renderInventory();
+  initDebug();
+  setupDebugPanel();
+  initScene();
+  initInventorySceneListener();
+}
+
+PRELOAD_IMAGES.forEach(src => {
+  const img = new Image();
+  img.onload = img.onerror = onLoad;
+  img.src = src;
+});
 </script>
 </body>
 </html>
