@@ -47,7 +47,7 @@
           {
             "id": "diary",
             "type": "puzzle",
-            "bounds": { "top": "46%", "left": "19%", "width": "17%", "height": "6%" },
+            "bounds": { "top": "44%", "left": "19%", "width": "17%", "height": "10%" },
             "action": "clickDiary"
           },
           {

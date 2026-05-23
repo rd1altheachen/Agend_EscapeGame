@@ -15,6 +15,7 @@ export const gameState = {
   carpetViewed: false,
   spellBookRead: false,
   _keyInserted: false,
+  _keyInHole: null,
   goldBookTaken: false,
   blueBookTaken: false,
   diaryTimeReverseRead: false,

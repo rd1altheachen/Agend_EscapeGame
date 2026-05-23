@@ -143,12 +143,10 @@ function checkOrreryAnswer() {
 }
 
 // --- Door Popup ---
-let keyInHole = null; // which hole the key is in: 'left'|'middle'|'right'|null
 let spellShown = false;
 
 function openDoorPopup() {
   if (gameState.doorOpen) { switchRoom('room2'); return; }
-  keyInHole = null;
   spellShown = false;
   openPopup(`
     <div class="popup-content">
@@ -162,41 +160,40 @@ function openDoorPopup() {
   document.querySelectorAll('.keyhole').forEach(kh => {
     kh.addEventListener('click', () => clickKeyhole(kh.dataset.hole));
   });
+  // Restore key if previously inserted
+  if (gameState._keyInHole) showKeyImage(gameState._keyInHole);
 }
 
 function clickKeyhole(pos) {
   // If spell shown and click anywhere on door → open
   if (spellShown) {
     setFlag('doorOpen', true);
-    removeItem('crystal_key');
-    clearSelection();
+    setFlag('_keyInHole', null);
     animateDoorOpen();
     return;
   }
   // If key is in this hole → pull it out
-  if (keyInHole === pos) {
-    removeKeyImage(pos);
-    keyInHole = null;
+  if (gameState._keyInHole === pos) {
+    removeKeyImage();
+    setFlag('_keyInHole', null);
     addItem('crystal_key');
     return;
   }
-  // If key is in another hole → ignore (must pull out first)
-  if (keyInHole) return;
+  // If key is in another hole → ignore
+  if (gameState._keyInHole) return;
   // Insert key: must have crystal_key selected
   const selected = getSelectedItem();
   if (selected !== 'crystal_key') return;
   removeItem('crystal_key');
   clearSelection();
-  keyInHole = pos;
+  setFlag('_keyInHole', pos);
   showKeyImage(pos);
   // Check state conditions
   if (pos === 'middle' && gameState.carpetViewed) {
     if (gameState.spellBookRead) {
-      // State C: show spell text
       spellShown = true;
       showDialogue('✦ Lumina Stella Aperio ✦');
     } else {
-      // State B: hint
       showDialogue('符文微微亮起...似乎還少了什麼');
     }
   }
@@ -319,7 +316,7 @@ function clickBlueBook() {
 // --- South Wall: Diary ---
 const diaryPages = [
   '<p style="font-size:13px;color:#d4a574;line-height:1.8;text-align:left">今天學了新的符號魔法...<br>老師說每個符號都有對應的月相力量。<br><br><span style="position:absolute;bottom:20px;right:30px;font-size:20px;opacity:.6">△</span></p>',
-  '<p style="font-size:13px;color:#d4a574;line-height:1.8;text-align:left">月相的力量不容小覷<br><br><span style="font-size:20px">🌑 → 🌓 → 🌕</span><br><span style="font-size:12px;letter-spacing:18px">&nbsp;1 &nbsp;&nbsp;&nbsp;3 &nbsp;&nbsp;&nbsp;2</span><br><br><span style="position:absolute;bottom:20px;right:30px;font-size:20px;opacity:.6">○</span></p>',
+  '<p style="font-size:13px;color:#d4a574;line-height:1.8;text-align:left">月相的力量不容小覷</p><div style="display:flex;justify-content:center;gap:24px;margin-top:12px"><div style="text-align:center"><div style="font-size:22px">🌑</div><div style="color:#ffd700;font-size:14px;margin-top:4px">1</div></div><div style="text-align:center;font-size:16px;color:#999;align-self:center">→</div><div style="text-align:center"><div style="font-size:22px">🌓</div><div style="color:#ffd700;font-size:14px;margin-top:4px">3</div></div><div style="text-align:center;font-size:16px;color:#999;align-self:center">→</div><div style="text-align:center"><div style="font-size:22px">🌕</div><div style="color:#ffd700;font-size:14px;margin-top:4px">2</div></div></div><span style="position:absolute;bottom:20px;right:30px;font-size:20px;color:#d4a574;opacity:.6">○</span>',
   '<p style="font-size:13px;color:#d4a574;line-height:1.8;text-align:left">鏡子裡的時間總是反著走的……<br><br><span style="font-size:28px">🕐</span><br><br><span style="position:absolute;bottom:20px;left:30px;font-size:20px;opacity:.6">☆</span></p>',
 ];
 let diaryPage = 0;
