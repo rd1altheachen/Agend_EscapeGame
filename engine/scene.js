@@ -203,13 +203,13 @@ function clickKeyhole(pos) {
 }
 
 function showKeyImage(pos) {
-  const positions = { left: '73px', middle: '158px', right: '240px' };
+  const positions = { left: '72px', middle: '157px', right: '239px' };
   const kh = document.querySelector(`.keyhole[data-hole="${pos}"]`);
   if (!kh) return;
   const img = document.createElement('img');
   img.src = 'assets/items/key-in-lock.png';
   img.className = 'key-in-lock';
-  img.style.cssText = `position:absolute;top:85px;left:${positions[pos]};width:40px;height:56px;z-index:5;pointer-events:none`;
+  img.style.cssText = `position:absolute;top:82px;left:${positions[pos]};width:52px;height:73px;z-index:5;pointer-events:none`;
   kh.parentElement.appendChild(img);
 }
 
