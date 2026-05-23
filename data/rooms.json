@@ -41,7 +41,30 @@
           "right": { "right": "2%", "bottom": "4%" }
         }
       },
-      "south": { "image": null, "hotspots": [], "navButtons": { "left": { "left": "2%", "bottom": "4%" }, "right": { "right": "2%", "bottom": "4%" } } },
+      "south": {
+        "image": "assets/scene-room1-south.png",
+        "hotspots": [
+          {
+            "id": "diary",
+            "type": "puzzle",
+            "bounds": { "top": "42%", "left": "12%", "width": "22%", "height": "12%" },
+            "action": "clickDiary"
+          },
+          {
+            "id": "drawer-lock",
+            "type": "puzzle",
+            "bounds": { "top": "58%", "left": "20%", "width": "30%", "height": "8%" },
+            "action": "clickDrawerLock"
+          },
+          {
+            "id": "flowerpot",
+            "type": "puzzle",
+            "bounds": { "top": "28%", "left": "68%", "width": "18%", "height": "18%" },
+            "action": "clickFlowerpot"
+          }
+        ],
+        "navButtons": { "left": { "left": "2%", "bottom": "4%" }, "right": { "right": "2%", "bottom": "4%" } }
+      },
       "west": {
         "image": "assets/scene-room1-west.png",
         "hotspots": [

@@ -42,6 +42,13 @@ const ITEM_DEFS = {
     viewImage: 'assets/ui/book-page-aperio.png',
     flagOnRead: 'spellBookRead',
   },
+  potion_recipe: {
+    name: '藥水配方殘頁',
+    type: 'view',
+    icon: '📄',
+    color: '#d4a574',
+    viewText: '配方：月光粉 + 星辰露 + 火焰花瓣 → 陽光藥水',
+  },
 };
 
 export function getItemDef(itemId) {

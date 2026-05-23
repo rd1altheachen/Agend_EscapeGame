@@ -17,6 +17,9 @@ export const gameState = {
   _keyInserted: false,
   goldBookTaken: false,
   blueBookTaken: false,
+  diaryTimeReverseRead: false,
+  drawerSolved: false,
+  flowerpotSolved: false,
 };
 
 export function setFlag(name, value) {

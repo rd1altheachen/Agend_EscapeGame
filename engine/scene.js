@@ -86,6 +86,9 @@ function handleAction(action) {
   else if (action === 'clickMirror') clickMirror();
   else if (action === 'clickGoldBook') clickGoldBook();
   else if (action === 'clickBlueBook') clickBlueBook();
+  else if (action === 'clickDiary') clickDiary();
+  else if (action === 'clickDrawerLock') clickDrawerLock();
+  else if (action === 'clickFlowerpot') clickFlowerpot();
 }
 
 // --- Orrery Popup ---
@@ -311,6 +314,88 @@ function clickBlueBook() {
   addItem('spell_book');
   const img = document.querySelector('.scene-obj[src*="book-blue-key"]');
   if (img) { img.style.visibility = 'hidden'; requestAnimationFrame(() => img.remove()); }
+}
+
+// --- South Wall: Diary ---
+const diaryPages = [
+  '<p style="font-size:13px;color:#d4a574;line-height:1.8;text-align:left">今天學了新的符號魔法...<br>老師說每個符號都有對應的月相力量。<br><br><span style="position:absolute;bottom:20px;right:30px;font-size:20px;opacity:.6">△</span></p>',
+  '<p style="font-size:13px;color:#d4a574;line-height:1.8;text-align:left">月相的力量不可小覷。<br><br>新月 △　半月 ☆　滿月 ○<br><br>🌑 → 🌓 → 🌕<br>新月 → 半月 → 滿月</p>',
+  '<p style="font-size:13px;color:#d4a574;line-height:1.8;text-align:left">按照月相順序排列符號，<br>就能打開封印。<br><br><span style="position:absolute;bottom:20px;left:30px;font-size:20px;opacity:.6">☆</span></p>',
+  '<p style="font-size:13px;color:#d4a574;line-height:1.8;text-align:left">鏡子裡的時間總是反著走的……<br><br>我在鏡中看到的鐘面，<br>數字都左右顛倒了。<br><br><span style="font-size:18px">🪞⏰</span></p>',
+];
+let diaryPage = 0;
+
+function clickDiary() {
+  diaryPage = 0;
+  openPopup(`
+    <div class="popup-content" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px">
+      <div id="diary-content">${diaryPages[0]}</div>
+      <div style="position:absolute;bottom:8px;display:flex;gap:40px;z-index:4">
+        <span id="diary-prev" style="cursor:pointer;color:#ffd700;font-size:18px;opacity:.3">◀</span>
+        <span id="diary-page-num" style="color:#999;font-size:11px">1/4</span>
+        <span id="diary-next" style="cursor:pointer;color:#ffd700;font-size:18px">▶</span>
+      </div>
+    </div>
+    <button class="popup-back" id="diary-back">返回</button>`);
+  document.getElementById('diary-back').addEventListener('click', closePopup);
+  document.getElementById('diary-prev').addEventListener('click', () => turnDiary(-1));
+  document.getElementById('diary-next').addEventListener('click', () => turnDiary(1));
+}
+
+function turnDiary(dir) {
+  diaryPage = Math.max(0, Math.min(3, diaryPage + dir));
+  document.getElementById('diary-content').innerHTML = diaryPages[diaryPage];
+  document.getElementById('diary-page-num').textContent = `${diaryPage + 1}/4`;
+  document.getElementById('diary-prev').style.opacity = diaryPage === 0 ? '.3' : '1';
+  document.getElementById('diary-next').style.opacity = diaryPage === 3 ? '.3' : '1';
+  if (diaryPage === 3) setFlag('diaryTimeReverseRead', true);
+}
+
+// --- South Wall: Drawer Symbol Lock (puzzle 1-2) ---
+let drawerSymbols = [0, 0, 0];
+const SYMBOLS = ['△', '☆', '○'];
+
+function clickDrawerLock() {
+  if (gameState.drawerSolved) { showDialogue('抽屜已經空了。'); return; }
+  drawerSymbols = [0, 0, 0];
+  openPopup(`
+    <div class="popup-content" style="display:flex;align-items:center;justify-content:center;gap:20px">
+      <div class="symbol-slot" id="ss0">△</div>
+      <div class="symbol-slot" id="ss1">△</div>
+      <div class="symbol-slot" id="ss2">△</div>
+    </div>
+    <button class="popup-back" id="drawer-back">返回</button>`);
+  document.getElementById('drawer-back').addEventListener('click', closePopup);
+  for (let i = 0; i < 3; i++) {
+    document.getElementById('ss' + i).addEventListener('click', () => {
+      drawerSymbols[i] = (drawerSymbols[i] + 1) % 3;
+      document.getElementById('ss' + i).textContent = SYMBOLS[drawerSymbols[i]];
+      checkDrawerAnswer();
+    });
+  }
+}
+
+function checkDrawerAnswer() {
+  if (drawerSymbols[0] === 0 && drawerSymbols[1] === 1 && drawerSymbols[2] === 2) {
+    setFlag('drawerSolved', true);
+    addItem('potion_recipe');
+    addItem('crystal_key');
+    showDialogue('抽屜打開了！裡面有一張殘頁和一把水晶鑰匙。');
+    setTimeout(() => closePopup(), 1500);
+  }
+}
+
+// --- South Wall: Flowerpot (puzzle 1-6) ---
+function clickFlowerpot() {
+  const selected = getSelectedItem();
+  if (selected === 'sunlight_potion') {
+    removeItem('sunlight_potion');
+    clearSelection();
+    setFlag('flowerpotSolved', true);
+    showDialogue('花朵綻放了！花心裡有一顆魔法星星！');
+  } else {
+    showDialogue('花苞緊閉著，似乎需要什麼才會綻放...');
+  }
 }
 
 // --- Carpet Popup ---
