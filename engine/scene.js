@@ -319,9 +319,8 @@ function clickBlueBook() {
 // --- South Wall: Diary ---
 const diaryPages = [
   '<p style="font-size:13px;color:#d4a574;line-height:1.8;text-align:left">今天學了新的符號魔法...<br>老師說每個符號都有對應的月相力量。<br><br><span style="position:absolute;bottom:20px;right:30px;font-size:20px;opacity:.6">△</span></p>',
-  '<p style="font-size:13px;color:#d4a574;line-height:1.8;text-align:left">月相的力量不可小覷。<br><br>新月 △　半月 ☆　滿月 ○<br><br>🌑 → 🌓 → 🌕<br>新月 → 半月 → 滿月</p>',
-  '<p style="font-size:13px;color:#d4a574;line-height:1.8;text-align:left">按照月相順序排列符號，<br>就能打開封印。<br><br><span style="position:absolute;bottom:20px;left:30px;font-size:20px;opacity:.6">☆</span></p>',
-  '<p style="font-size:13px;color:#d4a574;line-height:1.8;text-align:left">鏡子裡的時間總是反著走的……<br><br>我在鏡中看到的鐘面，<br>數字都左右顛倒了。<br><br><span style="font-size:18px">🪞⏰</span></p>',
+  '<p style="font-size:13px;color:#d4a574;line-height:1.8;text-align:left">月相的力量不容小覷<br><br><span style="font-size:20px">🌑 → 🌓 → 🌕</span><br><span style="font-size:12px;letter-spacing:18px">&nbsp;1 &nbsp;&nbsp;&nbsp;3 &nbsp;&nbsp;&nbsp;2</span><br><br><span style="position:absolute;bottom:20px;right:30px;font-size:20px;opacity:.6">○</span></p>',
+  '<p style="font-size:13px;color:#d4a574;line-height:1.8;text-align:left">鏡子裡的時間總是反著走的……<br><br><span style="font-size:28px">🕐</span><br><br><span style="position:absolute;bottom:20px;left:30px;font-size:20px;opacity:.6">☆</span></p>',
 ];
 let diaryPage = 0;
 
@@ -332,7 +331,7 @@ function clickDiary() {
       <div id="diary-content">${diaryPages[0]}</div>
       <div style="position:absolute;bottom:8px;display:flex;gap:40px;z-index:4">
         <span id="diary-prev" style="cursor:pointer;color:#ffd700;font-size:18px;opacity:.3">◀</span>
-        <span id="diary-page-num" style="color:#999;font-size:11px">1/4</span>
+        <span id="diary-page-num" style="color:#999;font-size:11px">1/3</span>
         <span id="diary-next" style="cursor:pointer;color:#ffd700;font-size:18px">▶</span>
       </div>
     </div>
@@ -343,12 +342,12 @@ function clickDiary() {
 }
 
 function turnDiary(dir) {
-  diaryPage = Math.max(0, Math.min(3, diaryPage + dir));
+  diaryPage = Math.max(0, Math.min(2, diaryPage + dir));
   document.getElementById('diary-content').innerHTML = diaryPages[diaryPage];
-  document.getElementById('diary-page-num').textContent = `${diaryPage + 1}/4`;
+  document.getElementById('diary-page-num').textContent = `${diaryPage + 1}/3`;
   document.getElementById('diary-prev').style.opacity = diaryPage === 0 ? '.3' : '1';
-  document.getElementById('diary-next').style.opacity = diaryPage === 3 ? '.3' : '1';
-  if (diaryPage === 3) setFlag('diaryTimeReverseRead', true);
+  document.getElementById('diary-next').style.opacity = diaryPage === 2 ? '.3' : '1';
+  if (diaryPage === 2) setFlag('diaryTimeReverseRead', true);
 }
 
 // --- South Wall: Drawer Symbol Lock (puzzle 1-2) ---
