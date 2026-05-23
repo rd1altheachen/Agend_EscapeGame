@@ -19,6 +19,7 @@ export const gameState = {
   goldBookTaken: false,
   blueBookTaken: false,
   diaryTimeReverseRead: false,
+  diaryRead: false,
   drawerSolved: false,
   flowerpotSolved: false,
 };

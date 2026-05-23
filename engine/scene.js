@@ -336,6 +336,7 @@ let diaryPage = 0;
 
 function clickDiary() {
   diaryPage = 0;
+  setFlag('diaryRead', true);
   openPopup(`
     <div class="popup-content" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px">
       <div id="diary-content">${diaryPages[0]}</div>
@@ -385,6 +386,7 @@ function clickDrawerLock() {
 }
 
 function checkDrawerAnswer() {
+  if (!gameState.diaryRead) return;
   if (drawerSymbols[0] === 0 && drawerSymbols[1] === 1 && drawerSymbols[2] === 2) {
     setFlag('drawerSolved', true);
     addItem('potion_recipe');
