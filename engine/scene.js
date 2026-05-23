@@ -136,7 +136,13 @@ function checkOrreryAnswer() {
 }
 
 // --- Door Popup ---
+let keyInHole = null; // which hole the key is in: 'left'|'middle'|'right'|null
+let spellShown = false;
+
 function openDoorPopup() {
+  if (gameState.doorOpen) { switchRoom('room2'); return; }
+  keyInHole = null;
+  spellShown = false;
   openPopup(`
     <div class="popup-content">
       <img src="assets/scene-room1-east.png" style="position:absolute;top:-321px;left:-331px;width:702px;height:990px;max-width:none">
@@ -152,28 +158,57 @@ function openDoorPopup() {
 }
 
 function clickKeyhole(pos) {
-  const puzzle = puzzlesData['magic-door'];
-  // If key already inserted, check if spellBook read to open
-  if (gameState._keyInserted) {
-    if (!gameState.spellBookRead) { showDialogue('鑰匙已插入，但似乎還需要什麼咒語...'); return; }
+  // If spell shown and click anywhere on door → open
+  if (spellShown) {
+    setFlag('doorOpen', true);
+    removeItem('crystal_key');
+    clearSelection();
     animateDoorOpen();
     return;
   }
-  // Insert key
+  // If key is in this hole → pull it out
+  if (keyInHole === pos) {
+    removeKeyImage(pos);
+    keyInHole = null;
+    addItem('crystal_key');
+    return;
+  }
+  // If key is in another hole → ignore (must pull out first)
+  if (keyInHole) return;
+  // Insert key: must have crystal_key selected
   const selected = getSelectedItem();
-  if (selected !== puzzle.requiredItem) {
-    showDialogue(selected ? '這個物品不適用於此處' : puzzle.noItemMessage);
-    return;
-  }
-  if (pos !== puzzle.correctHole) return;
-  removeItem(puzzle.requiredItem);
+  if (selected !== 'crystal_key') return;
+  removeItem('crystal_key');
   clearSelection();
-  setFlag('_keyInserted', true);
-  if (gameState.spellBookRead) {
-    animateDoorOpen();
-  } else {
-    showDialogue('鑰匙插入了鎖孔，但門沒有打開…似乎還需要什麼。');
+  keyInHole = pos;
+  showKeyImage(pos);
+  // Check state conditions
+  if (pos === 'middle' && gameState.carpetViewed) {
+    if (gameState.spellBookRead) {
+      // State C: show spell text
+      spellShown = true;
+      showDialogue('✦ Lumina Stella Aperio ✦');
+    } else {
+      // State B: hint
+      showDialogue('符文微微亮起...似乎還少了什麼');
+    }
   }
+}
+
+function showKeyImage(pos) {
+  const positions = { left: '73px', middle: '158px', right: '240px' };
+  const kh = document.querySelector(`.keyhole[data-hole="${pos}"]`);
+  if (!kh) return;
+  const img = document.createElement('img');
+  img.src = 'assets/items/key-in-lock.png';
+  img.className = 'key-in-lock';
+  img.style.cssText = `position:absolute;top:85px;left:${positions[pos]};width:40px;height:56px;z-index:5;pointer-events:none`;
+  kh.parentElement.appendChild(img);
+}
+
+function removeKeyImage() {
+  const img = document.querySelector('.key-in-lock');
+  if (img) img.remove();
 }
 
 function animateDoorOpen() {
@@ -186,7 +221,6 @@ function animateDoorOpen() {
     setTimeout(() => {
       getOverlay().style.animation = 'fadeOut .5s forwards';
       setTimeout(() => {
-        setFlag('doorOpen', true);
         closePopup();
         switchRoom('room2');
       }, 500);
