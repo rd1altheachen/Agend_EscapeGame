@@ -143,11 +143,22 @@ function checkOrreryAnswer() {
 }
 
 // --- Door Popup ---
-let spellShown = false;
+function isKeyLocked() {
+  return gameState._keyInHole === 'middle' && gameState.carpetViewed;
+}
 
 function openDoorPopup() {
   if (gameState.doorOpen) { switchRoom('room2'); return; }
-  spellShown = false;
+  // Rule 2: key locked + no popup, react directly on scene
+  if (isKeyLocked()) {
+    if (gameState.spellBookRead) {
+      showDialogue('✦ Lumina Stella Aperio ✦');
+      setTimeout(() => { setFlag('doorOpen', true); switchRoom('room2'); }, 1500);
+    } else {
+      showDialogue('似乎還缺少什麼咒語...');
+    }
+    return;
+  }
   openPopup(`
     <div class="popup-content">
       <img src="assets/scene-room1-east.png" style="position:absolute;top:-321px;left:-331px;width:702px;height:990px;max-width:none">
@@ -160,39 +171,41 @@ function openDoorPopup() {
   document.querySelectorAll('.keyhole').forEach(kh => {
     kh.addEventListener('click', () => clickKeyhole(kh.dataset.hole));
   });
-  // Restore key if previously inserted
   if (gameState._keyInHole) showKeyImage(gameState._keyInHole);
 }
 
 function clickKeyhole(pos) {
-  // If spell shown and click anywhere on door → open
-  if (spellShown) {
-    setFlag('doorOpen', true);
-    setFlag('_keyInHole', null);
-    animateDoorOpen();
-    return;
-  }
-  // If key is in this hole → pull it out
+  // If key is in this hole → try to pull out
   if (gameState._keyInHole === pos) {
+    // Rule 1: can't remove if locked
+    if (isKeyLocked()) {
+      if (gameState.spellBookRead) {
+        showDialogue('✦ Lumina Stella Aperio ✦');
+        setTimeout(() => { setFlag('doorOpen', true); closePopup(); switchRoom('room2'); }, 1500);
+      } else {
+        showDialogue('符文微微亮起...似乎還少了什麼');
+      }
+      return;
+    }
     removeKeyImage();
     setFlag('_keyInHole', null);
     addItem('crystal_key');
     return;
   }
-  // If key is in another hole → ignore
   if (gameState._keyInHole) return;
-  // Insert key: must have crystal_key selected
+  // Insert key
   const selected = getSelectedItem();
   if (selected !== 'crystal_key') return;
   removeItem('crystal_key');
   clearSelection();
   setFlag('_keyInHole', pos);
   showKeyImage(pos);
-  // Check state conditions
-  if (pos === 'middle' && gameState.carpetViewed) {
+  // Check if locked after insertion
+  if (isKeyLocked()) {
     if (gameState.spellBookRead) {
-      spellShown = true;
+      // Rule 3: fast path — all conditions met
       showDialogue('✦ Lumina Stella Aperio ✦');
+      setTimeout(() => { setFlag('doorOpen', true); closePopup(); switchRoom('room2'); }, 1500);
     } else {
       showDialogue('符文微微亮起...似乎還少了什麼');
     }
