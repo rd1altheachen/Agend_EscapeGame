@@ -56,7 +56,7 @@ function render() {
     }
     // Engraved text on east wall
     if (gameState.currentRoom === 'room1' && wallName === 'east') {
-      html += `<div class="wall-engraving" style="position:absolute;top:58%;left:8%;width:30%">月亮追逐星星，星星追逐太陽</div>`;
+      html += `<div class="wall-engraving" style="position:absolute;top:12%;left:8%;width:30%">月亮追逐星星，星星追逐太陽</div>`;
     }
     el.innerHTML = html;
   } else {
