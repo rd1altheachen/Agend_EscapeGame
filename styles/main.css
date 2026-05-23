@@ -7,6 +7,7 @@ html,body{height:100%;background:#111;font-family:sans-serif;overflow:hidden}
 .hotspot{position:absolute;cursor:pointer;border:none;background:transparent;z-index:5;-webkit-tap-highlight-color:transparent}
 .hotspot[data-action="clickGoldBook"],.hotspot[data-action="clickBlueBook"]{cursor:default}
 .scene-obj{transform:translateZ(0)}
+.wall-engraving{color:rgba(218,185,107,.7);font-size:11px;font-family:serif;letter-spacing:1px;text-shadow:0 0 4px rgba(255,215,0,.3),0 1px 1px rgba(0,0,0,.8);pointer-events:none;z-index:2}
 .nav-circle{position:absolute;width:12%;aspect-ratio:1;border-radius:50%;cursor:pointer;z-index:10;border:2px solid transparent;transition:border-color .3s,box-shadow .3s}
 .nav-circle.flash{border-color:rgba(255,255,255,.8);box-shadow:0 0 12px rgba(255,255,255,.6)}
 .nav-arrow{position:absolute;bottom:4%;width:42px;height:42px;cursor:pointer;z-index:10;transition:transform .1s}

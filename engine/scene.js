@@ -54,6 +54,10 @@ function render() {
       if (!gameState.goldBookTaken) html += `<img class="scene-obj" src="assets/items/book-gold-star.png" style="position:absolute;top:35.7%;left:26.0%;height:11.6%">`;
       if (!gameState.blueBookTaken) html += `<img class="scene-obj" src="assets/items/book-blue-key.png" style="position:absolute;top:62.9%;left:6.3%;height:11.6%">`;
     }
+    // Engraved text on east wall
+    if (gameState.currentRoom === 'room1' && wallName === 'east') {
+      html += `<div class="wall-engraving" style="position:absolute;top:58%;left:8%;width:30%">月亮追逐星星，星星追逐太陽</div>`;
+    }
     el.innerHTML = html;
   } else {
     el.innerHTML = `<div class="placeholder">${room.name} — ${LABELS[wallName]}</div>
