@@ -77,7 +77,7 @@
           {
             "id": "book-gold-star",
             "type": "puzzle",
-            "bounds": { "top": "32%", "left": "28%", "width": "5%", "height": "12%" },
+            "bounds": { "top": "32%", "left": "28%", "width": "8%", "height": "12%" },
             "action": "clickGoldBook"
           },
           {
