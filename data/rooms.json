@@ -83,7 +83,7 @@
           {
             "id": "book-blue-key",
             "type": "puzzle",
-            "bounds": { "top": "70%", "left": "10%", "width": "5%", "height": "12%" },
+            "bounds": { "top": "66%", "left": "15%", "width": "5%", "height": "12%" },
             "action": "clickBlueBook"
           }
         ],
