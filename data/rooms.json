@@ -71,19 +71,19 @@
           {
             "id": "mirror",
             "type": "puzzle",
-            "bounds": { "top": "24%", "left": "71%", "width": "21%", "height": "44%" },
+            "bounds": { "top": "26%", "left": "71%", "width": "21%", "height": "25%" },
             "action": "clickMirror"
           },
           {
             "id": "book-gold-star",
             "type": "puzzle",
-            "bounds": { "top": "31%", "left": "7%", "width": "8%", "height": "12%" },
+            "bounds": { "top": "31%", "left": "27%", "width": "5%", "height": "12%" },
             "action": "clickGoldBook"
           },
           {
             "id": "book-blue-key",
             "type": "puzzle",
-            "bounds": { "top": "66%", "left": "15%", "width": "5%", "height": "12%" },
+            "bounds": { "top": "65%", "left": "13%", "width": "5%", "height": "12%" },
             "action": "clickBlueBook"
           }
         ],
