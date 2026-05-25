@@ -153,7 +153,7 @@ function openDoorPopup() {
   if (isKeyLocked()) {
     if (gameState.spellBookRead) {
       showDialogue('✦ Lumina Stella Aperio ✦');
-      setTimeout(() => { setFlag('doorOpen', true); switchRoom('room2'); }, 1500);
+      setTimeout(() => { setFlag('doorOpen', true); removeItem('spell_book'); switchRoom('room2'); }, 1500);
     } else {
       showDialogue('似乎還缺少什麼咒語...');
     }
@@ -181,7 +181,7 @@ function clickKeyhole(pos) {
     if (isKeyLocked()) {
       if (gameState.spellBookRead) {
         showDialogue('✦ Lumina Stella Aperio ✦');
-        setTimeout(() => { setFlag('doorOpen', true); closePopup(); switchRoom('room2'); }, 1500);
+        setTimeout(() => { setFlag('doorOpen', true); removeItem('spell_book'); closePopup(); switchRoom('room2'); }, 1500);
       } else {
         showDialogue('符文微微亮起...似乎還少了什麼');
       }
@@ -205,7 +205,7 @@ function clickKeyhole(pos) {
     if (gameState.spellBookRead) {
       // Rule 3: fast path — all conditions met
       showDialogue('✦ Lumina Stella Aperio ✦');
-      setTimeout(() => { setFlag('doorOpen', true); closePopup(); switchRoom('room2'); }, 1500);
+      setTimeout(() => { setFlag('doorOpen', true); removeItem('spell_book'); closePopup(); switchRoom('room2'); }, 1500);
     } else {
       showDialogue('符文微微亮起...似乎還少了什麼');
     }
