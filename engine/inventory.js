@@ -47,7 +47,7 @@ const ITEM_DEFS = {
     type: 'view',
     icon: '📄',
     color: '#d4a574',
-    viewText: '配方：月光粉 + 星辰露 + 火焰花瓣 → 陽光藥水',
+    viewImage: 'assets/potion-recipe-clue.png',
   },
 };
 
