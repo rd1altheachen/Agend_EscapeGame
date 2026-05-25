@@ -51,7 +51,7 @@ function render() {
     html += `<img class="nav-arrow nav-arrow-r" src="assets/ui/arrow-right.png" data-nav="1">`;
     // Overlay book items on west wall (disappear when taken)
     if (gameState.currentRoom === 'room1' && wallName === 'west') {
-      if (!gameState.goldBookTaken) html += `<img class="scene-obj" src="assets/items/book-gold-star.png" style="position:absolute;top:35%;left:28%;height:11.6%">`;
+      if (!gameState.goldBookTaken) html += `<img class="scene-obj" src="assets/items/book-gold-star.png" style="position:absolute;top:28%;left:28%;height:11.6%">`;
       if (!gameState.blueBookTaken) html += `<img class="scene-obj" src="assets/items/book-blue-key.png" style="position:absolute;top:72%;left:13%;height:11.5%">`;
     }
     // Engraved text on east wall
