@@ -113,7 +113,7 @@ function onSlotClick(itemId) {
     } else if (def.viewImage) {
       openInvPopup(`
         <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2">
-          <img src="${def.viewImage}" style="max-width:90%;max-height:90%;object-fit:contain;border-radius:4px">
+          <img src="${def.viewImage}" style="max-width:80%;max-height:80%;object-fit:contain;border-radius:4px">
         </div>
         <button class="popup-back" id="view-back">關閉</button>`);
       document.getElementById('view-back').addEventListener('click', () => { closeInvPopup(); clearSelection(); });
