@@ -294,7 +294,7 @@ function clickMirror() {
   const el = document.getElementById('scene-content');
   const img = document.createElement('img');
   img.src = 'assets/items/book-gold-star.png';
-  img.style.cssText = 'position:absolute;top:28%;left:72%;height:14%;opacity:0;z-index:6;pointer-events:none';
+  img.style.cssText = 'position:absolute;top:23%;left:80%;height:14%;opacity:0;z-index:6;pointer-events:none';
   el.appendChild(img);
   let count = 0;
   const flash = () => {
