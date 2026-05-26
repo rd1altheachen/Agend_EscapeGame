@@ -103,11 +103,9 @@
       "north": {
         "image": "assets/scene-room2-north.png",
         "hotspots": [
-          { "id": "owl-painting", "type": "puzzle", "bounds": { "top": "18%", "left": "25%", "width": "28%", "height": "30%" }, "action": "clickOwlPainting" },
+          { "id": "owl-painting", "type": "puzzle", "bounds": { "top": "18%", "left": "25%", "width": "22%", "height": "24%" }, "action": "clickOwlPainting" },
           { "id": "owl-note", "type": "puzzle", "bounds": { "top": "48%", "left": "30%", "width": "8%", "height": "5%" }, "action": "clickOwlNote" },
-          { "id": "cauldron", "type": "puzzle", "bounds": { "top": "54%", "left": "18%", "width": "22%", "height": "15%" }, "action": "clickCauldron" },
-          { "id": "recipe-wall", "type": "puzzle", "bounds": { "top": "25%", "left": "2%", "width": "20%", "height": "25%" }, "action": "clickRecipeWall" },
-          { "id": "room2-door", "type": "puzzle", "bounds": { "top": "10%", "left": "55%", "width": "40%", "height": "80%" }, "action": "clickRoom2Door" }
+          { "id": "room2-door", "type": "puzzle", "bounds": { "top": "10%", "left": "55%", "width": "40%", "height": "52%" }, "action": "clickRoom2Door" }
         ],
         "navButtons": { "left": { "left": "2%", "bottom": "4%" }, "right": { "right": "2%", "bottom": "4%" } }
       },
