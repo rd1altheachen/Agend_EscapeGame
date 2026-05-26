@@ -49,6 +49,50 @@ const ITEM_DEFS = {
     color: '#d4a574',
     viewImage: 'assets/potion-recipe-clue.png',
   },
+  owl_note: {
+    name: '貓頭鷹紙條',
+    type: 'view',
+    icon: '📝',
+    color: '#c9a96e',
+    viewText: '左眼🌙，右眼⭐',
+  },
+  stirrer: {
+    name: '攪拌匙',
+    type: 'use',
+    icon: '🥄',
+    color: '#8b6914',
+  },
+  rainbow_dew: {
+    name: '彩虹露',
+    type: 'use',
+    icon: '🌈',
+    color: '#e74c3c',
+  },
+  stardust: {
+    name: '星塵粉',
+    type: 'use',
+    icon: '✨',
+    color: '#9b59b6',
+  },
+  magic_fire: {
+    name: '魔法火種',
+    type: 'use',
+    icon: '🔥',
+    color: '#e67e22',
+  },
+  sunlight_potion: {
+    name: '陽光藥水',
+    type: 'use',
+    icon: '☀️',
+    color: '#f1c40f',
+  },
+  graduation_scroll: {
+    name: '畢業咒語卷軸',
+    type: 'view',
+    icon: '📜',
+    color: '#ffd700',
+    viewText: '✦ 恭喜你完成了所有試煉！✦',
+  },
 };
 
 export function getItemDef(itemId) {

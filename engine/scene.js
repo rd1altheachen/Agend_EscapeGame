@@ -89,6 +89,17 @@ function handleAction(action) {
   else if (action === 'clickDiary') clickDiary();
   else if (action === 'clickDrawerLock') clickDrawerLock();
   else if (action === 'clickFlowerpot') clickFlowerpot();
+  else if (action === 'clickClock') clickClock();
+  else if (action === 'clickOwlPainting') clickOwlPainting();
+  else if (action === 'clickOwlNote') clickOwlNote();
+  else if (action === 'clickCauldron') clickCauldron();
+  else if (action === 'clickRecipeWall') clickRecipeWall();
+  else if (action === 'clickRoom2Door') clickRoom2Door();
+  else if (action === 'clickCabinet') clickCabinet();
+  else if (action === 'clickMusicBox') clickMusicBox();
+  else if (action === 'clickCrystalBall') clickCrystalBall();
+  else if (action === 'clickTubeRack') clickTubeRack();
+  else if (action === 'clickBalance') clickBalance();
 }
 
 // --- Orrery Popup ---
@@ -420,6 +431,237 @@ function openCarpetPopup() {
   setFlag('hasCarpetClue', true);
   setFlag('hasSpellClue', true);
   setFlag('carpetViewed', true);
+}
+
+// --- Room1 Clock ---
+function clickClock() {
+  openPopup(`<div class="popup-content" style="display:flex;align-items:center;justify-content:center"><div style="text-align:center;color:#ffd700;font-size:14px"><div style="font-size:40px;font-family:serif">🕐</div><p style="margin-top:8px">時鐘停在 <strong style="font-family:serif;font-size:18px">3:25</strong></p></div></div><button class="popup-back" id="clock-back">返回</button>`);
+  document.getElementById('clock-back').addEventListener('click', closePopup);
+  setFlag('clockExamined', true);
+}
+
+// === ROOM 2 PUZZLES ===
+
+// --- 2-1: Music Box (South) ---
+const MUSIC_OUTER = ['🌙','☁️','⚡','❄️','🌈','💨'];
+const MUSIC_MIDDLE = ['⭐','🌠','🪐','☄️','🌌','🕳️'];
+const MUSIC_INNER = ['☀️','🌑','🌅','🌇','💫','🔥'];
+let musicRings = [0, 0, 0];
+
+function clickMusicBox() {
+  if (gameState.musicBoxSolved) { showDialogue('音樂盒輕輕演奏著...紅→藍→金'); return; }
+  musicRings = [0, 0, 0];
+  openPopup(`<div class="popup-content" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px"><div style="color:#ccc;font-size:11px;margin-bottom:4px">點擊旋轉轉盤（對齊到頂部）</div><div id="music-rings"></div></div><button class="popup-back" id="mb-back">返回</button>`);
+  document.getElementById('mb-back').addEventListener('click', closePopup);
+  renderMusicRings();
+}
+
+function renderMusicRings() {
+  const el = document.getElementById('music-rings');
+  if (!el) return;
+  el.innerHTML = `<div style="display:flex;gap:12px;align-items:center"><div class="ring-slot" id="mr0" style="cursor:pointer;font-size:28px;width:60px;height:60px;border:2px solid #ffd700;border-radius:50%;display:flex;align-items:center;justify-content:center">${MUSIC_OUTER[musicRings[0]]}</div><div class="ring-slot" id="mr1" style="cursor:pointer;font-size:28px;width:60px;height:60px;border:2px solid #c0c0c0;border-radius:50%;display:flex;align-items:center;justify-content:center">${MUSIC_MIDDLE[musicRings[1]]}</div><div class="ring-slot" id="mr2" style="cursor:pointer;font-size:28px;width:60px;height:60px;border:2px solid #cd7f32;border-radius:50%;display:flex;align-items:center;justify-content:center">${MUSIC_INNER[musicRings[2]]}</div></div><div style="color:#999;font-size:10px;margin-top:6px">外圈 ─ 中圈 ─ 內圈</div>`;
+  for (let i = 0; i < 3; i++) {
+    document.getElementById('mr' + i).addEventListener('click', () => { musicRings[i] = (musicRings[i] + 1) % 6; renderMusicRings(); checkMusicBox(); });
+  }
+}
+
+function checkMusicBox() {
+  if (musicRings[0] === 0 && musicRings[1] === 0 && musicRings[2] === 0) {
+    setFlag('musicBoxSolved', true);
+    setFlag('hasMusicBoxClue', true);
+    addItem('stirrer');
+    showDialogue('音樂盒打開了！寶石閃爍：🔴→🔵→🟡 你獲得了攪拌匙！');
+    setTimeout(() => closePopup(), 1500);
+  }
+}
+
+// --- 2-2: Owl Painting (North) ---
+let owlEyes = [0, 0];
+const OWL_SYMBOLS = ['🌙','⭐','☀️','🔮'];
+
+function clickOwlNote() {
+  if (gameState.owlNoteFound) return;
+  setFlag('owlNoteFound', true);
+  addItem('owl_note');
+  showDialogue('你撿起了畫框下的小紙片。');
+}
+
+function clickOwlPainting() {
+  if (gameState.owlSolved) { showDialogue('貓頭鷹微笑著看著你。'); return; }
+  owlEyes = [0, 0];
+  openPopup(`<div class="popup-content" style="display:flex;flex-direction:column;align-items:center;justify-content:center"><div style="font-size:13px;color:#ccc;margin-bottom:8px">點擊眼睛旋轉符號</div><div id="owl-eyes" style="display:flex;gap:40px"></div></div><button class="popup-back" id="owl-back">返回</button>`);
+  document.getElementById('owl-back').addEventListener('click', closePopup);
+  renderOwlEyes();
+}
+
+function renderOwlEyes() {
+  const el = document.getElementById('owl-eyes');
+  if (!el) return;
+  el.innerHTML = `<div id="oe0" style="cursor:pointer;font-size:32px;width:50px;height:50px;border-radius:50%;background:#2c2c2c;display:flex;align-items:center;justify-content:center">${OWL_SYMBOLS[owlEyes[0]]}</div><div id="oe1" style="cursor:pointer;font-size:32px;width:50px;height:50px;border-radius:50%;background:#2c2c2c;display:flex;align-items:center;justify-content:center">${OWL_SYMBOLS[owlEyes[1]]}</div>`;
+  document.getElementById('oe0').addEventListener('click', () => { owlEyes[0] = (owlEyes[0] + 1) % 4; renderOwlEyes(); checkOwl(); });
+  document.getElementById('oe1').addEventListener('click', () => { owlEyes[1] = (owlEyes[1] + 1) % 4; renderOwlEyes(); checkOwl(); });
+}
+
+function checkOwl() {
+  if (!gameState.owlNoteFound) return;
+  if (owlEyes[0] === 0 && owlEyes[1] === 1) {
+    setFlag('owlSolved', true);
+    addItem('rainbow_dew');
+    showDialogue('貓頭鷹的嘴巴打開了！你獲得了彩虹露！');
+    setTimeout(() => closePopup(), 1500);
+  }
+}
+
+// --- 2-3: Tube Rack (West) ---
+const TUBE_COLORS = ['red','orange','yellow','green','blue','indigo','purple'];
+const TUBE_LABELS = ['紅','橙','黃','綠','藍','靛','紫'];
+let tubeOrder = [];
+let tubeSelected = null;
+
+function clickTubeRack() {
+  if (gameState.tubesSorted) { showDialogue('試管已經排列整齊了。'); return; }
+  tubeOrder = [...TUBE_COLORS].sort(() => Math.random() - 0.5);
+  tubeSelected = null;
+  openPopup(`<div class="popup-content" style="display:flex;flex-direction:column;align-items:center;justify-content:center"><div style="color:#ccc;font-size:11px;margin-bottom:8px">點擊兩支試管交換位置</div><div id="tube-rack" style="display:flex;gap:4px"></div></div><button class="popup-back" id="tube-back">返回</button>`);
+  document.getElementById('tube-back').addEventListener('click', closePopup);
+  renderTubes();
+}
+
+function renderTubes() {
+  const el = document.getElementById('tube-rack');
+  if (!el) return;
+  el.innerHTML = tubeOrder.map((c, i) => `<div class="tube-slot" data-idx="${i}" style="cursor:pointer;width:30px;height:70px;border-radius:0 0 12px 12px;background:${c};border:2px solid ${tubeSelected === i ? '#ffd700' : 'rgba(255,255,255,.3)'};display:flex;align-items:flex-end;justify-content:center;padding-bottom:4px"><span style="font-size:9px;color:#fff">${TUBE_LABELS[TUBE_COLORS.indexOf(c)]}</span></div>`).join('');
+  el.querySelectorAll('.tube-slot').forEach(slot => {
+    slot.addEventListener('click', () => {
+      const idx = parseInt(slot.dataset.idx);
+      if (tubeSelected === null) { tubeSelected = idx; renderTubes(); }
+      else { [tubeOrder[tubeSelected], tubeOrder[idx]] = [tubeOrder[idx], tubeOrder[tubeSelected]]; tubeSelected = null; renderTubes(); checkTubes(); }
+    });
+  });
+}
+
+function checkTubes() {
+  if (tubeOrder.every((c, i) => c === TUBE_COLORS[i])) {
+    setFlag('tubesSorted', true);
+    addItem('stardust');
+    showDialogue('試管排列正確！架子底部彈出了星塵粉！');
+    setTimeout(() => closePopup(), 1500);
+  }
+}
+
+// --- 2-4: Cabinet (East) ---
+let cabinetDials = [0, 0, 0];
+let cabinetLocked = false;
+
+function clickCabinet() {
+  if (gameState.cabinetSolved) { showDialogue('櫥櫃已經空了。'); return; }
+  if (!gameState.clockExamined && !gameState.diaryTimeReverseRead) { showDialogue('完全沒有頭緒…也許房間裡有什麼提示？'); return; }
+  if (gameState.clockExamined && !gameState.diaryTimeReverseRead) { showDialogue('3:25…好像很重要，但還缺少什麼資訊。'); return; }
+  if (!gameState.clockExamined && gameState.diaryTimeReverseRead) { showDialogue('時間倒流…但倒流什麼時間呢？'); return; }
+  cabinetDials = [0, 0, 0];
+  cabinetLocked = false;
+  openPopup(`<div class="popup-content" style="display:flex;align-items:center;justify-content:center;gap:8px"><div id="cab-dials" style="display:flex;gap:8px"></div></div><button class="popup-back" id="cab-back">返回</button>`);
+  document.getElementById('cab-back').addEventListener('click', closePopup);
+  renderCabinetDials();
+}
+
+function renderCabinetDials() {
+  const el = document.getElementById('cab-dials');
+  if (!el) return;
+  el.innerHTML = cabinetDials.map((v, i) => `<div style="display:flex;flex-direction:column;align-items:center"><div class="dial-btn" data-i="${i}" data-d="-1" style="cursor:pointer;color:#ffd700;font-size:16px;padding:4px">▲</div><div style="font-size:24px;color:#fff;font-weight:bold;width:36px;height:40px;display:flex;align-items:center;justify-content:center;background:#1a1a2e;border:2px solid #ffd700;border-radius:6px">${v}</div><div class="dial-btn" data-i="${i}" data-d="1" style="cursor:pointer;color:#ffd700;font-size:16px;padding:4px">▼</div></div>`).join('');
+  el.querySelectorAll('.dial-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (cabinetLocked) return;
+      const i = parseInt(btn.dataset.i), d = parseInt(btn.dataset.d);
+      cabinetDials[i] = (cabinetDials[i] + d + 10) % 10;
+      renderCabinetDials();
+      checkCabinet();
+    });
+  });
+}
+
+function checkCabinet() {
+  if (cabinetDials[0] === 5 && cabinetDials[1] === 2 && cabinetDials[2] === 3) {
+    setFlag('cabinetSolved', true);
+    addItem('magic_fire');
+    showDialogue('櫥櫃打開了！你獲得了魔法火種！');
+    setTimeout(() => closePopup(), 1500);
+  } else {
+    const code = cabinetDials.join('');
+    if (code.length === 3 && cabinetDials.some(v => v !== 0)) {
+      gameState.cabinetErrors++;
+      if (gameState.cabinetErrors >= 3 && gameState.cabinetErrors < 5) {
+        cabinetLocked = true;
+        showDialogue('鎖定 8 秒...');
+        setTimeout(() => { cabinetLocked = false; }, 8000);
+      } else if (gameState.cabinetErrors >= 5) {
+        showDialogue('把時間反過來看看？');
+      }
+    }
+  }
+}
+
+// --- 2-5: Cauldron (North) ---
+function clickCauldron() {
+  if (gameState.potionBrewed) { showDialogue('大鍋裡殘留著金色的光芒。'); return; }
+  const step = gameState.potionStep || 0;
+  const selected = getSelectedItem();
+  if (step === 0) {
+    if (selected === 'magic_fire') { removeItem('magic_fire'); clearSelection(); setFlag('potionStep', 1); showDialogue('🔥 魔法火種點燃了大鍋！'); }
+    else { showDialogue('大鍋還沒準備好，似乎還缺少什麼材料。'); }
+  } else if (step === 1) {
+    if (selected === 'rainbow_dew') { removeItem('rainbow_dew'); clearSelection(); setFlag('potionStep', 2); showDialogue('🌈 彩虹露倒入鍋中，液體變成七彩色！'); }
+    else { showDialogue('好像不是現在該放這個...'); }
+  } else if (step === 2) {
+    if (selected === 'stardust') { removeItem('stardust'); clearSelection(); setFlag('potionStep', 3); showDialogue('✨ 星塵粉灑入，鍋中閃爍星光！'); }
+    else { showDialogue('好像不是現在該放這個...'); }
+  } else if (step === 3) {
+    if (selected === 'moonlight_powder') { removeItem('moonlight_powder'); clearSelection(); setFlag('potionStep', 4); showDialogue('🌙 月光粉融入，液體發出柔和銀光！'); }
+    else { showDialogue('好像不是現在該放這個...'); }
+  } else if (step === 4) {
+    if (selected === 'stirrer') { gameState.potionStep = 5; showDialogue('攪拌中... (1/3)'); }
+    else { showDialogue('需要用攪拌匙攪拌。'); }
+  } else if (step === 5) {
+    if (selected === 'stirrer') { gameState.potionStep = 6; showDialogue('攪拌中... (2/3)'); }
+    else { showDialogue('繼續攪拌！'); }
+  } else if (step === 6) {
+    if (selected === 'stirrer') { removeItem('stirrer'); clearSelection(); setFlag('potionStep', 7); setFlag('potionBrewed', true); addItem('sunlight_potion'); showDialogue('☀️ 陽光藥水煮好了！'); }
+    else { showDialogue('再攪拌一次！'); }
+  }
+}
+
+// --- 2-6: Balance (West) ---
+function clickBalance() {
+  if (gameState.balanceSolved) { showDialogue('天秤底座已經打開了。'); return; }
+  const selected = getSelectedItem();
+  if (selected === 'magic_weight') {
+    removeItem('magic_weight'); clearSelection();
+    setFlag('balanceSolved', true);
+    addItem('graduation_scroll');
+    openPopup(`<div class="popup-content"><img src="assets/items/balance-even.png" style="width:100%;height:100%;object-fit:contain"></div><button class="popup-back" id="bal-back">返回</button>`);
+    document.getElementById('bal-back').addEventListener('click', closePopup);
+    showDialogue('天秤平衡了！底座打開，你獲得了畢業咒語卷軸！');
+  } else {
+    openPopup(`<div class="popup-content"><img src="assets/items/balance-uneven.png" style="width:100%;height:100%;object-fit:contain"></div><button class="popup-back" id="bal-back">返回</button>`);
+    document.getElementById('bal-back').addEventListener('click', closePopup);
+  }
+}
+
+// --- Crystal Ball (South) ---
+function clickCrystalBall() {
+  openPopup(`<div class="popup-content" style="display:flex;align-items:center;justify-content:center;gap:16px"><div style="width:36px;height:36px;border-radius:50%;background:#e74c3c"></div><div style="width:36px;height:36px;border-radius:50%;background:#3498db"></div><div style="width:36px;height:36px;border-radius:50%;background:#27ae60"></div><div style="width:36px;height:36px;border-radius:50%;background:#9b59b6"></div></div><button class="popup-back" id="cb-back">返回</button>`);
+  document.getElementById('cb-back').addEventListener('click', closePopup);
+}
+
+// --- Recipe Wall (North) ---
+function clickRecipeWall() {
+  openPopup(`<div class="popup-content"><img src="assets/potion-recipe-clue.png" style="max-width:100%;max-height:100%;object-fit:contain"></div><button class="popup-back" id="rw-back">返回</button>`);
+  document.getElementById('rw-back').addEventListener('click', closePopup);
+}
+
+// --- Room2 Door (North) ---
+function clickRoom2Door() {
+  switchRoom('room1');
 }
 
 // Expose switchRoom for toolbar buttons

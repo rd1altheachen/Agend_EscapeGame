@@ -16,6 +16,12 @@
             "type": "puzzle",
             "bounds": { "top": "83%", "left": "70%", "width": "12%", "height": "7%" },
             "action": "openCarpetPopup"
+          },
+          {
+            "id": "clock",
+            "type": "puzzle",
+            "bounds": { "top": "15%", "left": "75%", "width": "15%", "height": "15%" },
+            "action": "clickClock"
           }
         ],
         "navButtons": { "left": { "left": "2%", "bottom": "4%" }, "right": { "right": "2%", "bottom": "4%" } }
@@ -94,10 +100,40 @@
   "room2": {
     "name": "煉金工坊",
     "walls": {
-      "north": { "image": null, "hotspots": [], "navButtons": { "left": { "left": "2%", "bottom": "4%" }, "right": { "right": "2%", "bottom": "4%" } } },
-      "east": { "image": null, "hotspots": [], "navButtons": { "left": { "left": "2%", "bottom": "4%" }, "right": { "right": "2%", "bottom": "4%" } } },
-      "south": { "image": null, "hotspots": [], "navButtons": { "left": { "left": "2%", "bottom": "4%" }, "right": { "right": "2%", "bottom": "4%" } } },
-      "west": { "image": null, "hotspots": [], "navButtons": { "left": { "left": "2%", "bottom": "4%" }, "right": { "right": "2%", "bottom": "4%" } } }
+      "north": {
+        "image": "assets/scene-room2-north.png",
+        "hotspots": [
+          { "id": "owl-painting", "type": "puzzle", "bounds": { "top": "18%", "left": "25%", "width": "28%", "height": "30%" }, "action": "clickOwlPainting" },
+          { "id": "owl-note", "type": "puzzle", "bounds": { "top": "48%", "left": "30%", "width": "8%", "height": "5%" }, "action": "clickOwlNote" },
+          { "id": "cauldron", "type": "puzzle", "bounds": { "top": "45%", "left": "18%", "width": "22%", "height": "18%" }, "action": "clickCauldron" },
+          { "id": "recipe-wall", "type": "puzzle", "bounds": { "top": "25%", "left": "2%", "width": "20%", "height": "25%" }, "action": "clickRecipeWall" },
+          { "id": "room2-door", "type": "puzzle", "bounds": { "top": "10%", "left": "55%", "width": "40%", "height": "80%" }, "action": "clickRoom2Door" }
+        ],
+        "navButtons": { "left": { "left": "2%", "bottom": "4%" }, "right": { "right": "2%", "bottom": "4%" } }
+      },
+      "east": {
+        "image": "assets/scene-room2-east.png",
+        "hotspots": [
+          { "id": "cabinet", "type": "puzzle", "bounds": { "top": "5%", "left": "3%", "width": "30%", "height": "55%" }, "action": "clickCabinet" }
+        ],
+        "navButtons": { "left": { "left": "2%", "bottom": "4%" }, "right": { "right": "2%", "bottom": "4%" } }
+      },
+      "south": {
+        "image": "assets/scene-room2-south.png",
+        "hotspots": [
+          { "id": "music-box", "type": "puzzle", "bounds": { "top": "55%", "left": "5%", "width": "22%", "height": "20%" }, "action": "clickMusicBox" },
+          { "id": "crystal-ball", "type": "puzzle", "bounds": { "top": "48%", "left": "65%", "width": "25%", "height": "30%" }, "action": "clickCrystalBall" }
+        ],
+        "navButtons": { "left": { "left": "2%", "bottom": "4%" }, "right": { "right": "2%", "bottom": "4%" } }
+      },
+      "west": {
+        "image": "assets/scene-room2-west.png",
+        "hotspots": [
+          { "id": "tube-rack-center", "type": "puzzle", "bounds": { "top": "50%", "left": "30%", "width": "22%", "height": "15%" }, "action": "clickTubeRack" },
+          { "id": "balance", "type": "puzzle", "bounds": { "top": "70%", "left": "65%", "width": "20%", "height": "15%" }, "action": "clickBalance" }
+        ],
+        "navButtons": { "left": { "left": "2%", "bottom": "4%" }, "right": { "right": "2%", "bottom": "4%" } }
+      }
     }
   }
 }

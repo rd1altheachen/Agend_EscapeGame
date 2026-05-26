@@ -22,6 +22,20 @@ export const gameState = {
   diaryRead: false,
   drawerSolved: false,
   flowerpotSolved: false,
+  clockExamined: false,
+  owlNoteFound: false,
+  owlSolved: false,
+  musicBoxSolved: false,
+  tubesSorted: false,
+  cabinetSolved: false,
+  cabinetErrors: 0,
+  potionBrewed: false,
+  potionStep: 0,
+  balanceSolved: false,
+  hasMagicFire: false,
+  hasRainbowDew: false,
+  hasStardust: false,
+  hasStirrer: false,
 };
 
 export function setFlag(name, value) {
