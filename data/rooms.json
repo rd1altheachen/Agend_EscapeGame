@@ -112,7 +112,8 @@
       "east": {
         "image": "assets/scene-room2-east.png",
         "hotspots": [
-          { "id": "cabinet", "type": "puzzle", "bounds": { "top": "5%", "left": "3%", "width": "30%", "height": "55%" }, "action": "clickCabinet" }
+          { "id": "cabinet", "type": "puzzle", "bounds": { "top": "5%", "left": "3%", "width": "30%", "height": "55%" }, "action": "clickCabinet" },
+          { "id": "cauldron", "type": "puzzle", "bounds": { "top": "35%", "left": "25%", "width": "50%", "height": "35%" }, "action": "clickCauldron" }
         ],
         "navButtons": { "left": { "left": "2%", "bottom": "4%" }, "right": { "right": "2%", "bottom": "4%" } }
       },
