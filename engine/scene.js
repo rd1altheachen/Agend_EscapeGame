@@ -58,6 +58,11 @@ function render() {
     if (gameState.currentRoom === 'room1' && wallName === 'east') {
       html += `<div class="wall-engraving" style="position:absolute;top:12%;left:8%;width:30%">月亮追逐星星<br>星星追逐太陽</div>`;
     }
+    // Owl eyes on room2 north wall
+    if (gameState.currentRoom === 'room2' && wallName === 'north' && !gameState.owlSolved) {
+      html += `<div class="owl-eye" data-eye="0" style="position:absolute;top:33%;left:42%;width:5%;aspect-ratio:1;background:#000;border-radius:50%;cursor:pointer;z-index:6"></div>`;
+      html += `<div class="owl-eye" data-eye="1" style="position:absolute;top:33%;left:51%;width:5%;aspect-ratio:1;background:#000;border-radius:50%;cursor:pointer;z-index:6"></div>`;
+    }
     el.innerHTML = html;
   } else {
     el.innerHTML = `<div class="placeholder">${room.name} — ${LABELS[wallName]}</div>
@@ -75,6 +80,10 @@ function render() {
   });
   el.querySelectorAll('.hotspot').forEach(spot => {
     spot.addEventListener('click', () => handleAction(spot.dataset.action));
+  });
+  // Owl eye rotation
+  el.querySelectorAll('.owl-eye').forEach(eye => {
+    eye.addEventListener('click', (e) => { e.stopPropagation(); rotateOwlEye(parseInt(eye.dataset.eye)); });
   });
 }
 
@@ -479,11 +488,22 @@ function checkMusicBox() {
 let owlEyes = [0, 0];
 const OWL_SYMBOLS = ['🌙','⭐','☀️','🔮'];
 
+function rotateOwlEye(idx) {
+  owlEyes[idx] = (owlEyes[idx] + 1) % 4;
+  const el = document.querySelectorAll('.owl-eye')[idx];
+  if (el) { el.textContent = OWL_SYMBOLS[owlEyes[idx]]; el.style.background = 'none'; el.style.fontSize = '14px'; el.style.display = 'flex'; el.style.alignItems = 'center'; el.style.justifyContent = 'center'; }
+  if (gameState.owlNoteFound && owlEyes[0] === 0 && owlEyes[1] === 1) {
+    setFlag('owlSolved', true);
+    addItem('rainbow_dew');
+    showDialogue('貓頭鷹的嘴巴打開了！你獲得了彩虹露！');
+  }
+}
+
 function clickOwlNote() {
-  if (gameState.owlNoteFound) return;
+  if (gameState.owlNoteFound) { openPopup(`<div class="popup-content" style="display:flex;align-items:center;justify-content:center"><div style="font-size:60px">🌙</div></div><button class="popup-back" id="on-back">返回</button>`); document.getElementById('on-back').addEventListener('click', closePopup); return; }
   setFlag('owlNoteFound', true);
-  addItem('owl_note');
-  showDialogue('你撿起了畫框下的小紙片。');
+  openPopup(`<div class="popup-content" style="display:flex;align-items:center;justify-content:center"><div style="text-align:center;color:#d4a574"><div style="font-size:60px">🌙</div><p style="margin-top:8px;font-size:12px">紙片上畫著一個月亮...</p></div></div><button class="popup-back" id="on-back">返回</button>`);
+  document.getElementById('on-back').addEventListener('click', closePopup);
 }
 
 function clickOwlPainting() {
@@ -661,7 +681,11 @@ function clickRecipeWall() {
 
 // --- Room2 Door (North) ---
 function clickRoom2Door() {
-  switchRoom('room1');
+  gameState.currentRoom = 'room1';
+  gameState.wallIndex = 1;
+  render();
+  document.getElementById('btn-r1').classList.add('active');
+  document.getElementById('btn-r2').classList.remove('active');
 }
 
 // Expose switchRoom for toolbar buttons
