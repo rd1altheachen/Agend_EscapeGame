@@ -60,8 +60,8 @@ function render() {
     }
     // Owl eyes on room2 north wall (decorative only)
     if (gameState.currentRoom === 'room2' && wallName === 'north' && !gameState.owlSolved) {
-      html += `<div style="position:absolute;top:28%;left:42%;width:3%;aspect-ratio:1;background:#000;border-radius:50%;pointer-events:none;z-index:6"></div>`;
-      html += `<div style="position:absolute;top:28%;left:46%;width:3%;aspect-ratio:1;background:#000;border-radius:50%;pointer-events:none;z-index:6"></div>`;
+      html += `<div style="position:absolute;top:31%;left:42%;width:3%;aspect-ratio:1;background:#000;border-radius:50%;pointer-events:none;z-index:6"></div>`;
+      html += `<div style="position:absolute;top:31%;left:47%;width:3%;aspect-ratio:1;background:#000;border-radius:50%;pointer-events:none;z-index:6"></div>`;
     }
     el.innerHTML = html;
   } else {
@@ -672,7 +672,7 @@ function clickCrystalBall() {
 
 // --- Recipe Note (North) ---
 function clickRecipeNote() {
-  openPopup(`<div class="popup-content"><img src="assets/room2/recipe-note-clear.png" style="max-width:100%;max-height:100%;object-fit:contain"></div><button class="popup-back" id="rn-back">返回</button>`);
+  openPopup(`<div class="popup-content" style="display:flex;align-items:center;justify-content:center"><img src="assets/room2/recipe-note-clear.png" style="max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain"></div><button class="popup-back" id="rn-back">返回</button>`);
   document.getElementById('rn-back').addEventListener('click', closePopup);
 }
 
