@@ -58,10 +58,10 @@ function render() {
     if (gameState.currentRoom === 'room1' && wallName === 'east') {
       html += `<div class="wall-engraving" style="position:absolute;top:12%;left:8%;width:30%">月亮追逐星星<br>星星追逐太陽</div>`;
     }
-    // Owl eyes on room2 north wall
+    // Owl eyes on room2 north wall (decorative only)
     if (gameState.currentRoom === 'room2' && wallName === 'north' && !gameState.owlSolved) {
-      html += `<div class="owl-eye" data-eye="0" style="position:absolute;top:33%;left:42%;width:5%;aspect-ratio:1;background:#000;border-radius:50%;cursor:pointer;z-index:6"></div>`;
-      html += `<div class="owl-eye" data-eye="1" style="position:absolute;top:33%;left:51%;width:5%;aspect-ratio:1;background:#000;border-radius:50%;cursor:pointer;z-index:6"></div>`;
+      html += `<div style="position:absolute;top:28%;left:42%;width:3%;aspect-ratio:1;background:#000;border-radius:50%;pointer-events:none;z-index:6"></div>`;
+      html += `<div style="position:absolute;top:28%;left:46%;width:3%;aspect-ratio:1;background:#000;border-radius:50%;pointer-events:none;z-index:6"></div>`;
     }
     el.innerHTML = html;
   } else {
@@ -81,10 +81,6 @@ function render() {
   el.querySelectorAll('.hotspot').forEach(spot => {
     spot.addEventListener('click', () => handleAction(spot.dataset.action));
   });
-  // Owl eye rotation
-  el.querySelectorAll('.owl-eye').forEach(eye => {
-    eye.addEventListener('click', (e) => { e.stopPropagation(); rotateOwlEye(parseInt(eye.dataset.eye)); });
-  });
 }
 
 function handleAction(action) {
@@ -103,6 +99,7 @@ function handleAction(action) {
   else if (action === 'clickOwlNote') clickOwlNote();
   else if (action === 'clickCauldron') clickCauldron();
   else if (action === 'clickRecipeWall') clickRecipeWall();
+  else if (action === 'clickRecipeNote') clickRecipeNote();
   else if (action === 'clickRoom2Door') clickRoom2Door();
   else if (action === 'clickCabinet') clickCabinet();
   else if (action === 'clickMusicBox') clickMusicBox();
@@ -500,9 +497,9 @@ function rotateOwlEye(idx) {
 }
 
 function clickOwlNote() {
-  if (gameState.owlNoteFound) { openPopup(`<div class="popup-content" style="display:flex;align-items:center;justify-content:center"><div style="font-size:60px">🌙</div></div><button class="popup-back" id="on-back">返回</button>`); document.getElementById('on-back').addEventListener('click', closePopup); return; }
+  if (gameState.owlNoteFound) { openPopup(`<div class="popup-content" style="display:flex;align-items:center;justify-content:center"><div style="width:120px;height:120px;background:url('assets/ui/parchment-bg.png') center/cover;border-radius:8px;display:flex;align-items:center;justify-content:center"><span style="font-size:48px">🌙</span></div></div><button class="popup-back" id="on-back">返回</button>`); document.getElementById('on-back').addEventListener('click', closePopup); return; }
   setFlag('owlNoteFound', true);
-  openPopup(`<div class="popup-content" style="display:flex;align-items:center;justify-content:center"><div style="text-align:center;color:#d4a574"><div style="font-size:60px">🌙</div><p style="margin-top:8px;font-size:12px">紙片上畫著一個月亮...</p></div></div><button class="popup-back" id="on-back">返回</button>`);
+  openPopup(`<div class="popup-content" style="display:flex;align-items:center;justify-content:center"><div style="width:120px;height:120px;background:url('assets/ui/parchment-bg.png') center/cover;border-radius:8px;display:flex;align-items:center;justify-content:center"><span style="font-size:48px">🌙</span></div></div><button class="popup-back" id="on-back">返回</button>`);
   document.getElementById('on-back').addEventListener('click', closePopup);
 }
 
@@ -671,6 +668,12 @@ function clickBalance() {
 function clickCrystalBall() {
   openPopup(`<div class="popup-content" style="display:flex;align-items:center;justify-content:center;gap:16px"><div style="width:36px;height:36px;border-radius:50%;background:#e74c3c"></div><div style="width:36px;height:36px;border-radius:50%;background:#3498db"></div><div style="width:36px;height:36px;border-radius:50%;background:#27ae60"></div><div style="width:36px;height:36px;border-radius:50%;background:#9b59b6"></div></div><button class="popup-back" id="cb-back">返回</button>`);
   document.getElementById('cb-back').addEventListener('click', closePopup);
+}
+
+// --- Recipe Note (North) ---
+function clickRecipeNote() {
+  openPopup(`<div class="popup-content"><img src="assets/room2/recipe-note-clear.png" style="max-width:100%;max-height:100%;object-fit:contain"></div><button class="popup-back" id="rn-back">返回</button>`);
+  document.getElementById('rn-back').addEventListener('click', closePopup);
 }
 
 // --- Recipe Wall (North) ---
