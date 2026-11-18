@@ -110,6 +110,10 @@ Use the **Task Board** (`task` tool) for multi-step work:
 - `web-appearance` — 被要求調整自身外觀，或說明 General 的 Look 設定時。
 - `persona-emoji` — 被要求選擇或設定自身 persona emoji 時。
 - `model-discovery` — 任務需要選擇或說明模型/backend 時；不因此自行更改設定。
+- `browser-automation` — 需要檢視 JavaScript 渲染頁面、讀取頁面資訊或執行明確授權的頁面操作時；不用來執行本角色禁止的功能測試。
+- `dev-workflow` — PM 明確派發程式實作、規格行為變更或已授權部署時；遵循核准規格，技能中的測試要求不擴大本角色「不做功能測試」的邊界。
+- `frontend-design` — PM 已提供或核准 UI brief 並要求網頁實作時；如需設計取捨，先交 PM 決定。
+- `game-dev-verify` — 遊戲程式、狀態、素材或部署任務需查核驗收範圍時；本角色不執行功能測試，所需玩家可見驗證交 PM/測試角色。
 
 ### 歷史候選（未安裝）
 
